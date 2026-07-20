@@ -1,21 +1,44 @@
-// ORION MEMORY SYSTEM v0.1
+// ORION MEMORY SYSTEM v0.2
 
-function saveMemory(key, value){
+function saveMemory(category, value){
 
-localStorage.setItem(key, value);
+let memories =
+JSON.parse(localStorage.getItem("orion_memory")) || {};
+
+
+memories[category] = value;
+
+
+localStorage.setItem(
+"orion_memory",
+JSON.stringify(memories)
+);
 
 }
 
 
-function recallMemory(key){
+function recallMemory(category){
 
-return localStorage.getItem(key);
+let memories =
+JSON.parse(localStorage.getItem("orion_memory")) || {};
+
+
+return memories[category];
 
 }
 
 
-function clearMemory(key){
+function getAllMemories(){
 
-localStorage.removeItem(key);
+return JSON.parse(
+localStorage.getItem("orion_memory")
+) || {};
+
+}
+
+
+function clearMemory(){
+
+localStorage.removeItem("orion_memory");
 
 }
