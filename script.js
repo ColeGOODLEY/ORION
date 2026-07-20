@@ -104,15 +104,55 @@ memory;
 }
 
 
-else if(command == "recall"){
+// ORION MEMORY SYSTEM v0.3
+
+function saveMemory(category, value){
 
 let memories =
-getAllMemories();
+JSON.parse(localStorage.getItem("orion_memory")) || {};
 
 
-response.innerHTML =
-"ORION MEMORY BANK:<br><br>" +
-JSON.stringify(memories);
+if(!memories[category]){
+
+memories[category] = [];
+
+}
+
+
+memories[category].push(value);
+
+
+localStorage.setItem(
+"orion_memory",
+JSON.stringify(memories)
+);
+
+}
+
+
+function recallMemory(category){
+
+let memories =
+JSON.parse(localStorage.getItem("orion_memory")) || {};
+
+
+return memories[category];
+
+}
+
+
+function getAllMemories(){
+
+return JSON.parse(
+localStorage.getItem("orion_memory")
+) || {};
+
+}
+
+
+function clearMemory(){
+
+localStorage.removeItem("orion_memory");
 
 }
 else if(command == "joke"){
