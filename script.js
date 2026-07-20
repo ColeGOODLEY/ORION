@@ -102,12 +102,26 @@ category +
 memory;
 
 }
+else if(command.includes("favorite color")){
+
+let result =
+searchMemory("favorite color");
 
 
-else if(command.includes("favorite")){
+if(result && result.length > 0){
 
 response.innerHTML =
-"ORION MEMORY SEARCH ACTIVATED";
+"Your favorite color is:<br><br>" +
+result[0];
+
+}
+
+else{
+
+response.innerHTML =
+"I do not have your favorite color stored yet.";
+
+}
 
 }
 
