@@ -78,28 +78,30 @@ response.innerHTML =
 memory;
 
 }
-
-
-else if(command == "recall"){
-
 let memory =
-recallMemory("user_memory");
+command.replace("remember", "").trim();
 
 
-if(memory){
+saveMemory("user_memory", memory);
+
 
 response.innerHTML =
-"Retrieved memory:<br><br>" +
+"Memory stored.<br><br>" +
+"ORION will remember:<br>" +
 memory;
 
 }
 
-else {
+
+else if(command == "recall"){
+
+let memories =
+getAllMemories();
+
 
 response.innerHTML =
-"I do not currently have any stored memories.";
-
-}
+"ORION MEMORY BANK:<br><br>" +
+JSON.stringify(memories);
 
 }
 else if(command == "joke"){
