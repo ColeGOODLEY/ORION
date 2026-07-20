@@ -49,3 +49,31 @@ function clearMemory(){
 localStorage.removeItem("orion_memory");
 
 }
+
+
+function searchMemory(keyword){
+
+let memories =
+getAllMemories();
+
+let results = [];
+
+
+for(let category in memories){
+
+memories[category].forEach(memory => {
+
+if(memory.includes(keyword)){
+
+results.push(memory);
+
+}
+
+});
+
+}
+
+
+return results;
+
+}
