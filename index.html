@@ -2,45 +2,102 @@
 <html>
 
 <head>
-<title>ORION</title>
+
+<title>ORION HUD</title>
 
 <style>
 
 body {
-background-color: #0b0b0b;
-color: white;
-font-family: Arial, sans-serif;
+background: #05070d;
+color: #00bfff;
+font-family: "Courier New", monospace;
 text-align: center;
 padding: 30px;
 }
 
 h1 {
-font-size: 60px;
+font-size: 70px;
+letter-spacing: 10px;
+text-shadow: 0 0 20px #00bfff;
 }
 
-.box {
-border: 1px solid gray;
-border-radius: 10px;
-padding: 20px;
-margin: 20px auto;
+h2 {
+text-shadow: 0 0 10px #00bfff;
+}
+
+.panel {
+border: 1px solid #00bfff;
+box-shadow: 0 0 15px #00bfff;
+border-radius: 15px;
+padding: 25px;
+margin: 25px auto;
 max-width: 700px;
 }
 
-textarea, input {
-width: 90%;
-padding: 12px;
-margin: 10px;
-border-radius: 5px;
+input, textarea {
+
+background: #020409;
+color: #00bfff;
+border: 1px solid #00bfff;
+width: 85%;
+padding: 15px;
+border-radius: 8px;
+font-family: inherit;
+
 }
+
 
 button {
-padding: 12px 30px;
-border-radius: 5px;
+
+background: transparent;
+color: #00bfff;
+border: 1px solid #00bfff;
+padding: 15px 40px;
+border-radius: 10px;
 cursor: pointer;
+font-family: inherit;
+box-shadow: 0 0 10px #00bfff;
+
 }
 
+
+button:hover {
+
+background: #00bfff;
+color: black;
+
+}
+
+
 #response {
-min-height: 50px;
+
+min-height: 60px;
+margin-top: 20px;
+
+}
+
+
+.online {
+
+animation: pulse 2s infinite;
+
+}
+
+
+@keyframes pulse {
+
+0% {
+opacity: .5;
+}
+
+50% {
+opacity: 1;
+}
+
+100% {
+opacity: .5;
+}
+
 }
 
 </style>
@@ -50,6 +107,7 @@ min-height: 50px;
 
 <body>
 
+
 <h1>ORION</h1>
 
 <h3>
@@ -57,42 +115,54 @@ Operational Research & Intelligence for Optimization & Navigation
 </h3>
 
 
-<div class="box">
+<div class="panel">
 
-<h2>System Status</h2>
+<h2>CORE STATUS</h2>
 
-<p>🟢 ORION Online</p>
+<p class="online">
+🟦 SYSTEM ONLINE
+</p>
+
+<p>
+AI CORE: INITIALIZING
+<br>
+MEMORY: READY
+<br>
+VERSION: 0.3
+</p>
 
 </div>
 
 
 
-<div class="box">
+<div class="panel">
 
-<h2>Mission Control</h2>
+<h2>MISSION CONTROL</h2>
 
 <textarea placeholder="Today's Mission"></textarea>
 
-<textarea placeholder="Goals"></textarea>
+<br>
+
+<textarea placeholder="Objectives"></textarea>
 
 </div>
 
 
 
-<div class="box">
+<div class="panel">
 
-<h2>AI Assistant</h2>
+<h2>COMMAND INTERFACE</h2>
 
 <input id="command" placeholder="Speak to ORION...">
 
-<br>
+<br><br>
 
 <button onclick="executeORION()">
-Execute
+EXECUTE
 </button>
 
 
-<h3>ORION Response:</h3>
+<h2>ORION RESPONSE</h2>
 
 <p id="response">
 Awaiting command...
@@ -103,30 +173,41 @@ Awaiting command...
 
 
 
+
 <script>
 
 function executeORION(){
 
-let command = document.getElementById("command").value;
+let command =
+document.getElementById("command").value;
 
-let response = document.getElementById("response");
+
+let response =
+document.getElementById("response");
 
 
-if(command === ""){
+if(command == ""){
 
-response.innerHTML = "Please provide a command.";
+response.innerHTML =
+"Command required.";
 
 }
 
 else {
 
+
 response.innerHTML =
-"Command received: " + command + "<br><br>" +
-"Analysis complete. ORION is ready for further instructions.";
+"Command received.<br><br>" +
+"Analyzing: " + command +
+"<br><br>" +
+"ORION is standing by.";
+
 
 }
 
+
 }
+
 
 </script>
 
