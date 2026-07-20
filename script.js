@@ -106,15 +106,8 @@ memory;
 
 else if(command.includes("favorite")){
 
-let result =
-searchMemory("favorite color");
-
-
-if(result.length > 0){
-
 response.innerHTML =
-"Your favorite color is:<br><br>" +
-result[0];
+"ORION MEMORY SEARCH ACTIVATED";
 
 }
 
