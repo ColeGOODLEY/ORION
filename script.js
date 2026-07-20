@@ -124,7 +124,55 @@ response.innerHTML =
 }
 
 }
+else if(command.includes("what do you know about me")){
 
+let memories =
+getAllMemories();
+
+
+let knowledge =
+"";
+
+
+for(let category in memories){
+
+knowledge +=
+"<b>" +
+category +
+":</b><br>";
+
+
+memories[category].forEach(function(item){
+
+knowledge +=
+"• " +
+item +
+"<br>";
+
+});
+
+
+knowledge += "<br>";
+
+}
+
+
+if(knowledge == ""){
+
+response.innerHTML =
+"I do not have any memories about you yet.";
+
+}
+
+else{
+
+response.innerHTML =
+"Here is what I know about you:<br><br>" +
+knowledge;
+
+}
+
+}
 else if(command == "recall"){
 
 let memories =
