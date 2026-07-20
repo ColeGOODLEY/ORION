@@ -130,6 +130,17 @@ response.innerHTML =
 }
 
 }
+else if(command == "recall"){
+
+let memories =
+getAllMemories();
+
+
+response.innerHTML =
+"ORION MEMORY BANK:<br><br>" +
+JSON.stringify(memories);
+
+}
 else if(command == "joke"){
 
 response.innerHTML =
