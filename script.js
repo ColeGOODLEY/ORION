@@ -106,6 +106,28 @@ memory;
 
 else if(command.includes("favorite color")){
 
+let result =
+searchMemory("favorite color");
+
+
+if(result.length > 0){
+
+response.innerHTML =
+"Your favorite color is:<br><br>" +
+result[0];
+
+}
+
+else{
+
+response.innerHTML =
+"I do not have your favorite color stored yet.";
+
+}
+
+}
+
+
 let memories =
 getAllMemories();
 
