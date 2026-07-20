@@ -111,14 +111,6 @@ response.innerHTML =
 
 }
 
-else{
-
-response.innerHTML =
-"I do not have your favorite color stored yet.";
-
-}
-
-}
 else if(command == "recall"){
 
 let memories =
