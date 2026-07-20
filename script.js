@@ -42,10 +42,9 @@ response.innerHTML =
 "AVAILABLE COMMANDS:<br><br>" +
 "• status<br>" +
 "• mission<br>" +
-"• help";
-"• remember [information]<br>"
+"• help<br>" +
+"• remember [information]<br>" +
 "• recall";
-
 }
 
 
@@ -65,19 +64,6 @@ response.innerHTML =
 
 else if(command.startsWith("remember")){
 
-let memory =
-command.replace("remember", "").trim();
-
-
-saveMemory("user_memory", memory);
-
-
-response.innerHTML =
-"Memory stored.<br><br>" +
-"ORION will remember:<br>" +
-memory;
-
-}
 let memory =
 command.replace("remember", "").trim();
 
