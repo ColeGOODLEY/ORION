@@ -1,4 +1,4 @@
-// ORION MEMORY SYSTEM v0.2
+// ORION MEMORY SYSTEM v0.3
 
 function saveMemory(category, value){
 
@@ -6,7 +6,14 @@ let memories =
 JSON.parse(localStorage.getItem("orion_memory")) || {};
 
 
-memories[category] = value;
+if(!memories[category]){
+
+memories[category] = [];
+
+}
+
+
+memories[category].push(value);
 
 
 localStorage.setItem(
