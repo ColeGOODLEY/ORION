@@ -104,7 +104,32 @@ memory;
 }
 
 
+else if(command.includes("favorite color")){
 
+let memories =
+getAllMemories();
+
+
+let preferences =
+memories["preferences"];
+
+
+if(preferences){
+
+response.innerHTML =
+"Your remembered preference:<br><br>" +
+preferences;
+
+}
+
+else{
+
+response.innerHTML =
+"I do not have a stored favorite color yet.";
+
+}
+
+}
 else if(command == "joke"){
 
 response.innerHTML =
