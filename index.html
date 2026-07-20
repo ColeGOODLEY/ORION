@@ -1,8 +1,52 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 <title>ORION</title>
+
+<style>
+
+body {
+background-color: #0b0b0b;
+color: white;
+font-family: Arial, sans-serif;
+text-align: center;
+padding: 30px;
+}
+
+h1 {
+font-size: 60px;
+}
+
+.box {
+border: 1px solid gray;
+border-radius: 10px;
+padding: 20px;
+margin: 20px auto;
+max-width: 700px;
+}
+
+textarea, input {
+width: 90%;
+padding: 12px;
+margin: 10px;
+border-radius: 5px;
+}
+
+button {
+padding: 12px 30px;
+border-radius: 5px;
+cursor: pointer;
+}
+
+#response {
+min-height: 50px;
+}
+
+</style>
+
 </head>
+
 
 <body>
 
@@ -12,39 +56,81 @@
 Operational Research & Intelligence for Optimization & Navigation
 </h3>
 
-<hr>
+
+<div class="box">
+
+<h2>System Status</h2>
+
+<p>🟢 ORION Online</p>
+
+</div>
+
+
+
+<div class="box">
 
 <h2>Mission Control</h2>
 
-<p>Today's Mission:</p>
+<textarea placeholder="Today's Mission"></textarea>
 
-<textarea placeholder="Enter mission..."></textarea>
+<textarea placeholder="Goals"></textarea>
 
-<h2>Goals</h2>
+</div>
 
-<textarea placeholder="Enter goals..."></textarea>
+
+
+<div class="box">
 
 <h2>AI Assistant</h2>
 
-<input placeholder="Ask ORION...">
+<input id="command" placeholder="Speak to ORION...">
+
+<br>
 
 <button onclick="executeORION()">
 Execute
 </button>
 
-<hr>
 
-<p>
-Status: ORION v0.1 - Foundation
+<h3>ORION Response:</h3>
+
+<p id="response">
+Awaiting command...
 </p>
+
+
+</div>
+
+
+
 <script>
 
-function executeORION() {
+function executeORION(){
 
-alert("ORION online. Mission received.");
+let command = document.getElementById("command").value;
+
+let response = document.getElementById("response");
+
+
+if(command === ""){
+
+response.innerHTML = "Please provide a command.";
+
+}
+
+else {
+
+response.innerHTML =
+"Command received: " + command + "<br><br>" +
+"Analysis complete. ORION is ready for further instructions.";
+
+}
 
 }
 
 </script>
+
+
 </body>
+
 </html>
