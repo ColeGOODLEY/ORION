@@ -104,7 +104,7 @@ memory;
 }
 
 
-else if(command.includes("favorite color")){
+else if(command.includes("favorite")){
 
 let result =
 searchMemory("favorite color");
