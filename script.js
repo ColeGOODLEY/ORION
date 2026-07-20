@@ -68,12 +68,12 @@ let memory =
 command.replace("remember", "").trim();
 
 
-saveMemory("user_memory", memory);
+saveMemory("general", memory);
 
 
 response.innerHTML =
 "Memory stored.<br><br>" +
-"ORION will remember:<br>" +
+"ORION will remember, sir.:<br>" +
 memory;
 
 }
