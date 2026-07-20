@@ -47,7 +47,13 @@ response.innerHTML =
 }
 
 
-else if(command == "hello" || command == "hi"){
+else if(
+command.includes("hello") ||
+command.includes("hi") ||
+command.includes("hey") ||
+command.includes("good morning") ||
+command.includes("good evening")
+){
 
 response.innerHTML =
 "Good to see you, sir.<br><br>" +
