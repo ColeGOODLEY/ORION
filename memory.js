@@ -1,4 +1,4 @@
-// ORION MEMORY SYSTEM v0.3
+// ORION MEMORY SYSTEM v0.4
 
 function saveMemory(category, value){
 
@@ -61,7 +61,9 @@ let results = [];
 
 for(let category in memories){
 
-memories[category].forEach(memory => {
+if(Array.isArray(memories[category])){
+
+memories[category].forEach(function(memory){
 
 if(memory.includes(keyword)){
 
@@ -70,6 +72,8 @@ results.push(memory);
 }
 
 });
+
+}
 
 }
 
