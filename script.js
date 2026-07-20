@@ -47,15 +47,32 @@ response.innerHTML =
 }
 
 
+else if(command == "hello" || command == "hi"){
+
+response.innerHTML =
+"Good to see you, sir.<br><br>" +
+"ORION is online and ready to assist.";
+
+}
+
+
+else if(command == "joke"){
+
+response.innerHTML =
+"Humor module activated.<br><br>" +
+"Your productivity system has detected a suspicious amount of procrastination. Investigation underway.";
+
+}
+
+
 else {
 
 response.innerHTML =
 "Command received:<br><br>" +
 command +
 "<br><br>" +
-"I do not recognize this command yet.";
+"I apologize sir, I do not recognize this command yet. I will continue learning.";
 
 }
-
 
 }
