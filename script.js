@@ -68,12 +68,37 @@ let memory =
 command.replace("remember", "").trim();
 
 
-saveMemory("general", memory);
+let category = "general";
+
+
+if(memory.includes("favorite color")){
+
+category = "preferences";
+
+}
+
+else if(memory.includes("favorite food")){
+
+category = "preferences";
+
+}
+
+else if(memory.includes("goal")){
+
+category = "goals";
+
+}
+
+
+saveMemory(category, memory);
 
 
 response.innerHTML =
 "Memory stored.<br><br>" +
-"ORION will remember, sir.:<br>" +
+"Category: " +
+category +
+"<br><br>" +
+"ORION will remember:<br>" +
 memory;
 
 }
