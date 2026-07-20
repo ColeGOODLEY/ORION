@@ -126,9 +126,6 @@ response.innerHTML =
 }
 
 }
-
-
-
 else if(command == "recall"){
 
 let memories =
