@@ -43,6 +43,8 @@ response.innerHTML =
 "• status<br>" +
 "• mission<br>" +
 "• help";
+"• remember [information]<br>"
+"• recall";
 
 }
 
@@ -61,7 +63,45 @@ response.innerHTML =
 
 }
 
+else if(command.startsWith("remember")){
 
+let memory =
+command.replace("remember", "").trim();
+
+
+saveMemory("user_memory", memory);
+
+
+response.innerHTML =
+"Memory stored.<br><br>" +
+"ORION will remember:<br>" +
+memory;
+
+}
+
+
+else if(command == "recall"){
+
+let memory =
+recallMemory("user_memory");
+
+
+if(memory){
+
+response.innerHTML =
+"Retrieved memory:<br><br>" +
+memory;
+
+}
+
+else {
+
+response.innerHTML =
+"I do not currently have any stored memories.";
+
+}
+
+}
 else if(command == "joke"){
 
 response.innerHTML =
