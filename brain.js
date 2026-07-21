@@ -1,5 +1,5 @@
 // =====================================
-// ORION BRAIN SYSTEM v1.1
+// ORION BRAIN SYSTEM v1.2
 // =====================================
 
 const ORION_BRAIN = {
@@ -31,10 +31,19 @@ let response =
 
 
 
+//
+// STRATEGIC ANALYSIS DETECTION
+//
+
 if(
 command.includes("plan") ||
 command.includes("strategy") ||
-command.includes("goal")
+command.includes("goal") ||
+command.includes("should i") ||
+command.includes("compare") ||
+command.includes(" or ") ||
+command.includes("decision") ||
+command.includes("focus")
 ){
 
 response =
@@ -42,6 +51,10 @@ response =
 
 }
 
+
+//
+// QUESTION ANALYSIS
+//
 
 else if(
 command.includes("what") ||
@@ -55,6 +68,10 @@ response =
 }
 
 
+//
+// MEMORY ANALYSIS
+//
+
 else if(
 command.includes("memory") ||
 command.includes("remember")
@@ -65,6 +82,10 @@ response =
 
 }
 
+
+//
+// DEFAULT
+//
 
 else{
 
