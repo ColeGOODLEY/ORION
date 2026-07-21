@@ -84,8 +84,22 @@ response =
 
 }
 
+let response =
+"ORION is processing your request.";
 
-return {
+
+// Check important memories
+
+if(
+context.importantMemories &&
+context.importantMemories.length > 0
+){
+
+response +=
+" I have considered your important objectives.";
+
+}
+
 
 message: response,
 
