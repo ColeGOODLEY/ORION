@@ -1,5 +1,5 @@
 // =====================================
-// ORION BRAIN SYSTEM v0.6
+// ORION BRAIN SYSTEM v0.7
 // =====================================
 
 const ORION_BRAIN = {
@@ -11,44 +11,58 @@ model: "ORION LOCAL REASONING CORE",
 think: function(input){
 
 let response =
-"ORION is processing your request.";
+"ORION is analyzing your request.";
 
 input = input.toLowerCase();
 
 
-if(input.includes("plan") ||
+// Strategic reasoning
+
+if(
+input.includes("plan") ||
 input.includes("strategy") ||
-input.includes("goal")){
+input.includes("goal")
+){
 
 response =
-"Strategic analysis activated. I will help break this objective into steps.";
+"Strategic analysis activated. I will evaluate the objective, consider long-term impact, and help create an efficient path forward.";
 
 }
 
 
-else if(input.includes("memory") ||
-input.includes("remember")){
+// Memory reasoning
+
+else if(
+input.includes("memory") ||
+input.includes("remember")
+){
 
 response =
-"Memory systems are online. I will analyze stored information.";
+"Memory systems are online. I will review stored information and determine what is relevant.";
 
 }
 
 
-else if(input.includes("what") ||
+// Analysis reasoning
+
+else if(
+input.includes("what") ||
 input.includes("why") ||
-input.includes("how")){
+input.includes("how")
+){
 
 response =
-"Analysis mode activated. I am evaluating your request.";
+"Analysis mode activated. I will examine the situation, identify key factors, and provide a solution.";
 
 }
 
+
+// Personality response
 
 else{
 
 response =
-"I have processed your request and am ready for further instructions.";
+"I have processed your request. I am ready to assist with analysis, planning, and execution.";
 
 }
 
@@ -57,7 +71,11 @@ return {
 
 message: response,
 
-input: input
+input: input,
+
+personality: ORION_PERSONALITY.name,
+
+role: ORION_PERSONALITY.role
 
 };
 
