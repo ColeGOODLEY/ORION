@@ -38,15 +38,19 @@ importantMemories.push(memory);
 
 
 if(
+memory.information &&
+(
 memory.information.includes(input.toLowerCase()) ||
 input.toLowerCase().includes("goal") ||
 input.toLowerCase().includes("focus") ||
 input.toLowerCase().includes("plan")
+)
 ){
 
 relevantMemories.push(memory);
 
 }
+
 
 }
 
