@@ -1,172 +1,59 @@
 // =====================================
-// ORION REASONING ENGINE v1.2
+// ORION DECISION ENGINE v1.4
 // =====================================
 
-const ORION_REASONING = {
+const ORION_DECISION = {
 
 
-analyze:function(context,input){
+analyze:function(reasoning,input){
 
 
-let result = {
-
-objective:"No objective detected.",
+let decision = {
 
 priority:"No priority detected.",
 
-recommendations:[]
+reason:"No decision available.",
+
+actions:[]
 
 };
 
 
-let command =
-input
-.toLowerCase()
-.replace("think","")
-.trim();
-
-
-
-//
-// IDENTIFY CURRENT OBJECTIVE FIRST
-//
-
-if(command !== ""){
-
-result.objective = command;
-
-result.priority =
-"Current objective detected.";
-
-}
-
-
-//
-// USE MEMORY IF NO CURRENT OBJECTIVE
-//
-
-else if(
-context.relevantMemories &&
-context.relevantMemories.length > 0
-){
-
-result.objective =
-context.relevantMemories[0].information;
-
-result.priority =
-"Relevant objective detected.";
-
-}
-
-
-else if(
-context.importantMemories &&
-context.importantMemories.length > 0
-){
-
-result.objective =
-context.importantMemories[0].information;
-
-result.priority =
-"High importance objective detected.";
-
-}
-
-
-//
-// OBJECTIVE SPECIFIC RECOMMENDATIONS
-//
-
-let objective =
-result.objective.toLowerCase();
-
-
-
 if(
-objective.includes("orion")
-||
-objective.includes("ai")
+reasoning &&
+reasoning.objective &&
+reasoning.objective !== "No objective detected."
 ){
 
-result.recommendations.push(
-"Continue improving ORION's core systems."
+
+decision.priority =
+"Highest-value action identified.";
+
+
+decision.reason =
+"Decision based on the current objective, long-term impact, and expected value.";
+
+
+decision.actions.push(
+"Evaluate the most important next step."
 );
 
-result.recommendations.push(
-"Improve reasoning accuracy."
+
+decision.actions.push(
+"Execute the action with the highest potential impact."
 );
 
-result.recommendations.push(
-"Expand capabilities carefully."
+
+decision.actions.push(
+"Measure results and improve the strategy."
 );
 
-}
-
-
-else if(
-objective.includes("business")
-||
-objective.includes("money")
-||
-objective.includes("brand")
-){
-
-result.recommendations.push(
-"Define the target customer and value proposition."
-);
-
-result.recommendations.push(
-"Create a clear execution plan with measurable goals."
-);
-
-result.recommendations.push(
-"Prioritize actions that increase revenue potential."
-);
-
-}
-
-
-else if(
-objective.includes("plan")
-||
-objective.includes("goal")
-){
-
-result.recommendations.push(
-"Break the objective into smaller actionable steps."
-);
-
-result.recommendations.push(
-"Identify the highest-value action first."
-);
-
-result.recommendations.push(
-"Review progress and adjust strategy."
-);
-
-}
-
-
-else{
-
-
-result.recommendations.push(
-"Analyze the objective carefully."
-);
-
-result.recommendations.push(
-"Identify important factors and possible solutions."
-);
-
-result.recommendations.push(
-"Choose the highest-value next action."
-);
 
 }
 
 
 
-return result;
+return decision;
 
 
 }
