@@ -4,13 +4,16 @@
 
 const ORION_RESPONSE = {
 
-process: function(command) {
+process:function(command){
+
 
 let result =
 ORION_BRAIN.think(command);
 
 
 return {
+
+message: result.message,
 
 context: result.context,
 
@@ -20,32 +23,47 @@ decision: result.decision
 
 };
 
+
 },
 
 
-buildResponse: function(result) {
+buildResponse:function(result){
+
 
 return (
 
-"ORION RESPONSE<br><br>" +
+"ORION RESPONSE:<br><br>" +
 
-"<b>Strategic Priority:</b><br>" +
-result.reasoning.reasoning.priority +
+result.message +
+
+"<br><br><b>Strategic Priority:</b><br>" +
+
+result.reasoning.priority +
 
 "<br><br><b>Objective:</b><br>" +
-result.reasoning.reasoning.objective +
 
-"<br><br><b>Decision:</b><br>" +
+result.reasoning.objective +
+
+"<br><br><b>Recommended Actions:</b><br>" +
+
+result.reasoning.recommendations.join("<br>") +
+
+"<br><br><b>DECISION:</b><br>" +
+
 result.decision.priority +
 
 "<br><br><b>Decision Reason:</b><br>" +
+
 result.decision.reason +
 
 "<br><br><b>Decision Actions:</b><br>" +
+
 result.decision.actions.join("<br>")
 
 );
 
+
 }
+
 
 };
