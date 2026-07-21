@@ -1,5 +1,5 @@
 // =====================================
-// ORION BRAIN SYSTEM v0.8
+// ORION BRAIN SYSTEM v0.9
 // =====================================
 
 const ORION_BRAIN = {
@@ -11,14 +11,33 @@ model: "ORION LOCAL REASONING CORE",
 
 think: function(input){
 
-console.log("THINK STARTED")
 
-let context =
+console.log("THINK STARTED");
+
+
+
+let context = {
+
+importantMemories: []
+
+};
+
+
+
+if(
+typeof ORION_CONTEXT !== "undefined"
+){
+
+context =
 ORION_CONTEXT.build(input);
+
+}
+
 
 
 input =
 input.toLowerCase();
+
 
 
 let response =
@@ -38,6 +57,7 @@ response =
 }
 
 
+
 else if(
 input.includes("memory") ||
 input.includes("remember")
@@ -47,6 +67,7 @@ response =
 "Memory systems are online. I will analyze stored information and relevant context.";
 
 }
+
 
 
 else if(
@@ -61,6 +82,7 @@ response =
 }
 
 
+
 else{
 
 response =
@@ -71,6 +93,7 @@ response =
 
 
 if(
+context.importantMemories &&
 context.importantMemories.length > 0
 ){
 
