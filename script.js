@@ -1,5 +1,5 @@
 // =====================================
-// ORION COMMAND SYSTEM v1.0
+// ORION COMMAND SYSTEM v1.1
 // =====================================
 
 
@@ -15,6 +15,8 @@ document.getElementById("response");
 
 
 
+// EMPTY COMMAND
+
 if(command == ""){
 
 response.innerHTML =
@@ -29,11 +31,18 @@ response.innerHTML =
 else if(command == "status"){
 
 response.innerHTML =
-"ORION SYSTEM STATUS<br><br>" +
+
+"ORION SYSTEM STATUS:<br><br>" +
+
 "AI CORE: ONLINE<br>" +
+
 "MEMORY SYSTEM: ONLINE<br>" +
+
 "CONTEXT ENGINE: ONLINE<br>" +
-"REASONING ENGINE: ONLINE";
+
+"REASONING ENGINE: ONLINE<br>" +
+
+"DECISION ENGINE: ONLINE";
 
 }
 
@@ -44,15 +53,33 @@ response.innerHTML =
 else if(command == "who are you"){
 
 response.innerHTML =
+
 "I am " +
+
 ORION.name +
+
 ".<br><br>" +
 
 "Version: " +
-ORION.version +
-"<br><br>" +
 
-"Mission:<br>" +
+ORION.version +
+
+"<br><br>Mission:<br>" +
+
+ORION.mission;
+
+}
+
+
+
+// MISSION
+
+else if(command == "mission"){
+
+response.innerHTML =
+
+"CURRENT MISSION:<br><br>" +
+
 ORION.mission;
 
 }
@@ -64,21 +91,28 @@ ORION.mission;
 else if(command == "help"){
 
 response.innerHTML =
+
 "AVAILABLE COMMANDS:<br><br>" +
 
 "status<br>" +
+
 "who are you<br>" +
+
 "mission<br>" +
+
 "think<br>" +
+
 "remember<br>" +
+
 "recall<br>" +
+
 "clear memory";
 
 }
 
 
 
-// THINK SYSTEM
+// THINK COMMAND
 
 else if(command.startsWith("think")){
 
@@ -90,9 +124,11 @@ ORION_BRAIN.think(command);
 
 response.innerHTML =
 
+
 "ORION BRAIN STATUS:<br><br>" +
 
 result.message +
+
 
 
 "<br><br><b>Strategic Priority:</b><br>" +
@@ -100,35 +136,41 @@ result.message +
 result.reasoning.priority +
 
 
+
 "<br><br><b>Objective:</b><br>" +
 
 result.reasoning.objective +
 
 
+
 "<br><br><b>Recommended Actions:</b><br>" +
 
-result.reasoning.recommendations.join("<br>");
-+
+result.reasoning.recommendations.join("<br>") +
 
-"<br><br><b>Decision Priority:</b><br>" +
+
+
+"<br><br><b>DECISION:</b><br>" +
 
 result.decision.priority +
+
+
 
 "<br><br><b>Decision Reason:</b><br>" +
 
 result.decision.reason +
 
+
+
 "<br><br><b>Decision Actions:</b><br>" +
 
-result.decision.actions.join("<br>")
-
+result.decision.actions.join("<br>");
 
 
 }
 
 
 
-// REMEMBER
+// REMEMBER COMMAND
 
 else if(command.startsWith("remember")){
 
@@ -196,7 +238,7 @@ memory;
 
 
 
-// RECALL
+// RECALL COMMAND
 
 else if(command == "recall"){
 
@@ -226,21 +268,8 @@ clearMemory();
 
 
 response.innerHTML =
+
 "ORION memory bank cleared.";
-
-}
-
-
-
-// MISSION
-
-else if(command == "mission"){
-
-response.innerHTML =
-
-"CURRENT MISSION:<br><br>" +
-
-ORION.mission;
 
 }
 
