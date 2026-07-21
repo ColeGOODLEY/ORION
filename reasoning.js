@@ -1,5 +1,5 @@
 // =====================================
-// ORION REASONING ENGINE v1.1
+// ORION REASONING ENGINE v1.2
 // =====================================
 
 const ORION_REASONING = {
@@ -9,7 +9,6 @@ analyze:function(context,input){
 
 
 let result = {
-
 
 objective:"No objective detected.",
 
@@ -29,23 +28,21 @@ input
 
 
 //
-// CURRENT REQUEST FIRST
+// IDENTIFY CURRENT OBJECTIVE FIRST
 //
 
 if(command !== ""){
-
 
 result.objective = command;
 
 result.priority =
 "Current objective detected.";
 
-
 }
 
 
 //
-// MEMORY SECOND
+// USE MEMORY IF NO CURRENT OBJECTIVE
 //
 
 else if(
@@ -53,14 +50,11 @@ context.relevantMemories &&
 context.relevantMemories.length > 0
 ){
 
-
 result.objective =
 context.relevantMemories[0].information;
 
-
 result.priority =
 "Relevant objective detected.";
-
 
 }
 
@@ -70,44 +64,85 @@ context.importantMemories &&
 context.importantMemories.length > 0
 ){
 
-
 result.objective =
 context.importantMemories[0].information;
-
 
 result.priority =
 "High importance objective detected.";
 
+}
+
+
+//
+// OBJECTIVE SPECIFIC RECOMMENDATIONS
+//
+
+let objective =
+result.objective.toLowerCase();
+
+
+
+if(
+objective.includes("orion")
+||
+objective.includes("ai")
+){
+
+result.recommendations.push(
+"Continue improving ORION's core systems."
+);
+
+result.recommendations.push(
+"Improve reasoning accuracy."
+);
+
+result.recommendations.push(
+"Expand capabilities carefully."
+);
 
 }
 
 
-
-//
-// RECOMMENDATIONS
-//
-
-if(
-result.objective
-.toLowerCase()
-.includes("feature")
+else if(
+objective.includes("business")
+||
+objective.includes("money")
+||
+objective.includes("brand")
 ){
 
-
 result.recommendations.push(
-"Evaluate the highest-value capability to develop next."
+"Define the target customer and value proposition."
 );
 
-
 result.recommendations.push(
-"Consider user impact, complexity, and long-term value."
+"Create a clear execution plan with measurable goals."
 );
 
-
 result.recommendations.push(
-"Test the feature before expanding the system."
+"Prioritize actions that increase revenue potential."
 );
 
+}
+
+
+else if(
+objective.includes("plan")
+||
+objective.includes("goal")
+){
+
+result.recommendations.push(
+"Break the objective into smaller actionable steps."
+);
+
+result.recommendations.push(
+"Identify the highest-value action first."
+);
+
+result.recommendations.push(
+"Review progress and adjust strategy."
+);
 
 }
 
@@ -116,22 +151,18 @@ else{
 
 
 result.recommendations.push(
-"Break the objective into smaller actionable steps."
+"Analyze the objective carefully."
 );
-
 
 result.recommendations.push(
-"Identify the highest-value action first."
+"Identify important factors and possible solutions."
 );
-
 
 result.recommendations.push(
-"Evaluate progress and adjust the strategy based on results."
+"Choose the highest-value next action."
 );
-
 
 }
-
 
 
 
