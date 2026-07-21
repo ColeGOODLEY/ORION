@@ -73,7 +73,14 @@ ORION_BRAIN.think(command);
 
 response.innerHTML =
 "ORION BRAIN STATUS:<br><br>" +
-result.message;
+result.message +
+
+"<br><br><b>Strategic Priority:</b><br>" +
+result.decision.priority +
+
+"<br><br><b>Recommended Actions:</b><br>" +
+result.decision.actions.join("<br>");
+
 
 
 }
