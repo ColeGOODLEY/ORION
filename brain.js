@@ -10,11 +10,10 @@ model: "ORION LOCAL REASONING CORE",
 
 think: function(input){
 
-input = input.toLowerCase();
-
-
 let response =
-"ORION analyzed your request.";
+"ORION is processing your request.";
+
+input = input.toLowerCase();
 
 
 if(input.includes("plan") ||
@@ -27,21 +26,21 @@ response =
 }
 
 
-else if(input.includes("remember") ||
-input.includes("memory")){
+else if(input.includes("memory") ||
+input.includes("remember")){
 
 response =
-"Memory systems are online. I will check stored information.";
+"Memory systems are online. I will analyze stored information.";
 
 }
 
 
-else if(input.includes("how") ||
-input.includes("what") ||
-input.includes("why")){
+else if(input.includes("what") ||
+input.includes("why") ||
+input.includes("how")){
 
 response =
-"Research mode activated. I will analyze the information and provide an answer.";
+"Analysis mode activated. I am evaluating your request.";
 
 }
 
