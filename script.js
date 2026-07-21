@@ -58,11 +58,15 @@ response.innerHTML =
 
 else if(command == "think"){
 
+let result =
+ORION_BRAIN.think(command);
+
+
 response.innerHTML =
-"THINK MODULE ACTIVATED";
+"ORION BRAIN STATUS:<br><br>" +
+result.message;
 
 }
-
 
 else if(command == "who are you"){
 
