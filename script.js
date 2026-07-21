@@ -92,11 +92,11 @@ ORION.mission;
 
 
 else if(
-command.includes("hello") ||
-command.includes("hi") ||
-command.includes("hey") ||
-command.includes("good morning") ||
-command.includes("good evening")
+command == "hello" ||
+command == "hi" ||
+command == "hey" ||
+command == "good morning" ||
+command == "good evening"
 ){
 
 response.innerHTML =
