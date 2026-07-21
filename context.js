@@ -107,7 +107,7 @@ role:ORION_PERSONALITY.role,
 
 traits:ORION_PERSONALITY.traits,
 
-objective:ORION_PERSONALITY.primaryDirective
+objective:ORION_PERSONALITY.primeDirective
 
 },
 
