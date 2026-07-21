@@ -54,15 +54,8 @@ response.innerHTML =
 
 else if(command == "think"){
 
-if(typeof ORION_BRAIN !== "undefined"){
-
-let result =
-ORION_BRAIN.think("Test message");
-
-
 response.innerHTML =
-"ORION BRAIN STATUS:<br><br>" +
-result.message;
+"THINK MODULE ACTIVATED";
 
 }
 
