@@ -76,15 +76,18 @@ context.importantMemories.length > 0
 ){
 
 let goal =
-context.importantMemories[0].information;
+context.importantMemories[0];
 
+
+if(goal.information){
 
 response +=
 "<br><br>Based on your current priority: " +
-goal +
+goal.information +
 ", I will consider this objective when providing guidance.";
 
 }
+
 
 
 
