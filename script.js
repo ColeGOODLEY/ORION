@@ -104,22 +104,75 @@ command.replace("remember","").trim();
 
 let category = "general";
 
+let importance = "normal";
 
-if(memory.includes("favorite color") ||
-memory.includes("favorite food")){
+
+// Preference detection
+
+if(
+memory.includes("favorite") ||
+memory.includes("like") ||
+memory.includes("love")
+){
 
 category = "preferences";
 
+importance = "normal";
+
 }
 
-else if(memory.includes("goal")){
+
+// Goal detection
+
+else if(
+memory.includes("goal") ||
+memory.includes("want to") ||
+memory.includes("trying to") ||
+memory.includes("build")
+){
 
 category = "goals";
 
+importance = "high";
+
 }
 
 
-saveMemory(category,memory);
+// Personal information detection
+
+else if(
+memory.includes("my name") ||
+memory.includes("i am") ||
+memory.includes("i'm")
+){
+
+category = "identity";
+
+importance = "high";
+
+}
+
+
+// Temporary information
+
+else if(
+memory.includes("today") ||
+memory.includes("right now") ||
+memory.includes("currently")
+){
+
+category = "temporary";
+
+importance = "low";
+
+}
+
+
+saveMemory(
+category,
+memory,
+importance
+);
 
 
 response.innerHTML =
@@ -127,10 +180,14 @@ response.innerHTML =
 "Category: " +
 category +
 "<br><br>" +
+"Importance: " +
+importance +
+"<br><br>" +
 "ORION will remember:<br>" +
 memory;
 
 }
+
 
 
 else if(command.includes("favorite color")){
