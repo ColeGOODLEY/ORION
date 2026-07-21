@@ -31,7 +31,11 @@ reasoning.objective.toLowerCase();
 
 if(
 objective.includes("memory") &&
-objective.includes("tool")
+(
+objective.includes("tool") ||
+objective.includes("internet") ||
+objective.includes("access")
+)
 ){
 
 
