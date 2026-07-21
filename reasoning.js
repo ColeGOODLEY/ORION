@@ -81,7 +81,27 @@ let objective =
 result.objective.toLowerCase();
 
 
+else if(
+objective.includes(" or ") ||
+objective.includes("should i") ||
+objective.includes("better") ||
+objective.includes("versus") ||
+objective.includes("vs")
+){
 
+result.recommendations.push(
+"Compare both options based on long-term value, impact, and implementation difficulty."
+);
+
+result.recommendations.push(
+"Identify which option improves the system foundation first."
+);
+
+result.recommendations.push(
+"Choose the option that creates the greatest future capability."
+);
+
+}
 if(
 objective.includes("orion")
 ||
