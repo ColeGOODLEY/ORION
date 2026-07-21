@@ -1,17 +1,20 @@
 // =====================================
-// ORION DECISION ENGINE v1.1
+// ORION DECISION ENGINE v1.2
 // =====================================
 
 const ORION_DECISION = {
 
 
-analyze: function(reasoning,input){
+analyze:function(reasoning,input){
 
 
 let decision = {
 
-priority:"",
-reason:"",
+
+priority:"No decision made.",
+
+reason:"Insufficient information.",
+
 actions:[]
 
 };
@@ -25,48 +28,31 @@ reasoning.objective !== "No objective detected."
 ){
 
 
+
 decision.priority =
-reasoning.objective;
+"Improve ORION's core systems first.";
+
 
 
 decision.reason =
-"This objective has been identified as a high priority goal based on ORION reasoning.";
+"The foundation of ORION determines the reliability of every future capability. Strengthening the core systems creates the highest long-term value before adding more advanced features.";
 
 
 
 decision.actions.push(
-"Continue developing ORION's core systems."
+"Review and improve current ORION architecture."
 );
 
 
 decision.actions.push(
-"Improve reasoning capability."
+"Test existing systems for stability."
 );
 
 
 decision.actions.push(
-"Expand ORION functionality carefully."
+"Only add new capabilities after the foundation is reliable."
 );
 
-
-}
-
-
-
-else{
-
-
-decision.priority =
-"No priority detected.";
-
-
-decision.reason =
-"Additional information is needed.";
-
-
-decision.actions.push(
-"Create or define a goal."
-);
 
 
 }
