@@ -56,10 +56,15 @@ response.innerHTML =
 }
 
 
-else if(command == "think"){
+else if(command.startsWith("think")){
+
+let result =
+ORION_BRAIN.think(command);
+
 
 response.innerHTML =
-"THINK COMMAND WORKING";
+"ORION BRAIN STATUS:<br><br>" +
+result.message;
 
 }
 
