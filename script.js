@@ -4,9 +4,6 @@ function executeORION(){
 let command =
 document.getElementById("command").value.toLowerCase().trim();
 
-let command =
-document.getElementById("command").value.toLowerCase().trim();
-
 
 let response =
 document.getElementById("response");
