@@ -17,7 +17,7 @@ typeof getAllMemories === "function"
 
 
 let importantMemories = [];
-
+let relevantMemories = [];
 
 // Analyze important memories
 
@@ -36,7 +36,20 @@ memory.importance === "high"
 
 importantMemories.push(memory);
 
+
+if(
+memory.information.includes(input.toLowerCase()) ||
+input.toLowerCase().includes("goal") ||
+input.toLowerCase().includes("focus") ||
+input.toLowerCase().includes("plan")
+){
+
+relevantMemories.push(memory);
+
 }
+
+}
+
 
 
 });
@@ -82,7 +95,7 @@ memory: memories,
 
 
 importantMemories: importantMemories,
-
+relevantMemories: relevantMemories,
 
 request: input
 
