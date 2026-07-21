@@ -75,8 +75,14 @@ context.importantMemories &&
 context.importantMemories.length > 0
 ){
 
+let goal =
+context.importantMemories[0].information;
+
+
 response +=
-"<br><br>I have considered your important objectives.";
+"<br><br>Based on your current priority: " +
+goal +
+", I will consider this objective when providing guidance.";
 
 }
 
