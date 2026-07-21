@@ -148,8 +148,7 @@ response.innerHTML =
 
 }
 
-
-
+}
 else if(command.includes("what do you know about me")){
 
 let memories =
@@ -178,7 +177,7 @@ knowledge += "<br>";
 
 }
 
-
+}
 
 response.innerHTML =
 knowledge ?
