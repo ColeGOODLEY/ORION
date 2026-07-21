@@ -1,172 +1,70 @@
 // =====================================
-// ORION REASONING ENGINE v1.2
+// ORION RESPONSE ENGINE v1.1
 // =====================================
 
-const ORION_REASONING = {
+const ORION_RESPONSE = {
 
 
-analyze:function(context,input){
+process:function(command){
 
 
-let result = {
+let result =
+ORION_BRAIN.think(command);
 
-objective:"No objective detected.",
 
-priority:"No priority detected.",
+return {
 
-recommendations:[]
+
+message:result.message,
+
+context:result.context,
+
+reasoning:result.reasoning,
+
+decision:result.decision
+
 
 };
 
 
-let command =
-input
-.toLowerCase()
-.replace("think","")
-.trim();
+},
 
 
 
-//
-// IDENTIFY CURRENT OBJECTIVE FIRST
-//
-
-if(command !== ""){
-
-result.objective = command;
-
-result.priority =
-"Current objective detected.";
-
-}
+buildResponse:function(result){
 
 
-//
-// USE MEMORY IF NO CURRENT OBJECTIVE
-//
+return (
 
-else if(
-context.relevantMemories &&
-context.relevantMemories.length > 0
-){
+"ORION RESPONSE:<br><br>" +
 
-result.objective =
-context.relevantMemories[0].information;
+result.message +
 
-result.priority =
-"Relevant objective detected.";
+"<br><br><b>Strategic Priority:</b><br>" +
 
-}
+result.reasoning.priority +
 
+"<br><br><b>Objective:</b><br>" +
 
-else if(
-context.importantMemories &&
-context.importantMemories.length > 0
-){
+result.reasoning.objective +
 
-result.objective =
-context.importantMemories[0].information;
+"<br><br><b>Recommended Actions:</b><br>" +
 
-result.priority =
-"High importance objective detected.";
+result.reasoning.recommendations.join("<br>") +
 
-}
+"<br><br><b>DECISION:</b><br>" +
 
+result.decision.priority +
 
-//
-// OBJECTIVE SPECIFIC RECOMMENDATIONS
-//
+"<br><br><b>Decision Reason:</b><br>" +
 
-let objective =
-result.objective.toLowerCase();
+result.decision.reason +
 
+"<br><br><b>Decision Actions:</b><br>" +
 
+result.decision.actions.join("<br>")
 
-if(
-objective.includes("orion")
-||
-objective.includes("ai")
-){
-
-result.recommendations.push(
-"Continue improving ORION's core systems."
 );
-
-result.recommendations.push(
-"Improve reasoning accuracy."
-);
-
-result.recommendations.push(
-"Expand capabilities carefully."
-);
-
-}
-
-
-else if(
-objective.includes("business")
-||
-objective.includes("money")
-||
-objective.includes("brand")
-){
-
-result.recommendations.push(
-"Define the target customer and value proposition."
-);
-
-result.recommendations.push(
-"Create a clear execution plan with measurable goals."
-);
-
-result.recommendations.push(
-"Prioritize actions that increase revenue potential."
-);
-
-}
-
-
-else if(
-objective.includes("plan")
-||
-objective.includes("goal")
-){
-
-result.recommendations.push(
-"Break the objective into smaller actionable steps."
-);
-
-result.recommendations.push(
-"Identify the highest-value action first."
-);
-
-result.recommendations.push(
-"Review progress and adjust strategy."
-);
-
-}
-
-
-else{
-
-
-result.recommendations.push(
-"Analyze the objective carefully."
-);
-
-result.recommendations.push(
-"Identify important factors and possible solutions."
-);
-
-result.recommendations.push(
-"Choose the highest-value next action."
-);
-
-}
-
-
-
-return result;
 
 
 }
