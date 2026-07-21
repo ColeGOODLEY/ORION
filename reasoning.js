@@ -116,21 +116,22 @@ else{
 
 
 result.recommendations.push(
-"Continue improving ORION's core systems."
+"Break the objective into smaller actionable steps."
 );
 
 
 result.recommendations.push(
-"Improve reasoning accuracy."
+"Identify the highest-value action first."
 );
 
 
 result.recommendations.push(
-"Expand capabilities carefully."
+"Evaluate progress and adjust the strategy based on results."
 );
 
 
 }
+
 
 
 
