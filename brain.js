@@ -106,8 +106,11 @@ context.importantMemories[0].information +
 
 
 
-let decision =
-ORION_DECISION.analyze(context,input);
+let decision = {
+priority: "Not available",
+actions: []
+};
+
 
 
 return {
