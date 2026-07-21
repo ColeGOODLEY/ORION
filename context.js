@@ -1,12 +1,56 @@
 // =====================================
-// ORION CONTEXT ENGINE v1.0
+// ORION CONTEXT ENGINE v1.1
 // =====================================
 
 const ORION_CONTEXT = {
 
 build: function(input){
 
+
+let memories =
+typeof getAllMemories === "function"
+
+? getAllMemories()
+
+: {};
+
+
+
+let importantMemories = [];
+
+
+// Analyze important memories
+
+for(let category in memories){
+
+
+if(Array.isArray(memories[category])){
+
+
+memories[category].forEach(function(memory){
+
+
+if(
+memory.importance === "high"
+){
+
+importantMemories.push(memory);
+
+}
+
+
+});
+
+
+}
+
+
+}
+
+
+
 return {
+
 
 identity: {
 
@@ -17,6 +61,7 @@ version: ORION.version,
 mission: ORION.mission
 
 },
+
 
 
 personality: {
@@ -32,18 +77,18 @@ objective: ORION_PERSONALITY.primaryDirective
 },
 
 
-memory:
 
-typeof getAllMemories === "function"
+memory: memories,
 
-? getAllMemories()
 
-: {},
+importantMemories: importantMemories,
 
 
 request: input
 
+
 };
+
 
 }
 
