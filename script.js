@@ -47,6 +47,24 @@ response.innerHTML =
 "• recall";
 }
 
+else if(command == "who are you"){
+
+response.innerHTML =
+
+"I am " + ORION.name +
+
+".<br><br>" +
+
+"Version: " + ORION.version +
+
+"<br><br>" +
+
+"Mission:<br>" +
+
+ORION.mission;
+
+}
+
 
 else if(
 command.includes("hello") ||
