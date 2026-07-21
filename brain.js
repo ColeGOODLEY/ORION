@@ -11,6 +11,7 @@ model: "ORION LOCAL REASONING CORE",
 
 think: function(input){
 
+console.log("THINK STARTED")
 
 let context =
 ORION_CONTEXT.build(input);
