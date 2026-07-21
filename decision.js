@@ -49,6 +49,7 @@ objective.includes("vs")
 ){
 
 
+
 //
 // MEMORY VS TOOLS / INTERNET
 //
@@ -169,6 +170,7 @@ decision.actions.push(
 
 
 }
+
 
 
 //
