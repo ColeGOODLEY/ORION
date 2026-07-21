@@ -1,7 +1,7 @@
 function executeORION(){
 
 let command =
-document.getElementById("command").value.toLowerCase();
+document.getElementById("command").value.toLowerCase().trim();
 
 
 let response =
@@ -22,7 +22,7 @@ response.innerHTML =
 "ORION SYSTEM STATUS<br><br>" +
 "AI CORE: ONLINE<br>" +
 "MEMORY: READY<br>" +
-"VERSION: 0.3";
+"VERSION: 0.5";
 
 }
 
@@ -43,10 +43,18 @@ response.innerHTML =
 "• status<br>" +
 "• mission<br>" +
 "• help<br>" +
+"• who are you<br>" +
+"• think<br>" +
 "• remember [information]<br>" +
+"• what do you know about me<br>" +
 "• recall";
+
 }
+
+
 else if(command == "think"){
+
+if(typeof ORION_BRAIN !== "undefined"){
 
 let result =
 ORION_BRAIN.think("Test message");
@@ -57,20 +65,27 @@ response.innerHTML =
 result.message;
 
 }
+
+else{
+
+response.innerHTML =
+"ORION BRAIN MODULE NOT FOUND.";
+
+}
+
+}
+
+
 else if(command == "who are you"){
 
 response.innerHTML =
-
 "I am " + ORION.name +
-
 ".<br><br>" +
 
 "Version: " + ORION.version +
-
 "<br><br>" +
 
 "Mission:<br>" +
-
 ORION.mission;
 
 }
@@ -90,22 +105,18 @@ response.innerHTML =
 
 }
 
+
 else if(command.startsWith("remember")){
 
 let memory =
-command.replace("remember", "").trim();
+command.replace("remember","").trim();
 
 
 let category = "general";
 
 
-if(memory.includes("favorite color")){
-
-category = "preferences";
-
-}
-
-else if(memory.includes("favorite food")){
+if(memory.includes("favorite color") ||
+memory.includes("favorite food")){
 
 category = "preferences";
 
@@ -118,7 +129,7 @@ category = "goals";
 }
 
 
-saveMemory(category, memory);
+saveMemory(category,memory);
 
 
 response.innerHTML =
@@ -130,6 +141,8 @@ category +
 memory;
 
 }
+
+
 else if(command.includes("favorite color")){
 
 let result =
@@ -152,6 +165,8 @@ response.innerHTML =
 }
 
 }
+
+
 else if(command.includes("what do you know about me")){
 
 let memories =
@@ -183,33 +198,25 @@ knowledge += "<br>";
 }
 
 
-if(knowledge == ""){
-
 response.innerHTML =
+knowledge ?
+
+"Here is what I know about you:<br><br>" + knowledge :
+
 "I do not have any stored information about you yet.";
 
 }
 
-else{
 
-response.innerHTML =
-"Here is what I know about you:<br><br>" +
-knowledge;
-
-}
-
-}
 else if(command == "recall"){
-
-let memories =
-getAllMemories();
-
 
 response.innerHTML =
 "ORION MEMORY BANK:<br><br>" +
-JSON.stringify(memories);
+JSON.stringify(getAllMemories());
 
 }
+
+
 else if(command == "joke"){
 
 response.innerHTML =
@@ -219,7 +226,7 @@ response.innerHTML =
 }
 
 
-else {
+else{
 
 response.innerHTML =
 "Command received:<br><br>" +
