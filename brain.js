@@ -12,10 +12,12 @@ model: "ORION LOCAL REASONING CORE",
 think: function(input){
 
 
-let context = {};
+let context =
+ORION_CONTEXT.build(input);
 
 
-input = input.toLowerCase();
+input =
+input.toLowerCase();
 
 
 let response =
@@ -67,26 +69,16 @@ response =
 
 
 
-// MEMORY AWARENESS
-
 if(
-context.importantMemories &&
 context.importantMemories.length > 0
 ){
 
-let goal =
-context.importantMemories[0];
-
-
-if(goal.information){
-
 response +=
 "<br><br>Based on your current priority: " +
-goal.information +
+context.importantMemories[0].information +
 ", I will consider this objective when providing guidance.";
 
 }
-
 
 
 
@@ -94,18 +86,7 @@ return {
 
 message: response,
 
-input: input,
-
-context: context,
-
-importantMemories:
-context.importantMemories,
-
-personality:
-ORION_PERSONALITY.name,
-
-role:
-ORION_PERSONALITY.role
+context: context
 
 };
 
