@@ -1,65 +1,172 @@
 // =====================================
-// ORION DECISION ENGINE v1.2
+// ORION REASONING ENGINE v1.2
 // =====================================
 
-const ORION_DECISION = {
+const ORION_REASONING = {
 
 
-analyze:function(reasoning,input){
+analyze:function(context,input){
 
 
-let decision = {
+let result = {
 
+objective:"No objective detected.",
 
-priority:"No decision made.",
+priority:"No priority detected.",
 
-reason:"Insufficient information.",
-
-actions:[]
+recommendations:[]
 
 };
 
 
+let command =
+input
+.toLowerCase()
+.replace("think","")
+.trim();
 
-if(
-reasoning &&
-reasoning.objective &&
-reasoning.objective !== "No objective detected."
+
+
+//
+// IDENTIFY CURRENT OBJECTIVE FIRST
+//
+
+if(command !== ""){
+
+result.objective = command;
+
+result.priority =
+"Current objective detected.";
+
+}
+
+
+//
+// USE MEMORY IF NO CURRENT OBJECTIVE
+//
+
+else if(
+context.relevantMemories &&
+context.relevantMemories.length > 0
 ){
 
+result.objective =
+context.relevantMemories[0].information;
+
+result.priority =
+"Relevant objective detected.";
+
+}
 
 
-decision.priority =
-"Improve ORION's core systems first.";
+else if(
+context.importantMemories &&
+context.importantMemories.length > 0
+){
+
+result.objective =
+context.importantMemories[0].information;
+
+result.priority =
+"High importance objective detected.";
+
+}
+
+
+//
+// OBJECTIVE SPECIFIC RECOMMENDATIONS
+//
+
+let objective =
+result.objective.toLowerCase();
 
 
 
-decision.reason =
-"The foundation of ORION determines the reliability of every future capability. Strengthening the core systems creates the highest long-term value before adding more advanced features.";
+if(
+objective.includes("orion")
+||
+objective.includes("ai")
+){
 
-
-
-decision.actions.push(
-"Review and improve current ORION architecture."
+result.recommendations.push(
+"Continue improving ORION's core systems."
 );
 
-
-decision.actions.push(
-"Test existing systems for stability."
+result.recommendations.push(
+"Improve reasoning accuracy."
 );
 
-
-decision.actions.push(
-"Only add new capabilities after the foundation is reliable."
+result.recommendations.push(
+"Expand capabilities carefully."
 );
 
+}
 
+
+else if(
+objective.includes("business")
+||
+objective.includes("money")
+||
+objective.includes("brand")
+){
+
+result.recommendations.push(
+"Define the target customer and value proposition."
+);
+
+result.recommendations.push(
+"Create a clear execution plan with measurable goals."
+);
+
+result.recommendations.push(
+"Prioritize actions that increase revenue potential."
+);
+
+}
+
+
+else if(
+objective.includes("plan")
+||
+objective.includes("goal")
+){
+
+result.recommendations.push(
+"Break the objective into smaller actionable steps."
+);
+
+result.recommendations.push(
+"Identify the highest-value action first."
+);
+
+result.recommendations.push(
+"Review progress and adjust strategy."
+);
+
+}
+
+
+else{
+
+
+result.recommendations.push(
+"Analyze the objective carefully."
+);
+
+result.recommendations.push(
+"Identify important factors and possible solutions."
+);
+
+result.recommendations.push(
+"Choose the highest-value next action."
+);
 
 }
 
 
 
-return decision;
+return result;
 
 
 }
