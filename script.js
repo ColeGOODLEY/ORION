@@ -282,13 +282,13 @@ else{
 
 response.innerHTML =
 
-"I have received your command:<br><br>" +
+"I have received your command, Mr. Goodley:<br><br>" +
 
 command +
 
 "<br><br>" +
 
-"I am continuing to expand my capabilities.";
+"I am continuing to expand my capabilities,sir.";
 
 }
 
