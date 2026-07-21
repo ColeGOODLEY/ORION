@@ -1,37 +1,22 @@
 // =====================================
-// ORION BRAIN SYSTEM v0.9
+// ORION BRAIN SYSTEM v1.0
 // =====================================
 
 const ORION_BRAIN = {
 
-status: "ONLINE",
 
-model: "ORION LOCAL REASONING CORE",
+status:"ONLINE",
 
-
-think: function(input){
-
-
-console.log("THINK STARTED");
+model:"ORION LOCAL REASONING CORE",
 
 
 
-let context = {
-
-importantMemories: []
-
-};
+think:function(input){
 
 
 
-if(
-typeof ORION_CONTEXT !== "undefined"
-){
-
-context =
+let context =
 ORION_CONTEXT.build(input);
-
-}
 
 
 
@@ -40,8 +25,7 @@ input.toLowerCase();
 
 
 
-let response =
-"ORION is processing your request.";
+let response;
 
 
 
@@ -51,23 +35,12 @@ input.includes("strategy") ||
 input.includes("goal")
 ){
 
+
 response =
 "Strategic analysis activated. I will evaluate the objective, consider key factors, and help create an efficient path forward.";
 
-}
-
-
-
-else if(
-input.includes("memory") ||
-input.includes("remember")
-){
-
-response =
-"Memory systems are online. I will analyze stored information and relevant context.";
 
 }
-
 
 
 else if(
@@ -76,75 +49,47 @@ input.includes("why") ||
 input.includes("how")
 ){
 
+
 response =
 "Analysis mode activated. I will examine the situation, identify key factors, and provide a solution.";
 
-}
 
+}
 
 
 else{
 
+
 response =
 "I have processed your request and am ready for further instructions.";
 
-}
-
-
-
-if(
-context.importantMemories &&
-context.importantMemories.length > 0
-){
-
-response +=
-"<br><br>Based on your current priority: " +
-context.importantMemories[0].information +
-", I will consider this objective when providing guidance.";
 
 }
 
 
 
-let decision = {
-priority: "Not available",
-actions: []
-};
-
-
-
-let reasoning = {
-
-objective: "No objective detected.",
-
-priority: "General assistance",
-
-recommendations: []
-
-};
-
-
-if(typeof ORION_REASONING !== "undefined"){
-
-reasoning =
+let reasoning =
 ORION_REASONING.analyze(context,input);
-
-}
 
 
 
 return {
 
-message: response,
 
-context: context,
+message:response,
 
-reasoning: reasoning
+
+context:context,
+
+
+reasoning:reasoning
+
 
 };
 
 
 
 }
+
 
 };
