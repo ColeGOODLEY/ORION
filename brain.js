@@ -106,11 +106,17 @@ context.importantMemories[0].information +
 
 
 
+let decision =
+ORION_DECISION.analyze(context,input);
+
+
 return {
 
 message: response,
 
-context: context
+context: context,
+
+decision: decision
 
 };
 
