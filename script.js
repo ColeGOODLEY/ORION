@@ -108,6 +108,20 @@ result.reasoning.objective +
 "<br><br><b>Recommended Actions:</b><br>" +
 
 result.reasoning.recommendations.join("<br>");
++
+
+"<br><br><b>Decision Priority:</b><br>" +
+
+result.decision.priority +
+
+"<br><br><b>Decision Reason:</b><br>" +
+
+result.decision.reason +
+
+"<br><br><b>Decision Actions:</b><br>" +
+
+result.decision.actions.join("<br>")
+
 
 
 }
