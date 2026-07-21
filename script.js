@@ -1,5 +1,5 @@
 // =====================================
-// ORION COMMAND SYSTEM v0.8
+// ORION COMMAND SYSTEM v1.0
 // =====================================
 
 
@@ -24,76 +24,32 @@ response.innerHTML =
 
 
 
+// STATUS
+
 else if(command == "status"){
 
 response.innerHTML =
 "ORION SYSTEM STATUS<br><br>" +
 "AI CORE: ONLINE<br>" +
-"MEMORY: READY<br>" +
-"VERSION: 0.8";
+"MEMORY SYSTEM: ONLINE<br>" +
+"CONTEXT ENGINE: ONLINE<br>" +
+"REASONING ENGINE: ONLINE";
 
 }
 
 
 
-else if(command == "mission"){
-
-response.innerHTML =
-"CURRENT MISSION:<br><br>" +
-"Continue developing ORION into a personal AI operating system.";
-
-}
-
-
-
-else if(command == "help"){
-
-response.innerHTML =
-"AVAILABLE COMMANDS:<br><br>" +
-"• status<br>" +
-"• mission<br>" +
-"• help<br>" +
-"• who are you<br>" +
-"• think<br>" +
-"• remember [information]<br>" +
-"• what do you know about me<br>" +
-"• recall<br>" +
-"• clear memory";
-
-}
-
-
-
-else if(command.startsWith("think")){
-
-
-let result =
-ORION_BRAIN.think(command);
-
-
-response.innerHTML =
-"ORION BRAIN STATUS:<br><br>" +
-result.message +
-
-"<br><br><b>Strategic Priority:</b><br>" +
-result.decision.priority +
-
-"<br><br><b>Recommended Actions:</b><br>" +
-result.decision.actions.join("<br>");
-
-
-
-}
-
-
+// IDENTITY
 
 else if(command == "who are you"){
 
 response.innerHTML =
-"I am " + ORION.name +
+"I am " +
+ORION.name +
 ".<br><br>" +
 
-"Version: " + ORION.version +
+"Version: " +
+ORION.version +
 "<br><br>" +
 
 "Mission:<br>" +
@@ -103,21 +59,62 @@ ORION.mission;
 
 
 
-else if(
-command == "hello" ||
-command == "hi" ||
-command == "hey" ||
-command == "good morning" ||
-command == "good evening"
-){
+// HELP
+
+else if(command == "help"){
 
 response.innerHTML =
-"Good to see you, sir.<br><br>" +
-"ORION is online and ready to assist.";
+"AVAILABLE COMMANDS:<br><br>" +
+
+"status<br>" +
+"who are you<br>" +
+"mission<br>" +
+"think<br>" +
+"remember<br>" +
+"recall<br>" +
+"clear memory";
 
 }
 
 
+
+// THINK SYSTEM
+
+else if(command.startsWith("think")){
+
+
+let result =
+ORION_BRAIN.think(command);
+
+
+
+response.innerHTML =
+
+"ORION BRAIN STATUS:<br><br>" +
+
+result.message +
+
+
+"<br><br><b>Strategic Priority:</b><br>" +
+
+result.reasoning.priority +
+
+
+"<br><br><b>Objective:</b><br>" +
+
+result.reasoning.objective +
+
+
+"<br><br><b>Recommended Actions:</b><br>" +
+
+result.reasoning.recommendations.join("<br>");
+
+
+}
+
+
+
+// REMEMBER
 
 else if(command.startsWith("remember")){
 
@@ -126,21 +123,21 @@ let memory =
 command.replace("remember","").trim();
 
 
+
 let category =
 "general";
 
 
 
 if(
-memory.includes("favorite color") ||
-memory.includes("favorite food")
+memory.includes("favorite") ||
+memory.includes("like")
 ){
 
 category =
 "preferences";
 
 }
-
 
 
 else if(
@@ -154,127 +151,64 @@ category =
 
 
 
-saveMemory(category,memory);
+saveMemory(category,{
 
+information:memory,
 
+importance:"normal",
 
-response.innerHTML =
-"Memory stored.<br><br>" +
-"Category: " +
-category +
-"<br><br>" +
-"ORION will remember:<br>" +
-memory;
-
-}
-
-
-
-else if(command.includes("favorite color")){
-
-
-let result =
-searchMemory("favorite color");
-
-
-
-if(
-result &&
-result.length > 0
-){
-
-response.innerHTML =
-"Your favorite color is:<br><br>" +
-result[0];
-
-}
-
-else{
-
-response.innerHTML =
-"I do not have your favorite color stored yet.";
-
-}
-
-
-}
-
-
-
-else if(command.includes("what do you know about me")){
-
-
-let memories =
-getAllMemories();
-
-
-let knowledge =
-"";
-
-
-
-for(let category in memories){
-
-
-if(Array.isArray(memories[category])){
-
-
-knowledge +=
-"<b>" +
-category +
-":</b><br>";
-
-
-
-memories[category].forEach(function(item){
-
-
-knowledge +=
-"• " +
-item +
-"<br>";
-
+created:new Date().toLocaleString()
 
 });
 
 
-knowledge +=
-"<br>";
-
-}
-
-
-}
-
-
 
 response.innerHTML =
-knowledge ?
 
-"Here is what I know about you:<br><br>" +
-knowledge :
+"Memory stored.<br><br>" +
 
-"I do not have any stored information about you yet.";
+"Category: " +
+
+category +
+
+"<br><br>" +
+
+"ORION will remember:<br>" +
+
+memory;
+
 
 }
 
 
+
+// RECALL
 
 else if(command == "recall"){
 
 
 response.innerHTML =
+
 "ORION MEMORY BANK:<br><br>" +
-JSON.stringify(getAllMemories());
+
+JSON.stringify(
+getAllMemories(),
+null,
+2
+);
+
 
 }
 
 
 
+// CLEAR MEMORY
+
 else if(command == "clear memory"){
 
 
 clearMemory();
+
 
 
 response.innerHTML =
@@ -284,24 +218,34 @@ response.innerHTML =
 
 
 
-else if(command == "joke"){
+// MISSION
+
+else if(command == "mission"){
 
 response.innerHTML =
-"Humor module activated.<br><br>" +
-"Your productivity system has detected a suspicious amount of procrastination. Investigation underway.";
+
+"CURRENT MISSION:<br><br>" +
+
+ORION.mission;
 
 }
 
 
 
+// FALLBACK
+
 else{
 
 
 response.innerHTML =
-"Command received:<br><br>" +
+
+"I have received your command:<br><br>" +
+
 command +
+
 "<br><br>" +
-"I apologize sir, I do not recognize this command yet. I will continue learning.";
+
+"I am continuing to expand my capabilities.";
 
 }
 
