@@ -59,15 +59,6 @@ response.innerHTML =
 
 }
 
-else{
-
-response.innerHTML =
-"ORION BRAIN MODULE NOT FOUND.";
-
-}
-
-}
-
 
 else if(command == "who are you"){
 
@@ -157,7 +148,6 @@ response.innerHTML =
 
 }
 
-}
 
 
 else if(command.includes("what do you know about me")){
@@ -188,7 +178,6 @@ knowledge += "<br>";
 
 }
 
-}
 
 
 response.innerHTML =
@@ -228,5 +217,4 @@ command +
 "I apologize sir, I do not recognize this command yet. I will continue learning.";
 
 }
-
 }
