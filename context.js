@@ -1,5 +1,5 @@
 // =====================================
-// ORION CONTEXT ENGINE v1.1
+// ORION CONTEXT ENGINE v1.0
 // =====================================
 
 const ORION_CONTEXT = {
@@ -19,7 +19,6 @@ typeof getAllMemories === "function"
 let importantMemories = [];
 
 
-// Analyze important memories
 
 for(let category in memories){
 
@@ -94,3 +93,4 @@ request: input
 }
 
 };
+
