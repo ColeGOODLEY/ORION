@@ -1,5 +1,5 @@
 // =====================================
-// ORION REASONING ENGINE v1.2
+// ORION REASONING ENGINE v1.3
 // =====================================
 
 const ORION_REASONING = {
@@ -19,21 +19,21 @@ recommendations:[]
 };
 
 
-let command =
+
+let objective =
 input
 .toLowerCase()
 .replace("think","")
 .trim();
 
 
-
 //
-// IDENTIFY CURRENT OBJECTIVE FIRST
+// CURRENT OBJECTIVE
 //
 
-if(command !== ""){
+if(objective !== ""){
 
-result.objective = command;
+result.objective = objective;
 
 result.priority =
 "Current objective detected.";
@@ -41,47 +41,14 @@ result.priority =
 }
 
 
-//
-// USE MEMORY IF NO CURRENT OBJECTIVE
-//
-
-else if(
-context.relevantMemories &&
-context.relevantMemories.length > 0
-){
-
-result.objective =
-context.relevantMemories[0].information;
-
-result.priority =
-"Relevant objective detected.";
-
-}
-
-
-else if(
-context.importantMemories &&
-context.importantMemories.length > 0
-){
-
-result.objective =
-context.importantMemories[0].information;
-
-result.priority =
-"High importance objective detected.";
-
-}
-
 
 //
-// OBJECTIVE SPECIFIC RECOMMENDATIONS
+// INTENT DETECTION
 //
 
-let objective =
-result.objective.toLowerCase();
+// COMPARISON / TRADEOFF
 
-
-else if(
+if(
 objective.includes(" or ") ||
 objective.includes("should i") ||
 objective.includes("better") ||
@@ -89,98 +56,141 @@ objective.includes("versus") ||
 objective.includes("vs")
 ){
 
-result.recommendations.push(
-"Compare both options based on long-term value, impact, and implementation difficulty."
-);
+result.priority =
+"Decision comparison detected.";
+
 
 result.recommendations.push(
-"Identify which option improves the system foundation first."
+"Compare both options based on long-term value, impact, and difficulty."
 );
+
+
+result.recommendations.push(
+"Identify which option improves the foundation first."
+);
+
 
 result.recommendations.push(
 "Choose the option that creates the greatest future capability."
 );
 
-}
-if(
-objective.includes("orion")
-||
-objective.includes("ai")
-){
-
-result.recommendations.push(
-"Continue improving ORION's core systems."
-);
-
-result.recommendations.push(
-"Improve reasoning accuracy."
-);
-
-result.recommendations.push(
-"Expand capabilities carefully."
-);
 
 }
 
+
+// BUSINESS
 
 else if(
-objective.includes("business")
-||
-objective.includes("money")
-||
-objective.includes("brand")
+objective.includes("business") ||
+objective.includes("money") ||
+objective.includes("brand") ||
+objective.includes("revenue")
 ){
+
+result.priority =
+"Business objective detected.";
+
 
 result.recommendations.push(
 "Define the target customer and value proposition."
 );
 
+
 result.recommendations.push(
-"Create a clear execution plan with measurable goals."
+"Create an execution plan with measurable goals."
 );
+
 
 result.recommendations.push(
 "Prioritize actions that increase revenue potential."
 );
 
+
 }
 
 
+// ORION DEVELOPMENT
+
 else if(
-objective.includes("plan")
-||
-objective.includes("goal")
+objective.includes("orion") ||
+objective.includes("ai")
 ){
+
+result.priority =
+"ORION development objective detected.";
+
+
+result.recommendations.push(
+"Continue improving ORION's core systems."
+);
+
+
+result.recommendations.push(
+"Improve reasoning accuracy."
+);
+
+
+result.recommendations.push(
+"Expand capabilities carefully."
+);
+
+
+}
+
+
+// GENERAL PLANNING
+
+else if(
+objective.includes("plan") ||
+objective.includes("goal") ||
+objective.includes("focus")
+){
+
+result.priority =
+"Planning objective detected.";
+
 
 result.recommendations.push(
 "Break the objective into smaller actionable steps."
 );
 
+
 result.recommendations.push(
 "Identify the highest-value action first."
 );
+
 
 result.recommendations.push(
 "Review progress and adjust strategy."
 );
 
+
 }
 
 
+// DEFAULT
+
 else{
+
+
+result.priority =
+"General analysis detected.";
 
 
 result.recommendations.push(
 "Analyze the objective carefully."
 );
 
-result.recommendations.push(
-"Identify important factors and possible solutions."
-);
 
 result.recommendations.push(
-"Choose the highest-value next action."
+"Identify important factors."
 );
+
+
+result.recommendations.push(
+"Choose the most valuable next action."
+);
+
 
 }
 
