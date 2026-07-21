@@ -12,8 +12,7 @@ model: "ORION LOCAL REASONING CORE",
 think: function(input){
 
 
-let context =
-ORION_CONTEXT.build(input);
+let context = {};
 
 
 input = input.toLowerCase();
