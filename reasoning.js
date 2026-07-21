@@ -1,5 +1,5 @@
 // =====================================
-// ORION REASONING ENGINE v1.3
+// ORION REASONING ENGINE v1.4
 // =====================================
 
 const ORION_REASONING = {
@@ -27,6 +27,7 @@ input
 .trim();
 
 
+
 //
 // CURRENT OBJECTIVE
 //
@@ -35,25 +36,20 @@ if(objective !== ""){
 
 result.objective = objective;
 
-result.priority =
-"Current objective detected.";
-
 }
 
 
 
 //
-// INTENT DETECTION
+// COMPARISON / TRADEOFF ANALYSIS
 //
-
-// COMPARISON / TRADEOFF
 
 if(
 objective.includes(" or ") ||
-objective.includes("should i") ||
-objective.includes("better") ||
 objective.includes("versus") ||
-objective.includes("vs")
+objective.includes(" vs ") ||
+objective.includes("compare") ||
+objective.includes("comparison")
 ){
 
 result.priority =
@@ -61,24 +57,27 @@ result.priority =
 
 
 result.recommendations.push(
-"Compare both options based on long-term value, impact, and difficulty."
+"Compare each option based on long-term value, impact, and difficulty."
 );
 
 
 result.recommendations.push(
-"Identify which option improves the foundation first."
+"Identify the advantages and disadvantages of each option."
 );
 
 
 result.recommendations.push(
-"Choose the option that creates the greatest future capability."
+"Choose the option that creates the greatest future benefit."
 );
 
 
 }
 
 
-// BUSINESS
+
+//
+// BUSINESS STRATEGY
+//
 
 else if(
 objective.includes("business") ||
@@ -109,7 +108,10 @@ result.recommendations.push(
 }
 
 
+
+//
 // ORION DEVELOPMENT
+//
 
 else if(
 objective.includes("orion") ||
@@ -138,12 +140,48 @@ result.recommendations.push(
 }
 
 
-// GENERAL PLANNING
+
+//
+// DAILY FOCUS / PROGRESS PLANNING
+//
+
+else if(
+objective.includes("today") ||
+objective.includes("focus") ||
+objective.includes("progress") ||
+objective.includes("next step")
+){
+
+result.priority =
+"Progress planning objective detected.";
+
+
+result.recommendations.push(
+"Identify the highest-impact task available right now."
+);
+
+
+result.recommendations.push(
+"Prioritize actions that create measurable progress."
+);
+
+
+result.recommendations.push(
+"Complete the next important step before expanding scope."
+);
+
+
+}
+
+
+
+//
+// GENERAL GOAL / PLAN
+//
 
 else if(
 objective.includes("plan") ||
-objective.includes("goal") ||
-objective.includes("focus")
+objective.includes("goal")
 ){
 
 result.priority =
@@ -168,7 +206,10 @@ result.recommendations.push(
 }
 
 
-// DEFAULT
+
+//
+// DEFAULT ANALYSIS
+//
 
 else{
 
