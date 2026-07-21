@@ -70,22 +70,39 @@ response =
 
 let reasoning =
 ORION_REASONING.analyze(context,input);
+let decision = {
 
+priority:"No priority detected.",
+
+reason:"No decision available.",
+
+actions:[]
+
+};
+
+
+if(
+typeof ORION_DECISION !== "undefined"
+){
+
+decision =
+ORION_DECISION.analyze(reasoning,input);
+
+}
 
 
 return {
 
-
 message:response,
-
 
 context:context,
 
+reasoning:reasoning,
 
-reasoning:reasoning
-
+decision:decision
 
 };
+
 
 
 
