@@ -55,15 +55,11 @@ response.innerHTML =
 
 else if(command.startsWith("think")){
 
-let result =
-ORION_BRAIN.think(command);
-
-
 response.innerHTML =
-"ORION BRAIN STATUS:<br><br>" +
-result.message;
+"THINK COMMAND REACHED";
 
 }
+
 
 
 else if(command == "who are you"){
