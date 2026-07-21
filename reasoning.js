@@ -5,92 +5,80 @@
 const ORION_REASONING = {
 
 
-analyze: function(context,input){
+analyze:function(context,input){
 
 
-let analysis = {
+let result = {
 
-objective: "No objective detected.",
 
-priority: "General assistance",
+objective:"No objective found.",
 
-recommendations: []
+priority:"No priority detected.",
+
+recommendations:[]
 
 };
 
 
 
+let memorySource =
+context.importantMemories;
+
+
+
 if(
-context &&
-context.importantMemories &&
-context.importantMemories.length > 0
+memorySource &&
+memorySource.length > 0
 ){
 
-analysis.objective =
-context.importantMemories[0].information;
+
+result.objective =
+memorySource[0].information;
 
 
-analysis.priority =
-"High importance objective detected.";
-
-
-analysis.recommendations.push(
-"Continue improving ORION's core systems."
-);
-
-analysis.recommendations.push(
-"Test each new capability before expanding."
-);
-
-analysis.recommendations.push(
-"Prioritize reliability over complexity."
-);
-
-
-}
-
-
-analysis.objective =
-context.importantMemories[0].information;
-
-
-analysis.priority =
+result.priority =
 "High importance objective detected.";
 
 
 
-analysis.recommendations.push(
+result.recommendations.push(
 "Continue improving ORION's core systems."
 );
 
 
-analysis.recommendations.push(
-"Test each new capability before expanding."
+result.recommendations.push(
+"Improve reasoning accuracy."
 );
 
 
-analysis.recommendations.push(
-"Prioritize reliability over complexity."
+result.recommendations.push(
+"Expand capabilities carefully."
 );
+
+
+
+}
+
+
+else if(
+context.relevantMemories &&
+context.relevantMemories.length > 0
+){
+
+
+result.objective =
+context.relevantMemories[0].information;
+
+
+result.priority =
+"Relevant objective detected.";
 
 
 }
 
 
 
-else{
-
-
-analysis.recommendations.push(
-"Define a clear objective."
-);
-
-
-}
-
-
-
-return analysis;
+return result;
 
 
 }
