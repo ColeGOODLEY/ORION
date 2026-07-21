@@ -1,5 +1,5 @@
 // =====================================
-// ORION CONTEXT ENGINE v1.2
+// ORION CONTEXT ENGINE v1.1
 // =====================================
 
 const ORION_CONTEXT = {
@@ -17,10 +17,9 @@ typeof getAllMemories === "function"
 
 
 let importantMemories = [];
-let relevantMemories = [];
 
 
-// Analyze memories
+// Analyze important memories
 
 for(let category in memories){
 
@@ -31,38 +30,14 @@ if(Array.isArray(memories[category])){
 memories[category].forEach(function(memory){
 
 
-
 if(
 typeof memory === "object" &&
 memory.importance === "high"
 ){
 
-
 importantMemories.push(memory);
 
-
-
-let information =
-memory.information.toLowerCase();
-
-
-
-if(
-input.toLowerCase().includes("goal") ||
-input.toLowerCase().includes("focus") ||
-input.toLowerCase().includes("plan") ||
-information.includes(input.toLowerCase())
-){
-
-
-relevantMemories.push(memory);
-
-
 }
-
-
-}
-
 
 
 });
@@ -108,8 +83,6 @@ memory: memories,
 
 
 importantMemories: importantMemories,
-
-relevantMemories: relevantMemories,
 
 
 request: input
