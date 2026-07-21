@@ -1,11 +1,11 @@
 // =====================================
-// ORION DECISION ENGINE v1.0
+// ORION DECISION ENGINE v1.1
 // =====================================
 
 const ORION_DECISION = {
 
 
-analyze: function(context,input){
+analyze: function(reasoning,input){
 
 
 let decision = {
@@ -19,27 +19,23 @@ actions:[]
 
 
 if(
-context.importantMemories &&
-context.importantMemories.length > 0
+reasoning &&
+reasoning.objective &&
+reasoning.objective !== "No objective detected."
 ){
 
 
-let goal =
-context.importantMemories[0].information;
-
-
-
 decision.priority =
-goal;
+reasoning.objective;
 
 
 decision.reason =
-"This objective has been identified as a high importance goal.";
+"This objective has been identified as a high priority goal based on ORION reasoning.";
 
 
 
 decision.actions.push(
-"Continue developing core systems."
+"Continue developing ORION's core systems."
 );
 
 
@@ -49,7 +45,7 @@ decision.actions.push(
 
 
 decision.actions.push(
-"Expand ORION functionality."
+"Expand ORION functionality carefully."
 );
 
 
