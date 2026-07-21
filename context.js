@@ -1,5 +1,5 @@
 // =====================================
-// ORION CONTEXT ENGINE v1.1
+// ORION CONTEXT ENGINE v1.2
 // =====================================
 
 const ORION_CONTEXT = {
@@ -15,11 +15,8 @@ typeof getAllMemories === "function"
 : {};
 
 
-
 let importantMemories = [];
-
 let relevantMemories = [];
-
 
 
 for(let category in memories){
@@ -31,12 +28,10 @@ if(Array.isArray(memories[category])){
 memories[category].forEach(function(memory){
 
 
-
 if(
-typeof memory === "object" &&
+memory &&
 memory.information
 ){
-
 
 
 if(
@@ -49,20 +44,16 @@ importantMemories.push(memory);
 }
 
 
-
 if(
 memory.information
 .toLowerCase()
-.includes(input.toLowerCase()) ||
+.includes(input.toLowerCase())
+
+||
 
 input.toLowerCase()
-.includes("goal") ||
+.includes("goal")
 
-input.toLowerCase()
-.includes("focus") ||
-
-input.toLowerCase()
-.includes("plan")
 ){
 
 relevantMemories.push(memory);
@@ -70,9 +61,7 @@ relevantMemories.push(memory);
 }
 
 
-
 }
-
 
 
 });
@@ -87,46 +76,18 @@ relevantMemories.push(memory);
 
 return {
 
+importantMemories: importantMemories,
 
-identity:{
+relevantMemories: relevantMemories,
 
-name:ORION.name,
+memory: memories,
 
-version:ORION.version,
-
-mission:ORION.mission
-
-},
-
-
-personality:{
-
-name:ORION_PERSONALITY.name,
-
-role:ORION_PERSONALITY.role,
-
-traits:ORION_PERSONALITY.traits,
-
-objective:ORION_PERSONALITY.primeDirective
-
-},
-
-
-memory:memories,
-
-
-importantMemories:importantMemories,
-
-
-relevantMemories:relevantMemories,
-
-
-request:input
-
+request: input
 
 };
 
 
 }
+
 
 };
