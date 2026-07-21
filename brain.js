@@ -10,6 +10,10 @@ model: "ORION LOCAL REASONING CORE",
 
 think: function(input){
 
+let context =
+ORION_CONTEXT.build(input);
+
+
 let response =
 "ORION is analyzing your request.";
 
@@ -72,6 +76,8 @@ return {
 message: response,
 
 input: input,
+
+context: context,
 
 personality: ORION_PERSONALITY.name,
 
