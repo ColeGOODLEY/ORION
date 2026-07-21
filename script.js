@@ -58,13 +58,8 @@ response.innerHTML =
 
 else if(command == "think"){
 
-let result =
-ORION_BRAIN.think(command);
-
-
 response.innerHTML =
-"ORION BRAIN STATUS:<br><br>" +
-result.message;
+"THINK COMMAND WORKING";
 
 }
 
