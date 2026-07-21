@@ -15,7 +15,21 @@ ORION_CONTEXT.build(input);
 
 
 let response =
-"ORION is analyzing your request.";
+"ORION is processing your request.";
+
+
+// Check important memories
+
+if(
+context.importantMemories &&
+context.importantMemories.length > 0
+){
+
+response +=
+" I have considered your important objectives.";
+
+}
+
 
 input = input.toLowerCase();
 
