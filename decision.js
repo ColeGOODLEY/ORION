@@ -1,8 +1,19 @@
 // =====================================
-// ORION DECISION ENGINE v1.5
+// ORION DECISION ENGINE v1.6
 // =====================================
 
 const ORION_DECISION = {
+
+
+scoreOption:function(value,foundation,risk){
+
+return (
+value +
+foundation -
+risk
+);
+
+},
 
 
 analyze:function(reasoning,input){
@@ -26,7 +37,7 @@ reasoning.objective.toLowerCase();
 
 
 //
-// MEMORY VS TOOLS DECISION
+// MEMORY VS TOOLS / INTERNET DECISION
 //
 
 if(
@@ -39,12 +50,24 @@ objective.includes("access")
 ){
 
 
+let memoryScore =
+this.scoreOption(9,10,2);
+
+
+let toolsScore =
+this.scoreOption(8,5,4);
+
+
+
+if(memoryScore > toolsScore){
+
+
 decision.priority =
 "Improve ORION memory systems first.";
 
 
 decision.reason =
-"Memory is a foundation capability. A stronger memory system improves personalization, context, and future tool performance. Building tools before ORION can reliably use information creates less long-term value.";
+"Memory creates stronger long-term value because it improves personalization, context, and the effectiveness of future tools.";
 
 
 decision.actions.push(
@@ -60,6 +83,38 @@ decision.actions.push(
 decision.actions.push(
 "Add advanced tools after the foundation is reliable."
 );
+
+
+}
+
+
+else{
+
+
+decision.priority =
+"Add external capabilities first.";
+
+
+decision.reason =
+"The current objective suggests external capabilities provide the greatest immediate value.";
+
+
+decision.actions.push(
+"Add and test new capabilities."
+);
+
+
+decision.actions.push(
+"Measure usefulness."
+);
+
+
+decision.actions.push(
+"Improve systems based on results."
+);
+
+
+}
 
 
 }
