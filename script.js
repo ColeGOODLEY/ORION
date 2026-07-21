@@ -118,56 +118,12 @@ else if(command.startsWith("think")){
 
 
 let result =
-ORION_BRAIN.think(command);
-
-
+ORION_RESPONSE.process(command);
 
 response.innerHTML =
-
-
-"ORION BRAIN STATUS:<br><br>" +
-
-result.message +
-
-
-
-"<br><br><b>Strategic Priority:</b><br>" +
-
-result.reasoning.priority +
-
-
-
-"<br><br><b>Objective:</b><br>" +
-
-result.reasoning.objective +
-
-
-
-"<br><br><b>Recommended Actions:</b><br>" +
-
-result.reasoning.recommendations.join("<br>") +
-
-
-
-"<br><br><b>DECISION:</b><br>" +
-
-result.decision.priority +
-
-
-
-"<br><br><b>Decision Reason:</b><br>" +
-
-result.decision.reason +
-
-
-
-"<br><br><b>Decision Actions:</b><br>" +
-
-result.decision.actions.join("<br>");
-
+ORION_RESPONSE.buildResponse(result);
 
 }
-
 
 
 // REMEMBER COMMAND
