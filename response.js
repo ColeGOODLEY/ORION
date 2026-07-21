@@ -6,25 +6,17 @@ const ORION_RESPONSE = {
 
 process: function(command) {
 
-let context =
-ORION_CONTEXT.build(command);
-
-
-let reasoning =
+let result =
 ORION_BRAIN.think(command);
-
-
-let decision =
-ORION_DECISION.analyze(context, command);
 
 
 return {
 
-context: context,
+context: result.context,
 
-reasoning: reasoning,
+reasoning: result.reasoning,
 
-decision: decision
+decision: result.decision
 
 };
 
