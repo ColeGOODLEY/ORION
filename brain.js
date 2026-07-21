@@ -113,15 +113,36 @@ actions: []
 
 
 
+let reasoning = {
+
+objective: "No objective detected.",
+
+priority: "General assistance",
+
+recommendations: []
+
+};
+
+
+if(typeof ORION_REASONING !== "undefined"){
+
+reasoning =
+ORION_REASONING.analyze(context,input);
+
+}
+
+
+
 return {
 
 message: response,
 
 context: context,
 
-decision: decision
+reasoning: reasoning
 
 };
+
 
 
 }
