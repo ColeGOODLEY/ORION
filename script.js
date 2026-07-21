@@ -1,3 +1,8 @@
+// =====================================
+// ORION COMMAND SYSTEM v0.8
+// =====================================
+
+
 function executeORION(){
 
 
@@ -9,6 +14,7 @@ let response =
 document.getElementById("response");
 
 
+
 if(command == ""){
 
 response.innerHTML =
@@ -17,15 +23,17 @@ response.innerHTML =
 }
 
 
+
 else if(command == "status"){
 
 response.innerHTML =
 "ORION SYSTEM STATUS<br><br>" +
 "AI CORE: ONLINE<br>" +
 "MEMORY: READY<br>" +
-"VERSION: 0.5";
+"VERSION: 0.8";
 
 }
+
 
 
 else if(command == "mission"){
@@ -35,6 +43,7 @@ response.innerHTML =
 "Continue developing ORION into a personal AI operating system.";
 
 }
+
 
 
 else if(command == "help"){
@@ -48,15 +57,24 @@ response.innerHTML =
 "• think<br>" +
 "• remember [information]<br>" +
 "• what do you know about me<br>" +
-"• recall";
+"• recall<br>" +
+"• clear memory";
 
 }
 
 
+
 else if(command.startsWith("think")){
 
+
+let result =
+ORION_BRAIN.think(command);
+
+
 response.innerHTML =
-"THINK COMMAND REACHED";
+"ORION BRAIN STATUS:<br><br>" +
+result.message;
+
 
 }
 
@@ -77,6 +95,7 @@ ORION.mission;
 }
 
 
+
 else if(
 command == "hello" ||
 command == "hi" ||
@@ -92,92 +111,50 @@ response.innerHTML =
 }
 
 
+
 else if(command.startsWith("remember")){
+
 
 let memory =
 command.replace("remember","").trim();
 
 
-let category = "general";
+let category =
+"general";
 
-let importance = "normal";
 
-
-// Preference detection
 
 if(
-memory.includes("favorite") ||
-memory.includes("like") ||
-memory.includes("love")
+memory.includes("favorite color") ||
+memory.includes("favorite food")
 ){
 
-category = "preferences";
-
-importance = "normal";
+category =
+"preferences";
 
 }
 
 
-// Goal detection
 
 else if(
-memory.includes("goal") ||
-memory.includes("want to") ||
-memory.includes("trying to") ||
-memory.includes("build")
+memory.includes("goal")
 ){
 
-category = "goals";
-
-importance = "high";
+category =
+"goals";
 
 }
 
 
-// Personal information detection
 
-else if(
-memory.includes("my name") ||
-memory.includes("i am") ||
-memory.includes("i'm")
-){
+saveMemory(category,memory);
 
-category = "identity";
-
-importance = "high";
-
-}
-
-
-// Temporary information
-
-else if(
-memory.includes("today") ||
-memory.includes("right now") ||
-memory.includes("currently")
-){
-
-category = "temporary";
-
-importance = "low";
-
-}
-
-
-saveMemory(
-category,
-memory,
-importance
-);
 
 
 response.innerHTML =
 "Memory stored.<br><br>" +
 "Category: " +
 category +
-"<br><br>" +
-"Importance: " +
-importance +
 "<br><br>" +
 "ORION will remember:<br>" +
 memory;
@@ -188,11 +165,16 @@ memory;
 
 else if(command.includes("favorite color")){
 
+
 let result =
 searchMemory("favorite color");
 
 
-if(result && result.length > 0){
+
+if(
+result &&
+result.length > 0
+){
 
 response.innerHTML =
 "Your favorite color is:<br><br>" +
@@ -207,62 +189,92 @@ response.innerHTML =
 
 }
 
+
 }
+
+
+
 else if(command.includes("what do you know about me")){
+
 
 let memories =
 getAllMemories();
 
-let knowledge = "";
+
+let knowledge =
+"";
+
 
 
 for(let category in memories){
 
+
 if(Array.isArray(memories[category])){
 
+
 knowledge +=
-"<b>" + category + ":</b><br>";
+"<b>" +
+category +
+":</b><br>";
+
 
 
 memories[category].forEach(function(item){
 
+
 knowledge +=
-"• " + item + "<br>";
+"• " +
+item +
+"<br>";
+
 
 });
 
 
-knowledge += "<br>";
+knowledge +=
+"<br>";
 
 }
 
+
 }
+
+
 
 response.innerHTML =
 knowledge ?
 
-"Here is what I know about you:<br><br>" + knowledge :
+"Here is what I know about you:<br><br>" +
+knowledge :
 
 "I do not have any stored information about you yet.";
 
 }
 
-else if(command == "clear memory"){
 
-clearMemory();
-
-response.innerHTML =
-"ORION MEMORY BANK CLEARED.";
-
-}
 
 else if(command == "recall"){
+
 
 response.innerHTML =
 "ORION MEMORY BANK:<br><br>" +
 JSON.stringify(getAllMemories());
 
 }
+
+
+
+else if(command == "clear memory"){
+
+
+clearMemory();
+
+
+response.innerHTML =
+"ORION memory bank cleared.";
+
+}
+
 
 
 else if(command == "joke"){
@@ -274,7 +286,9 @@ response.innerHTML =
 }
 
 
+
 else{
+
 
 response.innerHTML =
 "Command received:<br><br>" +
@@ -283,4 +297,6 @@ command +
 "I apologize sir, I do not recognize this command yet. I will continue learning.";
 
 }
+
+
 }
