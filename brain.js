@@ -79,6 +79,8 @@ input: input,
 
 context: context,
 
+importantMemories: context.importantMemories,
+
 personality: ORION_PERSONALITY.name,
 
 role: ORION_PERSONALITY.role
