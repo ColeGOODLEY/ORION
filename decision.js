@@ -1,5 +1,5 @@
 // =====================================
-// ORION DECISION ENGINE v1.6
+// ORION DECISION ENGINE v1.7
 // =====================================
 
 const ORION_DECISION = {
@@ -37,7 +37,20 @@ reasoning.objective.toLowerCase();
 
 
 //
-// MEMORY VS TOOLS / INTERNET DECISION
+// GENERAL COMPARISON DECISION
+//
+
+if(
+objective.includes("should i") ||
+objective.includes(" or ") ||
+objective.includes("compare") ||
+objective.includes("versus") ||
+objective.includes("vs")
+){
+
+
+//
+// MEMORY VS TOOLS / INTERNET
 //
 
 if(
@@ -67,7 +80,7 @@ decision.priority =
 
 
 decision.reason =
-"Memory creates stronger long-term value because it improves personalization, context, and the effectiveness of future tools.";
+"Memory creates stronger long-term value because it improves personalization, context, and the effectiveness of future capabilities.";
 
 
 decision.actions.push(
@@ -81,7 +94,7 @@ decision.actions.push(
 
 
 decision.actions.push(
-"Add advanced tools after the foundation is reliable."
+"Add advanced capabilities after the foundation is reliable."
 );
 
 
@@ -111,6 +124,80 @@ decision.actions.push(
 
 decision.actions.push(
 "Improve systems based on results."
+);
+
+
+}
+
+
+}
+
+
+//
+// ORION VS USERS / BUSINESS VALIDATION
+//
+
+else if(
+objective.includes("user") ||
+objective.includes("customer") ||
+objective.includes("business") ||
+objective.includes("revenue")
+){
+
+
+decision.priority =
+"Validate real-world value before expanding development.";
+
+
+decision.reason =
+"Improving ORION increases capability, but users and real-world feedback determine whether the system creates meaningful value.";
+
+
+decision.actions.push(
+"Identify potential users and their needs."
+);
+
+
+decision.actions.push(
+"Test the current version with real feedback."
+);
+
+
+decision.actions.push(
+"Improve ORION based on validated demand."
+);
+
+
+}
+
+
+//
+// GENERAL COMPARISON FALLBACK
+//
+
+else{
+
+
+decision.priority =
+"Evaluate both options based on long-term value.";
+
+
+decision.reason =
+"The best choice depends on impact, risk, effort, and future opportunity.";
+
+
+decision.actions.push(
+"Compare the advantages and disadvantages of each option."
+);
+
+
+decision.actions.push(
+"Identify the highest-impact action."
+);
+
+
+decision.actions.push(
+"Measure results and adjust."
 );
 
 
