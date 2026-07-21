@@ -194,6 +194,14 @@ knowledge ?
 
 }
 
+else if(command == "clear memory"){
+
+clearMemory();
+
+response.innerHTML =
+"ORION MEMORY BANK CLEARED.";
+
+}
 
 else if(command == "recall"){
 
