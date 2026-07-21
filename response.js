@@ -6,7 +6,7 @@ const ORION_RESPONSE = {
 
 process: function(command) {
 
-const context = CONTEXT_ENGINE.analyze(command);
+const context = ORION_CONTEXT.build(command);
 
 const memories = getAllMemories();
 
