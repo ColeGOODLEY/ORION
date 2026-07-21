@@ -46,7 +46,17 @@ response.innerHTML =
 "• remember [information]<br>" +
 "• recall";
 }
+else if(command == "think"){
 
+let result =
+ORION_BRAIN.think("Test message");
+
+
+response.innerHTML =
+"ORION BRAIN STATUS:<br><br>" +
+result.message;
+
+}
 else if(command == "who are you"){
 
 response.innerHTML =
