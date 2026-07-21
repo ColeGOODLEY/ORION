@@ -1,6 +1,5 @@
 function executeORION(){
 
-alert("ORION EXECUTE IS WORKING");
 
 let command =
 document.getElementById("command").value.toLowerCase().trim();
