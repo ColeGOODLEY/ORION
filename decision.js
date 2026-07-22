@@ -179,72 +179,75 @@ decision.actions.push(
 
 else{
 
+let parts =
+objective.split(" or ");
+
+if(parts.length == 2){
+
+let optionA =
+parts[0]
+.replace("should i","")
+.trim();
+
+let optionB =
+parts[1]
+.trim();
+
+let scoreA =
+ORION_EVALUATION.evaluate(optionA);
+
+let scoreB =
+ORION_EVALUATION.evaluate(optionB);
+
+let winner =
+scoreA.total >= scoreB.total
+? optionA
+: optionB;
+
+decision.priority =
+"Highest-value option identified.";
+
+decision.reason =
+"The options were evaluated using long-term value, foundation impact, risk, and effort.";
+
+decision.actions.push(
+"Option A: " + optionA + " (Score: " + scoreA.total + ")"
+);
+
+decision.actions.push(
+"Option B: " + optionB + " (Score: " + scoreB.total + ")"
+);
+
+decision.actions.push(
+"Recommended: " + winner
+);
+
+}
+
+else{
 
 decision.priority =
 "Evaluate both options based on long-term value.";
 
-
 decision.reason =
 "The best choice depends on impact, risk, effort, and future opportunity.";
-
 
 decision.actions.push(
 "Compare the advantages and disadvantages of each option."
 );
 
-
 decision.actions.push(
 "Identify the highest-impact action."
 );
-
 
 decision.actions.push(
 "Measure results and adjust."
 );
 
+}
 
 }
 
-
-}
-
-
-
-//
-// BUSINESS DECISION
-//
-
-else if(
-objective.includes("business") ||
-objective.includes("brand") ||
-objective.includes("revenue")
-){
-
-
-decision.priority =
-"Validate the business opportunity first.";
-
-
-decision.reason =
-"A strong business begins with understanding the customer, the problem, and the value being created before expanding execution.";
-
-
-decision.actions.push(
-"Define the target customer."
-);
-
-
-decision.actions.push(
-"Identify the problem being solved."
-);
-
-
-decision.actions.push(
-"Create a measurable execution plan."
-);
-
-
-}
 
 
 
