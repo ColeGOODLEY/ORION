@@ -1,331 +1,158 @@
 // =====================================
-// ORION DECISION ENGINE v1.7
+// ORION DECISION ENGINE v1.0
+// =====================================
+// Purpose:
+// Evaluates options, compares choices,
+// and recommends the best decision path.
 // =====================================
 
 const ORION_DECISION = {
 
+    version: "1.0",
 
-scoreOption:function(value,foundation,risk){
+    evaluate: function(objective, options) {
 
-return (
-value +
-foundation -
-risk
-);
+        if (!objective) {
+            return {
+                decision: "No objective detected.",
+                reason: "ORION needs a goal before making a decision.",
+                actions: [
+                    "Provide the goal.",
+                    "Provide available options."
+                ]
+            };
+        }
 
-},
+        if (!options || options.length === 0) {
+            return {
+                decision: "No options available.",
+                reason: "ORION cannot compare without choices.",
+                actions: [
+                    "Add possible options.",
+                    "Request another evaluation."
+                ]
+            };
+        }
 
 
-analyze:function(reasoning,input){
+        let results = [];
+
+        options.forEach(option => {
+
+            let score = 0;
+
+            let name = option.toLowerCase();
 
 
-let decision = {
+            // Impact evaluation
+            if (
+                name.includes("improve") ||
+                name.includes("upgrade") ||
+                name.includes("build") ||
+                name.includes("create")
+            ) {
+                score += 3;
+            }
 
-priority:"No priority detected.",
 
-reason:"No decision available.",
+            // Long term value
+            if (
+                name.includes("memory") ||
+                name.includes("learning") ||
+                name.includes("intelligence") ||
+                name.includes("system")
+            ) {
+                score += 4;
+            }
 
-actions:[]
+
+            // Speed / usefulness
+            if (
+                name.includes("internet") ||
+                name.includes("connection") ||
+                name.includes("access")
+            ) {
+                score += 3;
+            }
+
+
+            // Difficulty penalty
+            if (
+                name.includes("complex") ||
+                name.includes("hard")
+            ) {
+                score -= 1;
+            }
+
+
+            results.push({
+                option: option,
+                score: score
+            });
+
+        });
+
+
+        // Sort highest score first
+        results.sort(function(a,b){
+            return b.score - a.score;
+        });
+
+
+        let winner = results[0];
+
+
+        return {
+
+            decision: winner.option,
+
+            score: winner.score,
+
+            reason:
+            "This option provides the strongest combination of long-term value, system improvement, and strategic advantage.",
+
+
+            comparison: results,
+
+
+            actions: [
+                "Implement the selected option.",
+                "Measure improvement.",
+                "Reevaluate future priorities."
+            ]
+
+        };
+
+    },
+
+
+    compare: function(option1, option2) {
+
+        return this.evaluate(
+            "Compare options",
+            [
+                option1,
+                option2
+            ]
+        );
+
+    },
+
+
+    strategicChoice: function(goal, choices) {
+
+        return this.evaluate(
+            goal,
+            choices
+        );
+
+    }
 
 };
 
 
+// Make available to ORION brain system
 
-let objective =
-(reasoning.objective || input || "").toLowerCase();
-
-
-
-//
-// GENERAL COMPARISON DECISION
-//
-
-if(
-objective.includes("should i") ||
-objective.includes(" or ") ||
-objective.includes("compare") ||
-objective.includes("versus") ||
-objective.includes("vs")
-){
-
-
-
-//
-// MEMORY VS TOOLS / INTERNET
-//
-
-if(
-objective.includes("memory") &&
-(
-objective.includes("tool") ||
-objective.includes("internet") ||
-objective.includes("access")
-)
-){
-
-
-let memoryScore =
-this.scoreOption(9,10,2);
-
-
-let toolsScore =
-this.scoreOption(8,5,4);
-
-
-
-if(memoryScore > toolsScore){
-
-
-decision.priority =
-"Improve ORION memory systems first.";
-
-
-decision.reason =
-"Memory creates stronger long-term value because it improves personalization, context, and the effectiveness of future capabilities.";
-
-
-decision.actions.push(
-"Improve memory storage and retrieval accuracy."
-);
-
-
-decision.actions.push(
-"Test memory recall and relevance."
-);
-
-
-decision.actions.push(
-"Add advanced capabilities after the foundation is reliable."
-);
-
-
+if (typeof module !== "undefined") {
+    module.exports = ORION_DECISION;
 }
-
-
-else{
-
-
-decision.priority =
-"Add external capabilities first.";
-
-
-decision.reason =
-"The current objective suggests external capabilities provide the greatest immediate value.";
-
-
-decision.actions.push(
-"Add and test new capabilities."
-);
-
-
-decision.actions.push(
-"Measure usefulness."
-);
-
-
-decision.actions.push(
-"Improve systems based on results."
-);
-
-
-}
-
-
-}
-
-
-//
-// ORION VS USERS / BUSINESS VALIDATION
-//
-
-else if(
-objective.includes("user") ||
-objective.includes("customer") ||
-objective.includes("business") ||
-objective.includes("revenue")
-){
-
-
-decision.priority =
-"Validate real-world value before expanding development.";
-
-
-decision.reason =
-"Improving ORION increases capability, but users and real-world feedback determine whether the system creates meaningful value.";
-
-
-decision.actions.push(
-"Identify potential users and their needs."
-);
-
-
-decision.actions.push(
-"Test the current version with real feedback."
-);
-
-
-decision.actions.push(
-"Improve ORION based on validated demand."
-);
-
-
-}
-
-
-
-//
-// GENERAL COMPARISON FALLBACK
-//
-
-else{
-
-let parts =
-objective.split(" or ");
-
-if(parts.length == 2){
-
-let optionA =
-parts[0]
-.replace("should i","")
-.trim();
-
-let optionB =
-parts[1]
-.trim();
-
-let scoreA =
-ORION_EVALUATION.evaluate(optionA);
-
-let scoreB =
-ORION_EVALUATION.evaluate(optionB);
-
-let winner =
-scoreA.total >= scoreB.total
-? optionA
-: optionB;
-
-decision.priority =
-"Highest-value option identified.";
-
-decision.reason =
-"The options were evaluated using long-term value, foundation impact, risk, and effort.";
-
-decision.actions.push(
-"Option A: " + optionA + " (Score: " + scoreA.total + ")"
-);
-
-decision.actions.push(
-"Option B: " + optionB + " (Score: " + scoreB.total + ")"
-);
-
-decision.actions.push(
-"Recommended: " + winner
-);
-
-}
-
-else{
-
-decision.priority =
-"Evaluate both options based on long-term value.";
-
-decision.reason =
-"The best choice depends on impact, risk, effort, and future opportunity.";
-
-decision.actions.push(
-"Compare the advantages and disadvantages of each option."
-);
-
-decision.actions.push(
-"Identify the highest-impact action."
-);
-
-decision.actions.push(
-"Measure results and adjust."
-);
-
-}
-
-}
-
-
-
-
-//
-// ORION DEVELOPMENT DECISION
-//
-
-else if(
-objective.includes("orion") ||
-objective.includes("ai")
-){
-
-
-decision.priority =
-"Strengthen ORION's core systems first.";
-
-
-decision.reason =
-"Reliable foundations improve every future capability. Core intelligence, memory, and reasoning should be stable before adding complexity.";
-
-
-decision.actions.push(
-"Improve system reliability."
-);
-
-
-decision.actions.push(
-"Test reasoning and memory behavior."
-);
-
-
-decision.actions.push(
-"Expand capabilities gradually."
-);
-
-
-}
-
-
-
-//
-// DEFAULT DECISION
-//
-
-else{
-
-
-decision.priority =
-"Take the highest-value next action.";
-
-
-decision.reason =
-"The decision is based on long-term impact, efficiency, and progress toward the objective.";
-
-
-decision.actions.push(
-"Evaluate the current situation."
-);
-
-
-decision.actions.push(
-"Choose the most valuable action."
-);
-
-
-decision.actions.push(
-"Measure results and improve."
-);
-
-
-}
-
-
-
-return decision;
-
-
-}
-
-
-};
