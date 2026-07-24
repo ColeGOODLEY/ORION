@@ -32,7 +32,7 @@ actions:[]
 
 
 let objective =
-reasoning.objective.toLowerCase();
+(reasoning.objective || input || "").toLowerCase();
 
 
 
