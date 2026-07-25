@@ -18,6 +18,9 @@ processReasoning(
     context
 );
 
+const evaluation =
+evaluateDecision(command);
+        
         return `
 
         ORION ONLINE
@@ -55,6 +58,10 @@ processReasoning(
 Reasoning Analysis:
 
 ${reasoning.analysis}
+
+Evaluation:
+
+${evaluation.analysis}
 
         Core System:
         Operational
