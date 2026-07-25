@@ -1,92 +1,28 @@
 // =====================================
-// ORION COMPARISON ENGINE v1.0
+// ORION COMPARISON ENGINE
+// Recovery Build 1.0
 // =====================================
 
-const ORION_COMPARISON = {
 
-extract:function(objective){
+function compareOptions(command){
 
-let result = {
 
-comparison:false,
-options:[]
+    return {
 
-};
 
-let text =
-objective.toLowerCase().trim();
+        optionA:
+        "Improve Memory",
 
-if(
-text.includes(" or ")
-){
 
-result.comparison = true;
+        optionB:
+        "Add Internet Access",
 
-result.options =
-text
-.replace("should i","")
-.split(" or ")
-.map(function(option){
 
-return option.trim();
+        comparison:
+        "Comparing options based on long-term usefulness, capability growth, and strategic value."
 
-});
+
+    };
+
 
 }
-
-return result;
-
-},
-
-
-compare:function(objective){
-
-let comparison =
-this.extract(objective);
-
-if(
-comparison.comparison === false
-){
-
-return null;
-
-}
-
-let bestOption = null;
-
-let bestScore = -9999;
-
-comparison.options.forEach(function(option){
-
-let score =
-ORION_EVALUATION.evaluate(option);
-
-if(
-score.total > bestScore
-){
-
-bestScore = score.total;
-
-bestOption = {
-
-option:option,
-
-score:score
-
-};
-
-}
-
-});
-
-return {
-
-options:comparison.options,
-
-winner:bestOption
-
-};
-
-}
-
-};
