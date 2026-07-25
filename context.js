@@ -1,24 +1,31 @@
+// =====================================
 // ORION CONTEXT ENGINE
+// Recovery Build 1.0
+// =====================================
 
 
 function getContext(command){
 
 
-return {
+    return {
 
-    user:
-    "Mr. Goodley",
+        user:
+        "Mr. Goodley",
 
-    assistant:
-    "ORION",
 
-    objective:
-    "Provide strategic assistance and guidance.",
+        assistant:
+        "ORION",
 
-    command:
-    command
 
-};
+        objective:
+        "Provide strategic assistance and guidance.",
+
+
+        currentCommand:
+        command
+
+
+    };
 
 
 }
