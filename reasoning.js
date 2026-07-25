@@ -16,10 +16,10 @@ function processReasoning(command, brain, context, memories){
         user: context.user,
 
         memory:
-memories
+memories,
 
-        analysis:
-        "Evaluating the request using logic, context, and available information."
+analysis:
+"Evaluating the request using logic, context, and available information."
 
     };
 
