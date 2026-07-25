@@ -1,64 +1,52 @@
 // ORION CORE CONTROLLER
 // Recovery Build v1.0
 
-
-function executeORION(){
+function executeORION() {
 
     const input =
-    document.getElementById("userInput").value.trim();
+        document.getElementById("command").value.trim();
 
     const output =
-    document.getElementById("output");
+        document.getElementById("response");
 
-
-    if(input === ""){
+    if (input === "") {
 
         output.innerHTML =
-        "Awaiting your command, Mr. Goodley.";
+            "Awaiting your command, Mr. Goodley.";
 
         return;
-    }
 
+    }
 
     let response = ORION(input);
 
-
     output.innerHTML = response;
 
-
-    document.getElementById("userInput").value = "";
+    document.getElementById("command").value = "";
 
 }
 
-
-
-function ORION(command){
-
+function ORION(command) {
 
     let brain =
-    analyzeCommand(command);
-
+        analyzeCommand(command);
 
     let context =
-    getContext(command);
-
+        getContext(command);
 
     let memories =
-    searchMemory(command);
-
+        searchMemory(command);
 
     let reasoning =
-    processReasoning(
-        command,
-        brain,
-        context,
-        memories
-    );
-
+        processReasoning(
+            command,
+            brain,
+            context,
+            memories
+        );
 
     let decision =
-    makeDecision(reasoning);
-
+        makeDecision(reasoning);
 
     return generateResponse(
         command,
