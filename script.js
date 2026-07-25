@@ -1,18 +1,44 @@
+// =====================================
+// ORION SCRIPT
+// Recovery Build 1.0
+// =====================================
+
+
 function executeORION() {
 
-    const output = document.getElementById("response");
 
-    if (typeof ORION === "undefined") {
+    const input =
+    document.getElementById("command");
+
+
+    const output =
+    document.getElementById("response");
+
+
+    const command =
+    input.value.trim();
+
+
+
+    if(command === ""){
+
 
         output.innerHTML =
-        "ERROR: ORION Core is not loaded.";
+        "Awaiting your command, Mr. Goodley.";
+
 
         return;
 
     }
 
 
+
     output.innerHTML =
-    "SUCCESS: ORION Core is loaded.";
+    ORION.process(command);
+
+
+
+    input.value = "";
+
 
 }
