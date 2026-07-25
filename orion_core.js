@@ -19,14 +19,16 @@ const ORION = {
         const context =
         getContext(command);
 
-
+const memories =
+searchMemory(command);
 
         const reasoning =
-        processReasoning(
-            command,
-            brain,
-            context
-        );
+processReasoning(
+    command,
+    brain,
+    context,
+    memories
+);
 
 
 
