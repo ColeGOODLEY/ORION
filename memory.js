@@ -1,35 +1,26 @@
 // ORION MEMORY SYSTEM
 
 
-function saveMemory(category,value){
+function saveMemory(category, value){
 
+    let memories =
+    JSON.parse(
+        localStorage.getItem("orion_memory")
+    ) || {};
 
-let memories =
-JSON.parse(
-localStorage.getItem("orion_memory")
-)
-||
-{};
+    if(!memories[category]){
+        memories[category] = [];
+    }
 
+    // Don't save duplicate memories
+    if(!memories[category].includes(value)){
+        memories[category].push(value);
+    }
 
-
-if(!memories[category]){
-
-memories[category]=[];
-
-}
-
-
-
-memories[category].push(value);
-
-
-
-localStorage.setItem(
-"orion_memory",
-JSON.stringify(memories)
-);
-
+    localStorage.setItem(
+        "orion_memory",
+        JSON.stringify(memories)
+    );
 
 }
 
