@@ -20,7 +20,9 @@ processReasoning(
 
 const evaluation =
 evaluateDecision(command);
-        
+
+        const comparison =
+compareOptions(command);
         return `
 
         ORION ONLINE
@@ -60,7 +62,9 @@ Reasoning Analysis:
 ${reasoning.analysis}
 
 Evaluation:
+Comparison:
 
+${comparison.comparison}
 ${evaluation.analysis}
 
         Core System:
