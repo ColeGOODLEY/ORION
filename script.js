@@ -1,15 +1,9 @@
-// =====================================
-// ORION SCRIPT
-// Recovery Build 1.0
-// =====================================
-
+// ORION SCRIPT TEST
 
 function executeORION() {
 
-
     const input =
     document.getElementById("command");
-
 
     const output =
     document.getElementById("response");
@@ -19,26 +13,54 @@ function executeORION() {
     input.value.trim();
 
 
+    output.innerHTML =
+    "Step 1: Button works<br>";
+
 
     if(command === ""){
 
-
-        output.innerHTML =
-        "Awaiting your command, Mr. Goodley.";
-
+        output.innerHTML +=
+        "Step 2: Empty command";
 
         return;
 
     }
 
 
+    output.innerHTML +=
+    "Step 3: Command received: " + command + "<br>";
 
-    output.innerHTML =
+
+    if(typeof ORION === "undefined"){
+
+        output.innerHTML +=
+        "Step 4 FAILED: ORION does not exist";
+
+        return;
+
+    }
+
+
+    output.innerHTML +=
+    "Step 4: ORION exists<br>";
+
+
+    if(typeof ORION.process !== "function"){
+
+        output.innerHTML +=
+        "Step 5 FAILED: ORION process missing";
+
+        return;
+
+    }
+
+
+    output.innerHTML +=
+    "Step 5: Calling ORION Core<br>";
+
+
+    output.innerHTML +=
     ORION.process(command);
-
-
-
-    input.value = "";
 
 
 }
