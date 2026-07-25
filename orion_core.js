@@ -23,6 +23,12 @@ evaluateDecision(command);
 
         const comparison =
 compareOptions(command);
+        
+        const decision =
+makeDecision(
+    command,
+    comparison
+);
         return `
 
         ORION ONLINE
@@ -61,14 +67,29 @@ Reasoning Analysis:
 
 ${reasoning.analysis}
 
+
 Evaluation:
+
+${evaluation.analysis}
+
+
 Comparison:
 
 ${comparison.comparison}
-${evaluation.analysis}
 
-        Core System:
-        Operational
+
+Decision:
+
+${decision.decision}
+
+
+Reason:
+
+${decision.reason}
+
+
+Core System:
+Operational
 
 
         Good evening, Mr. Goodley.
