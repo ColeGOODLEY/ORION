@@ -33,7 +33,39 @@ Memory has been successfully stored.
 
 }
 
+if(
+    text.includes("what do you remember") ||
+    text.includes("what do you know about me")
+){
 
+    const memories =
+    recallMemory("personal");
+
+    if(memories.length === 0){
+
+        return `
+
+ORION ONLINE
+
+I currently have no stored personal memories, Mr. Goodley.
+
+`;
+
+    }
+
+    return `
+
+ORION ONLINE
+
+Mr. Goodley,
+
+Here is what I currently remember:
+
+• ${memories.join("\n• ")}
+
+`;
+
+}
 if(
 text.includes("hello") ||
 text.includes("hi") ||
