@@ -1,33 +1,24 @@
+// =====================================
 // ORION REASONING ENGINE
+// Recovery Build 1.0
+// =====================================
 
 
-function processReasoning(
-command,
-brain,
-context,
-memory
-){
+function processReasoning(command, brain, context){
 
 
-return {
+    return {
 
+        command: command,
 
-command:command,
+        intent: brain.intent,
 
+        user: context.user,
 
-intent:brain.intent,
+        analysis:
+        "Evaluating the request using logic, context, and available information."
 
-
-context:context,
-
-
-memory:memory,
-
-
-analysis:
-"Evaluating request using available context and reasoning systems."
-
-};
+    };
 
 
 }
