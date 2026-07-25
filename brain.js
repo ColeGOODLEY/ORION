@@ -1,45 +1,42 @@
+// =====================================
 // ORION BRAIN SYSTEM
+// =====================================
 
 
-function analyzeCommand(input){
+function analyzeCommand(command){
 
 
     let text =
-    input.toLowerCase();
+    command.toLowerCase();
+
 
 
     let intent =
     "conversation";
 
 
+
     if(
         text.includes("should") ||
         text.includes("choose") ||
-        text.includes("better") ||
         text.includes("decide")
     ){
 
-        intent="decision";
+        intent =
+        "decision";
 
     }
 
 
 
     if(
-        text.includes("remember")
+        text.includes("hello") ||
+        text.includes("hi") ||
+        text.includes("hey")
     ){
 
-        intent="memory";
-
-    }
-
-
-
-    if(
-        text.includes("status")
-    ){
-
-        intent="status";
+        intent =
+        "greeting";
 
     }
 
@@ -47,11 +44,12 @@ function analyzeCommand(input){
 
     return {
 
-        command: input,
+        intent:
+        intent,
 
-        intent:intent,
 
-        confidence:"high"
+        confidence:
+        "high"
 
     };
 
