@@ -1,83 +1,41 @@
+// =====================================
 // ORION DECISION ENGINE
+// Recovery Build 1.0
+// =====================================
 
 
-function makeDecision(reasoning){
+function makeDecision(command, comparison){
 
 
-let command =
-reasoning.command.toLowerCase();
+    if(
+        command.toLowerCase().includes("memory") ||
+        command.toLowerCase().includes("internet")
+    ){
+
+        return {
+
+            decision:
+            "Improve memory first.",
 
 
+            reason:
+            "A stronger memory system creates a more personalized foundation for ORION before expanding external capabilities."
 
-if(reasoning.intent === "decision"){
+        };
 
-
-
-if(
-command.includes("memory")
-&&
-command.includes("internet")
-){
+    }
 
 
-return {
+    return {
+
+        decision:
+        "No decision required.",
 
 
-decision:
-"Prioritize improving memory first.",
+        reason:
+        "The command does not contain a decision request."
 
-
-reason:
-"Sir, a truly personal AI requires strong continuity and understanding of its user before expanding external capabilities.",
-
-
-action:
-"Upgrade memory architecture, then integrate internet access."
-
-};
-
-
-}
-
-
-
-return {
-
-
-decision:
-"Evaluate options based on long-term value.",
-
-
-reason:
-"The strongest choice is the one that provides the greatest future advantage.",
-
-
-action:
-"Compare benefits, risks, and implementation difficulty."
-
-};
-
-
-}
-
-
-
-
-return {
-
-
-decision:
-"No strategic decision required.",
-
-
-reason:
-"The request can be handled through normal assistance.",
-
-
-action:
-"Provide information and support."
-
-};
+    };
 
 
 }
