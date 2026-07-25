@@ -1,73 +1,115 @@
-// =====================================
-// ORION RESPONSE ENGINE v1.1
-// =====================================
-
-const ORION_RESPONSE = {
+// ORION RESPONSE SYSTEM
+// Personality Recovery Build
 
 
-process:function(command){
+function generateResponse(command,decision){
 
 
-let result =
-ORION_BRAIN.think(command);
-
-
-return {
-
-
-message:result.message,
-
-context:result.context,
-
-reasoning:result.reasoning,
-
-decision:result.decision
-
-
-};
-
-
-},
+let text =
+command.toLowerCase();
 
 
 
-buildResponse:function(result){
+if(
+text.includes("hello") ||
+text.includes("hi") ||
+text.includes("hey")
+){
 
 
-return (
+return `
 
-"ORION RESPONSE:<br><br>" +
+ORION ONLINE
 
-result.message +
+Good day, Mr. Goodley.
 
-"<br><br><b>Strategic Priority:</b><br>" +
+All primary systems are operational.
 
-result.reasoning.priority +
+How may I assist you today, Sir?
 
-"<br><br><b>Objective:</b><br>" +
-
-result.reasoning.objective +
-
-"<br><br><b>Recommended Actions:</b><br>" +
-
-result.reasoning.recommendations.join("<br>") +
-
-"<br><br><b>DECISION:</b><br>" +
-
-result.decision.priority +
-
-"<br><br><b>Decision Reason:</b><br>" +
-
-result.decision.reason +
-
-"<br><br><b>Decision Actions:</b><br>" +
-
-result.decision.actions.join("<br>")
-
-);
-
+`;
 
 }
 
 
-};
+
+if(text.includes("who are you")){
+
+
+return `
+
+I am ORION, Sir.
+
+Operational Research & Intelligence for Optimization and Navigation.
+
+I am designed to assist with analysis, strategy, memory, and decision support.
+
+My purpose is to help you accomplish your objectives efficiently.
+
+`;
+
+}
+
+
+
+
+if(text.includes("status")){
+
+
+return `
+
+ORION SYSTEM STATUS
+
+Core System:
+ONLINE
+
+Reasoning Engine:
+ONLINE
+
+Memory System:
+ONLINE
+
+Decision Engine:
+ONLINE
+
+Personality Layer:
+ACTIVE
+
+
+Everything appears operational, Mr. Goodley.
+
+`;
+
+}
+
+
+
+
+return `
+
+ORION ONLINE
+
+
+Sir, I have analyzed your request.
+
+
+Assessment:
+
+${decision.reason}
+
+
+Recommendation:
+
+${decision.decision}
+
+
+Suggested Action:
+
+${decision.action}
+
+
+Awaiting your next instruction, Mr. Goodley.
+
+`;
+
+}
