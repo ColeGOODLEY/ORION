@@ -3,13 +3,11 @@
 // Recovery Build 1.0
 // =====================================
 
+
 const ORION = {
 
-    process(command) {
 
-
-        const brain =
-            analyzeCommand(command);
+    process(command){
 
 
         return `
@@ -22,22 +20,19 @@ const ORION = {
         ${command}
 
 
-        Brain Analysis:
-
-        Intent:
-        ${brain.intent}
-
-
-        Confidence:
-        ${brain.confidence}
+        Core System:
+        Operational
 
 
         Good evening, Mr. Goodley.
 
-        Awaiting further instruction, Sir.
+
+        Awaiting your next instruction, Sir.
 
         `;
 
+
     }
+
 
 };
