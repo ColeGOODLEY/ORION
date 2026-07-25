@@ -1,35 +1,28 @@
-// =====================================
-// ORION MEMORY SYSTEM v1.0
-// =====================================
+// ORION MEMORY SYSTEM
 
 
-function saveMemory(category, value, importance = "normal"){
+function saveMemory(category,value){
 
 
 let memories =
-JSON.parse(localStorage.getItem("orion_memory")) || {};
+JSON.parse(
+localStorage.getItem("orion_memory")
+)
+||
+{};
+
 
 
 if(!memories[category]){
 
-memories[category] = [];
+memories[category]=[];
 
 }
 
 
-let memory = {
 
-information: value,
+memories[category].push(value);
 
-importance: importance,
-
-created:
-new Date().toLocaleString()
-
-};
-
-
-memories[category].push(memory);
 
 
 localStorage.setItem(
@@ -47,31 +40,16 @@ function recallMemory(category){
 
 
 let memories =
-JSON.parse(localStorage.getItem("orion_memory")) || {};
-
-
-return memories[category];
-
-}
-
-
-
-
-function getAllMemories(){
-
-
-return JSON.parse(
+JSON.parse(
 localStorage.getItem("orion_memory")
-) || {};
-
-}
-
-
+)
+||
+{};
 
 
-function clearMemory(){
 
-localStorage.removeItem("orion_memory");
+return memories[category] || [];
+
 
 }
 
@@ -82,30 +60,30 @@ function searchMemory(keyword){
 
 
 let memories =
-getAllMemories();
+JSON.parse(
+localStorage.getItem("orion_memory")
+)
+||
+{};
 
 
-let results = [];
+
+let results=[];
+
 
 
 for(let category in memories){
 
 
-if(Array.isArray(memories[category])){
-
-
-memories[category].forEach(function(memory){
+memories[category].forEach(item=>{
 
 
 if(
-memory.information
-.toLowerCase()
+item.toLowerCase()
 .includes(keyword.toLowerCase())
 ){
 
-
-results.push(memory);
-
+results.push(item);
 
 }
 
@@ -115,8 +93,6 @@ results.push(memory);
 
 }
 
-
-}
 
 
 return results;
