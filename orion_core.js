@@ -19,8 +19,7 @@ const ORION = {
         const context =
         getContext(command);
 
-const memories =
-searchMemory(command);
+const memories = [];
 
         const reasoning =
 processReasoning(
