@@ -1,51 +1,53 @@
 // =====================================
-// ORION BRAIN SYSTEM
+// ORION CORE
 // Recovery Build 1.0
 // =====================================
 
 
-function analyzeCommand(command){
+const ORION = {
 
 
-    let text =
-    command.toLowerCase();
+    process(command){
 
 
-    let intent =
-    "conversation";
+        const brain =
+        analyzeCommand(command);
 
 
-    if(
-        text.includes("hello") ||
-        text.includes("hi") ||
-        text.includes("hey")
-    ){
 
-        intent =
-        "greeting";
+        return `
+
+        ORION ONLINE
+
+
+        Command Received:
+
+        ${command}
+
+
+        Brain Analysis:
+
+        Intent:
+        ${brain.intent}
+
+
+        Confidence:
+        ${brain.confidence}
+
+
+        Core System:
+        Operational
+
+
+        Good evening, Mr. Goodley.
+
+
+        Awaiting your next instruction, Sir.
+
+        `;
+
 
     }
 
 
-    if(
-        text.includes("should") ||
-        text.includes("choose") ||
-        text.includes("decide")
-    ){
-
-        intent =
-        "decision";
-
-    }
-
-
-    return {
-
-        intent: intent,
-
-        confidence: "high"
-
-    };
-
-
-}
+};
