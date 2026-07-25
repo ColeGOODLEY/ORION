@@ -58,44 +58,34 @@ return memories[category] || [];
 
 function searchMemory(keyword){
 
+    let memories =
+    JSON.parse(
+        localStorage.getItem("orion_memory")
+    ) || {};
 
-let memories =
-JSON.parse(
-localStorage.getItem("orion_memory")
-)
-||
-{};
+    let results = [];
 
+    for(let category in memories){
 
+        if(!Array.isArray(memories[category])){
+            continue;
+        }
 
-let results=[];
+        memories[category].forEach(item => {
 
+            if(
+                typeof item === "string" &&
+                item.toLowerCase().includes(keyword.toLowerCase())
+            ){
 
+                results.push(item);
 
-for(let category in memories){
+            }
 
+        });
 
-memories[category].forEach(item=>{
+    }
 
-
-if(
-item.toLowerCase()
-.includes(keyword.toLowerCase())
-){
-
-results.push(item);
-
-}
-
-
-});
-
-
-}
-
-
-
-return results;
-
+    return results;
 
 }
