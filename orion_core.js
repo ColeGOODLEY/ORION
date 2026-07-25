@@ -11,7 +11,12 @@ const ORION = {
         const context =
         getContext(command);
 
-
+const reasoning =
+processReasoning(
+    command,
+    brain,
+    context
+);
 
         return `
 
@@ -47,7 +52,9 @@ const ORION = {
         Objective:
         ${context.objective}
 
+Reasoning Analysis:
 
+${reasoning.analysis}
 
         Core System:
         Operational
