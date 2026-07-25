@@ -7,7 +7,31 @@ function generateResponse(command,decision){
 
 let text =
 command.toLowerCase();
+if(text.startsWith("remember ")){
 
+    const memory =
+    command.substring(9).trim();
+
+    saveMemory(
+        "personal",
+        memory
+    );
+
+    return `
+
+ORION ONLINE
+
+Understood, Mr. Goodley.
+
+I will remember:
+
+"${memory}"
+
+Memory has been successfully stored.
+
+`;
+
+}
 
 
 if(
