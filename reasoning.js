@@ -4,7 +4,7 @@
 // =====================================
 
 
-function processReasoning(command, brain, context){
+function processReasoning(command, brain, context, memories){
 
 
     return {
@@ -14,6 +14,9 @@ function processReasoning(command, brain, context){
         intent: brain.intent,
 
         user: context.user,
+
+        memory:
+memories
 
         analysis:
         "Evaluating the request using logic, context, and available information."
