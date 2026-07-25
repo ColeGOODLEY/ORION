@@ -1,9 +1,3 @@
-// =====================================
-// ORION CORE
-// Recovery Build 1.0
-// =====================================
-
-
 const ORION = {
 
 
@@ -12,6 +6,10 @@ const ORION = {
 
         const brain =
         analyzeCommand(command);
+
+
+        const context =
+        getContext(command);
 
 
 
@@ -33,6 +31,22 @@ const ORION = {
 
         Confidence:
         ${brain.confidence}
+
+
+
+        Context Analysis:
+
+        User:
+        ${context.user}
+
+
+        Assistant:
+        ${context.assistant}
+
+
+        Objective:
+        ${context.objective}
+
 
 
         Core System:
