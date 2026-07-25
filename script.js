@@ -1,6 +1,8 @@
 function executeORION() {
 
-    document.getElementById("response").innerHTML =
-        "SUCCESS: Execute button is working.";
+    const output = document.getElementById("response");
+
+    output.innerHTML =
+        ORION.process("TEST");
 
 }
