@@ -1,6 +1,7 @@
 // =====================================
 // ORION RESPONSE SYSTEM
-// Adaptive Learning Build 1.7
+// Adaptive Learning Build 1.8
+// Goal Management Integration
 // =====================================
 
 function generateResponse(command, decision, memories, knowledge, reasoning, comparison, evaluation, plan, goal){
@@ -357,7 +358,45 @@ Planning engine is operational.
 
 }
 
+// =====================================
+// GOAL MANAGER
+// =====================================
 
+if(goal){
+
+return `
+
+ORION GOAL STATUS
+
+
+Primary Goal:
+
+${goal.primaryGoal}
+
+
+Importance:
+
+${goal.importance}
+
+
+Current Focus:
+
+${goal.currentFocus}
+
+
+Progress:
+
+${goal.progress}
+
+
+Next Milestone:
+
+${goal.nextMilestone}
+
+
+`;
+
+}
 
 // =====================================
 // RESPONSE BUILDING
