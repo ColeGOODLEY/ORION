@@ -74,33 +74,34 @@ const ORION = {
 
 
         if(
-            decision &&
-            decision.decision
-        ){
+    decision &&
+    decision.decision &&
+    decision.decision !== "No decision required."
+){
 
-            saveLearning(
-                "decisions",
-                {
+    saveLearning(
+        "decisions",
+        {
 
-                    command:
-                    command,
-
-
-                    decision:
-                    decision.decision,
+            command:
+            command,
 
 
-                    reason:
-                    decision.reason,
+            decision:
+            decision.decision,
 
 
-                    timestamp:
-                    new Date().toISOString()
+            reason:
+            decision.reason,
 
-                }
-            );
+
+            timestamp:
+            new Date().toISOString()
 
         }
+    );
+
+}
 
 
 
