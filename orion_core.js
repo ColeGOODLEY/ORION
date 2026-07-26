@@ -8,9 +8,27 @@ const ORION = {
 
     process(command){
 
-        const brain =
-        analyzeCommand(command);
 
+const brain =
+analyzeCommand(command);
+
+
+// =====================================
+// ORION CONVERSATION CAPTURE
+// =====================================
+
+saveConversation(
+    "user",
+    command
+);
+
+
+const conversation =
+getConversationContext();
+
+
+const context =
+getContext(command);
         const context =
         getContext(command);
 
@@ -23,13 +41,14 @@ const ORION = {
         );
 
         const reasoning =
-        processReasoning(
-            command,
-            brain,
-            context,
-            personalMemories,
-            knowledge
-        );
+processReasoning(
+    command,
+    brain,
+    context,
+    personalMemories,
+    knowledge,
+    conversation
+);
 
         const comparison =
         compareOptions(command);
@@ -106,7 +125,8 @@ return generateResponse(
     evaluation,
     plan,
     goal,
-    confidence
+    confidence,
+    conversation
 );
 
     }
