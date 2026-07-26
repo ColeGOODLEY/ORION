@@ -1,9 +1,10 @@
 // =====================================
 // ORION RESPONSE SYSTEM
-// Adaptive Learning Build 1.6
+// Adaptive Learning Build 1.7
 // =====================================
 
 function generateResponse(command, decision, memories, knowledge, reasoning, comparison, evaluation, plan){
+
 let text =
 command.toLowerCase();
 
@@ -304,10 +305,54 @@ ONLINE
 Decision Engine:
 ONLINE
 
+Planning System:
+ONLINE
+
 Personality Layer:
 ACTIVE
 
 Everything appears operational, Mr. Goodley.
+
+`;
+
+}
+
+
+
+// =====================================
+// PLANNING ENGINE
+// =====================================
+
+if(plan){
+
+return `
+
+ORION MISSION PLAN
+
+
+Objective:
+
+${plan.objective}
+
+
+Current Phase:
+
+${plan.currentPhase}
+
+
+Completed Systems:
+
+✓ ${plan.completed.join("\n✓ ")}
+
+
+Next Objectives:
+
+• ${plan.nextSteps.join("\n• ")}
+
+
+Mission Status:
+
+Planning engine is operational.
 
 `;
 
