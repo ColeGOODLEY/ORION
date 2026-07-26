@@ -233,24 +233,28 @@ ORION ONLINE
 
 Sir, I have analyzed your request.
 
-${knowledge}
 
-${memorySection}
+Strategic Context:
+
+${decision.context || "No additional context available."}
+
 
 Assessment:
 
 ${decision.reason}
 
+
 Recommendation:
 
 ${decision.decision}
+
 
 Suggested Action:
 
 ${decision.action}
 
+
 Awaiting your next instruction, Mr. Goodley.
 
 `;
-
 }
