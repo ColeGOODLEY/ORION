@@ -4,52 +4,66 @@
 // Central Processing System
 // =====================================
 
+
 const ORION = {
+
 
     process(command){
 
 
-const brain =
-analyzeCommand(command);
+        const brain =
+        analyzeCommand(command);
 
 
-// =====================================
-// ORION CONVERSATION CAPTURE
-// =====================================
 
-saveConversation(
-    "user",
-    command
-);
+        // =====================================
+        // ORION CONVERSATION CAPTURE
+        // =====================================
 
-
-const conversation =
-getConversationContext();
+        saveConversation(
+            "user",
+            command
+        );
 
 
-const context =
-getContext(command);
+        const conversation =
+        getConversationContext();
+
+
+
+        const context =
+        getContext(command);
+
+
 
         const personalMemories =
         getRelevantMemories(command);
+
+
 
         const knowledge =
         integrateKnowledge(
             personalMemories
         );
 
+
+
         const reasoning =
-processReasoning(
-    command,
-    brain,
-    context,
-    personalMemories,
-    knowledge,
-    conversation
-);
+        processReasoning(
+            command,
+            brain,
+            context,
+            personalMemories,
+            knowledge,
+            conversation
+        );
+
+
 
         const comparison =
         compareOptions(command);
+
+
 
         const evaluation =
         evaluateDecision(
@@ -58,29 +72,49 @@ processReasoning(
             knowledge
         );
 
-       const decision =
-makeDecision(
-    command,
-    comparison,
-    knowledge,
-    reasoning
-);
 
 
-const confidence =
-calculateConfidence(
-    command,
-    decision,
-    personalMemories,
-    recallLearning("decisions")
-);
+        const decision =
+        makeDecision(
+            command,
+            comparison,
+            knowledge,
+            reasoning
+        );
+
+
+
+        // =====================================
+        // CONFIDENCE ENGINE
+        // =====================================
+
+        const confidence =
+        calculateConfidence(
+            command,
+            decision,
+            personalMemories,
+            recallLearning("decisions")
+        );
+
+
+
+        // =====================================
+        // PLANNING ENGINE
+        // =====================================
 
         const plan =
-createPlan(command);
+        createPlan(command);
 
 
-const goal =
-manageGoals(command);
+
+        // =====================================
+        // GOAL MANAGER
+        // =====================================
+
+        const goal =
+        manageGoals(command);
+
+
 
         // =====================================
         // ORION LEARNING CAPTURE
@@ -99,11 +133,14 @@ manageGoals(command);
                     command:
                     command,
 
+
                     decision:
                     decision.decision,
 
+
                     reason:
                     decision.reason,
+
 
                     timestamp:
                     new Date().toISOString()
@@ -113,20 +150,28 @@ manageGoals(command);
 
         }
 
-return generateResponse(
-    command,
-    decision,
-    personalMemories,
-    knowledge,
-    reasoning,
-    comparison,
-    evaluation,
-    plan,
-    goal,
-    confidence,
-    conversation
-);
+
+
+        // =====================================
+        // RESPONSE GENERATION
+        // =====================================
+
+        return generateResponse(
+            command,
+            decision,
+            personalMemories,
+            knowledge,
+            reasoning,
+            comparison,
+            evaluation,
+            plan,
+            goal,
+            confidence,
+            conversation
+        );
+
 
     }
+
 
 };
