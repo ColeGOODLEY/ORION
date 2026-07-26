@@ -29,8 +29,6 @@ getConversationContext();
 
 const context =
 getContext(command);
-        const context =
-        getContext(command);
 
         const personalMemories =
         getRelevantMemories(command);
