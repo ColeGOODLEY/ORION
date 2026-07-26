@@ -1,6 +1,6 @@
 // =====================================
 // ORION RESPONSE SYSTEM
-// Personality Recovery Build 1.4
+// Adaptive Learning Build 1.5
 // =====================================
 
 
@@ -66,6 +66,77 @@ I will remember:
 "${memory}"
 
 Memory has been successfully stored.
+
+`;
+
+}
+
+
+
+if(
+text.includes("what have you learned") ||
+text.includes("show learning") ||
+text.includes("learning status")
+){
+
+    const learned =
+    recallLearning("decisions");
+
+
+    if(
+        learned.length === 0
+    ){
+
+        return `
+
+ORION ONLINE
+
+I currently have no learned decision records, Mr. Goodley.
+
+`;
+
+    }
+
+
+    let learningOutput = "";
+
+
+    learned.forEach(item => {
+
+
+        learningOutput += `
+
+Decision:
+${item.decision}
+
+Reason:
+${item.reason}
+
+Command:
+${item.command}
+
+Recorded:
+${item.timestamp}
+
+--------------------
+
+`;
+
+    });
+
+
+
+    return `
+
+ORION ONLINE
+
+Mr. Goodley,
+
+Here are my current learning records:
+
+${learningOutput}
+
+I will continue using these records to improve future decision analysis.
 
 `;
 
@@ -180,6 +251,9 @@ Memory System:
 ONLINE
 
 Decision Engine:
+ONLINE
+
+Learning System:
 ONLINE
 
 Personality Layer:
