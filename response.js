@@ -1,7 +1,7 @@
 // =====================================
 // ORION RESPONSE SYSTEM
 // Adaptive Intelligence Build 2.2
-// Personality Integration
+// Personality Integration Fix
 // =====================================
 
 
@@ -27,38 +27,23 @@ command.toLowerCase();
 
 
 // =====================================
-// PERSONALITY
+// PERSONALITY DATA
 // =====================================
 
-
-let personalityTone = "";
-
-let personalityBehavior = "";
+let personalityInfo = "";
 
 
 if(personalityStyleData){
 
+personalityInfo = `
 
-personalityTone =
+Current Communication Style:
 
-`
-
-Communication Style:
-
-${personalityStyleData.tone}
-
-
-`;
-
-
-personalityBehavior =
-
-`
+${personalityStyleData.tone || "Adaptive"}
 
 Behavior:
 
-${personalityStyleData.behavior}
-
+${personalityStyleData.behavior || "Strategic assistant mode"}
 
 `;
 
@@ -66,12 +51,9 @@ ${personalityStyleData.behavior}
 
 
 
-
-
 // =====================================
 // MEMORY STORAGE
 // =====================================
-
 
 if(text.startsWith("remember ")){
 
@@ -82,38 +64,29 @@ command.substring(9).trim();
 let category = "facts";
 
 
-
 if(
-
 memory.includes("favorite") ||
 memory.includes("like") ||
 memory.includes("prefer")
-
 ){
 
 category = "preferences";
 
 }
 
-
 else if(
-
 memory.includes("goal") ||
 memory.includes("want") ||
 memory.includes("build")
-
 ){
 
 category = "goals";
 
 }
 
-
 else if(
-
 memory.includes("orion") ||
 memory.includes("project")
-
 ){
 
 category = "projects";
@@ -121,33 +94,23 @@ category = "projects";
 }
 
 
-
 saveMemory(
-
 category,
-
 memory
-
 );
 
 
-
 return `
 
 ORION ONLINE
-
 
 Understood, Mr. Goodley.
 
-
 I will remember:
-
 
 "${memory}"
 
-
 Memory has been successfully stored.
-
 
 `;
 
@@ -156,41 +119,121 @@ Memory has been successfully stored.
 
 
 // =====================================
-// LEARNING STATUS
+// CLEAR LEARNING
 // =====================================
 
+if(text === "clear learning"){
 
-if(
-
-text === "learning count" ||
-text === "how much have you learned"
-
-){
+clearLearning();
 
 
 return `
 
 ORION ONLINE
 
-
-Learning Records:
-
-
-${learningCount("decisions")}
-
+Learning history has been cleared successfully, Mr. Goodley.
 
 `;
 
 }
 
 
+
+// =====================================
+// LEARNING COUNT
+// =====================================
+
+if(
+text === "learning count" ||
+text === "how much have you learned"
+){
+
+return `
+
+ORION ONLINE
+
+Current Learning Records:
+
+${learningCount("decisions")}
+
+`;
+
+}
+
+
+
+// =====================================
+// SHOW LEARNING
+// =====================================
+
+if(
+text.includes("what have you learned") ||
+text.includes("show learning")
+){
+
+const learned =
+recallLearning("decisions");
+
+
+if(!learned || learned.length === 0){
+
+return `
+
+ORION ONLINE
+
+No learned decision records currently available.
+
+`;
+
+}
+
+
+let output = "";
+
+
+learned.forEach(item=>{
+
+output += `
+
+Decision:
+
+${item.decision}
+
+
+Reason:
+
+${item.reason}
+
+
+Recorded:
+
+${item.timestamp}
+
+
+----------------
+
+`;
+
+});
+
+
+return `
+
+ORION LEARNING STATUS
+
+
+${output}
+
+
+`;
+
+}
 
 
 
 // =====================================
 // CONVERSATION STATUS
 // =====================================
-
 
 if(text.includes("conversation status")){
 
@@ -218,14 +261,12 @@ history.length > 0
 ?
 
 history.map(item =>
-
 item.role + ": " + item.message
-
 ).join("\n")
 
 :
 
-"No conversation history available."
+"No conversation history."
 
 }
 
@@ -233,8 +274,6 @@ item.role + ": " + item.message
 `;
 
 }
-
-
 
 
 
@@ -242,41 +281,42 @@ item.role + ": " + item.message
 // MEMORY RECALL
 // =====================================
 
-
 if(
-
 text.includes("what do you remember") ||
-
 text.includes("what do you know about me")
-
 ){
 
 
 const memories = [
 
-
 ...recallMemory("preferences"),
-
 ...recallMemory("goals"),
-
 ...recallMemory("projects"),
-
 ...recallMemory("facts")
-
 
 ];
 
 
-
-if(memories.length === 0){
-
-
 return `
 
-ORION ONLINE
+ORION MEMORY STATUS
 
 
-No stored memories currently available, Mr. Goodley.
+Current Memories:
+
+
+${
+memories.length > 0
+
+?
+
+"• " + memories.join("\n• ")
+
+:
+
+"No memories stored."
+
+}
 
 
 `;
@@ -285,15 +325,84 @@ No stored memories currently available, Mr. Goodley.
 
 
 
+// =====================================
+// PERSONALITY / IDENTITY
+// =====================================
+
+if(
+
+text.includes("who are you") ||
+
+text.includes("what is your personality") ||
+
+text.includes("describe yourself") ||
+
+text.includes("what are you like") ||
+
+text.includes("personality")
+
+){
+
+
 return `
 
 ORION ONLINE
 
 
-Current Memory Records:
+I am ORION, Sir.
 
 
-• ${memories.join("\n• ")}
+Operational Research & Intelligence for Optimization and Navigation.
+
+
+My purpose is to assist with:
+
+
+• Strategic analysis
+
+• Decision support
+
+• Memory management
+
+• Planning
+
+• Goal optimization
+
+• Adaptive learning
+
+
+
+My Personality:
+
+
+• Intelligent
+
+• Strategic
+
+• Calm
+
+• Honest
+
+• Supportive
+
+• Analytical
+
+• Witty
+
+• Loyal
+
+
+
+My operating principle:
+
+
+I am designed to assist you, not simply agree with you.
+
+If analysis shows a better path, I will explain why and recommend it.
+
+
+
+${personalityInfo}
 
 
 `;
@@ -306,15 +415,10 @@ Current Memory Records:
 // GREETING
 // =====================================
 
-
 if(
-
 text.includes("hello") ||
-
 text.includes("hi") ||
-
 text.includes("hey")
-
 ){
 
 
@@ -329,61 +433,17 @@ Good day, Mr. Goodley.
 All primary systems are operational.
 
 
-${personalityTone}
-
-
-How may I assist you today?
-
+How may I assist you today, Sir?
 
 `;
 
 }
-
-
-
-
-
-// =====================================
-// IDENTITY
-// =====================================
-
-
-if(text.includes("who are you")){
-
-
-return `
-
-I am ORION, Sir.
-
-
-Operational Research & Intelligence for Optimization and Navigation.
-
-
-I am designed to provide:
-
-• Strategic analysis
-• Decision support
-• Memory assistance
-• Planning
-• Adaptive learning
-• Personal optimization
-
-
-${personalityTone}
-
-
-`;
-
-}
-
-
 
 
 
 // =====================================
 // SYSTEM STATUS
 // =====================================
-
 
 if(text.includes("status")){
 
@@ -434,14 +494,7 @@ ONLINE
 
 
 
-Current Mode:
-
-${personalityStyleData ? personalityStyleData.tone : "Standard"}
-
-
-
 Everything appears operational, Mr. Goodley.
-
 
 `;
 
@@ -449,19 +502,13 @@ Everything appears operational, Mr. Goodley.
 
 
 
-
-
 // =====================================
 // CONFIDENCE
 // =====================================
 
-
 if(
-
 confidence &&
-
 text.includes("confidence")
-
 ){
 
 
@@ -472,16 +519,12 @@ ORION CONFIDENCE ANALYSIS
 
 Confidence Score:
 
-
 ${confidence.score}%
-
 
 
 Reasoning:
 
-
 • ${confidence.reasoning.join("\n• ")}
-
 
 
 `;
@@ -490,12 +533,9 @@ Reasoning:
 
 
 
-
-
 // =====================================
 // PLANNING
 // =====================================
-
 
 if(plan){
 
@@ -507,37 +547,27 @@ ORION MISSION PLAN
 
 Objective:
 
-
 ${plan.objective}
-
 
 
 Current Phase:
 
-
 ${plan.currentPhase}
-
 
 
 Completed Systems:
 
-
 ✓ ${plan.completed.join("\n✓ ")}
-
 
 
 Next Objectives:
 
-
 • ${plan.nextSteps.join("\n• ")}
-
 
 
 Mission Status:
 
-
 Planning engine operational.
-
 
 `;
 
@@ -545,12 +575,9 @@ Planning engine operational.
 
 
 
-
-
 // =====================================
 // GOALS
 // =====================================
-
 
 if(goal){
 
@@ -562,37 +589,27 @@ ORION GOAL STATUS
 
 Primary Goal:
 
-
 ${goal.primaryGoal}
-
 
 
 Importance:
 
-
 ${goal.importance}
-
 
 
 Current Focus:
 
-
 ${goal.currentFocus}
-
 
 
 Progress:
 
-
 ${goal.progress}
-
 
 
 Next Milestone:
 
-
 ${goal.nextMilestone}
-
 
 
 `;
@@ -601,26 +618,19 @@ ${goal.nextMilestone}
 
 
 
-
-
 // =====================================
-// BUILD RESPONSE SECTIONS
+// FINAL RESPONSE BUILD
 // =====================================
-
 
 let memorySection = "";
 
-
 if(memories && memories.length > 0){
-
 
 memorySection = `
 
 Relevant Memory:
 
-
 • ${memories.join("\n• ")}
-
 
 `;
 
@@ -630,17 +640,13 @@ Relevant Memory:
 
 let knowledgeSection = "";
 
-
 if(knowledge){
-
 
 knowledgeSection = `
 
 Strategic Context:
 
-
 ${knowledge}
-
 
 `;
 
@@ -650,17 +656,13 @@ ${knowledge}
 
 let reasoningSection = "";
 
-
 if(reasoning && reasoning.analysis){
-
 
 reasoningSection = `
 
 Reasoning Analysis:
 
-
 ${reasoning.analysis}
-
 
 `;
 
@@ -670,17 +672,13 @@ ${reasoning.analysis}
 
 let comparisonSection = "";
 
-
-if(decision && decision.comparison){
-
+if(comparison){
 
 comparisonSection = `
 
-Option Comparison:
+Comparison:
 
-
-${decision.comparison}
-
+${JSON.stringify(comparison)}
 
 `;
 
@@ -690,29 +688,17 @@ ${decision.comparison}
 
 let evaluationSection = "";
 
-
 if(evaluation){
-
 
 evaluationSection = `
 
-Evaluation Analysis:
+Evaluation:
 
-
-${evaluation.analysis}
-
-
-${evaluation.optionAEvaluation || ""}
-
-
-${evaluation.optionBEvaluation || ""}
-
+${evaluation.analysis || ""}
 
 `;
 
 }
-
-
 
 
 
@@ -724,12 +710,7 @@ ORION ONLINE
 Sir, I have analyzed your request.
 
 
-
-${personalityTone}
-
-
-${personalityBehavior}
-
+${personalityInfo}
 
 
 ${knowledgeSection}
@@ -751,26 +732,25 @@ ${memorySection}
 Assessment:
 
 
-${decision.reason}
+${decision?.reason || "No assessment available."}
 
 
 
 Recommendation:
 
 
-${decision.decision}
+${decision?.decision || "No recommendation available."}
 
 
 
 Suggested Action:
 
 
-${decision.action}
+${decision?.action || "Continue operation."}
 
 
 
 Awaiting your next instruction, Mr. Goodley.
-
 
 `;
 
