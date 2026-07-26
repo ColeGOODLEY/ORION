@@ -7,6 +7,17 @@
 function makeDecision(command, comparison, knowledge){
 
 
+    let strategicContext = "";
+
+
+    if(knowledge){
+
+        strategicContext =
+        knowledge;
+
+    }
+
+
     let text =
     command.toLowerCase();
 
@@ -19,19 +30,17 @@ function makeDecision(command, comparison, knowledge){
 
         return {
 
-
             decision:
             "Improve memory first.",
-
-
 
             reason:
             "A stronger memory system creates a more personalized foundation for ORION before expanding external capabilities.",
 
-
-
             action:
-            "Prioritize improving ORION's memory system, then expand external connectivity once personalization is stronger."
+            "Prioritize improving ORION's memory system, then expand external connectivity once personalization is stronger.",
+
+            context:
+            strategicContext
 
         };
 
@@ -41,19 +50,17 @@ function makeDecision(command, comparison, knowledge){
 
     return {
 
-
         decision:
         "No decision required.",
-
-
 
         reason:
         "The command does not contain a decision request.",
 
-
-
         action:
-        "Continue normal operation and await the next instruction."
+        "Continue normal operation and await the next instruction.",
+
+        context:
+        strategicContext
 
     };
 
