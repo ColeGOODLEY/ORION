@@ -1,7 +1,8 @@
 // =====================================
 // ORION CORE
 // Adaptive Intelligence Build 2.1
-// Intent Routing Integration
+// Intent Routing + Personality Integration
+// Central Processing System
 // =====================================
 
 
@@ -9,7 +10,6 @@ const ORION = {
 
 
 process(command){
-
 
 
 try{
@@ -25,12 +25,27 @@ analyzeCommand(command);
 
 
 // =====================================
+// PERSONALITY ANALYSIS
+// =====================================
+
+const personalityStyle =
+ORION_PERSONALITY.getStyle(command);
+
+
+const personality =
+ORION_PERSONALITY.getBehavior(
+    personalityStyle
+);
+
+
+
+// =====================================
 // CONVERSATION CAPTURE
 // =====================================
 
 saveConversation(
-"user",
-command
+    "user",
+    command
 );
 
 
@@ -40,7 +55,7 @@ getConversationContext();
 
 
 // =====================================
-// CONTEXT
+// CONTEXT SYSTEM
 // =====================================
 
 const context =
@@ -49,7 +64,7 @@ getContext(command);
 
 
 // =====================================
-// MEMORY
+// MEMORY SYSTEM
 // =====================================
 
 const personalMemories =
@@ -58,12 +73,12 @@ getRelevantMemories(command);
 
 
 // =====================================
-// KNOWLEDGE
+// KNOWLEDGE SYSTEM
 // =====================================
 
 const knowledge =
 integrateKnowledge(
-personalMemories
+    personalMemories
 );
 
 
@@ -73,72 +88,75 @@ personalMemories
 // =====================================
 
 
-// Personality questions do not need decision analysis
+// Personality requests
 
 if(
 brain.intent === "personality"
 ){
 
 return generateResponse(
-command,
-{},
-personalMemories,
-knowledge,
-null,
-null,
-null,
-null,
-null,
-null,
-conversation
+    command,
+    {},
+    personalMemories,
+    knowledge,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    conversation,
+    personality
 );
 
 }
 
 
 
-// Status requests do not need reasoning
+// Status requests
 
 if(
 brain.intent === "status"
 ){
 
 return generateResponse(
-command,
-{},
-personalMemories,
-knowledge,
-null,
-null,
-null,
-null,
-null,
-null,
-conversation
+    command,
+    {},
+    personalMemories,
+    knowledge,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    conversation,
+    personality
 );
 
 }
 
 
 
-// Memory requests prioritize memory
+// Memory requests
 
 if(
 brain.intent === "memory"
 ){
 
 return generateResponse(
-command,
-{},
-personalMemories,
-knowledge,
-null,
-null,
-null,
-null,
-null,
-null,
-conversation
+    command,
+    {},
+    personalMemories,
+    knowledge,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    conversation,
+    personality
 );
 
 }
@@ -151,12 +169,12 @@ conversation
 
 const reasoning =
 processReasoning(
-command,
-brain,
-context,
-personalMemories,
-knowledge,
-conversation
+    command,
+    brain,
+    context,
+    personalMemories,
+    knowledge,
+    conversation
 );
 
 
@@ -168,37 +186,49 @@ compareOptions(command);
 
 const evaluation =
 evaluateDecision(
-command,
-comparison,
-knowledge
+    command,
+    comparison,
+    knowledge
 );
 
 
 
 const decision =
 makeDecision(
-command,
-comparison,
-knowledge,
-reasoning
+    command,
+    comparison,
+    knowledge,
+    reasoning
 );
 
 
+
+// =====================================
+// CONFIDENCE ENGINE
+// =====================================
 
 const confidence =
 calculateConfidence(
-command,
-decision,
-personalMemories,
-recallLearning("decisions")
+    command,
+    decision,
+    personalMemories,
+    recallLearning("decisions")
 );
 
 
+
+// =====================================
+// PLANNING ENGINE
+// =====================================
 
 const plan =
 createPlan(command);
 
 
+
+// =====================================
+// GOAL MANAGEMENT
+// =====================================
 
 const goal =
 manageGoals(command);
@@ -220,23 +250,25 @@ decision.decision !== "No decision required."
 ){
 
 saveLearning(
-"decisions",
-{
+    "decisions",
+    {
 
-command:
-command,
+        command:
+        command,
 
-decision:
-decision.decision,
 
-reason:
-decision.reason,
+        decision:
+        decision.decision,
 
-timestamp:
-new Date().toISOString()
 
-}
+        reason:
+        decision.reason,
 
+
+        timestamp:
+        new Date().toISOString()
+
+    }
 );
 
 }
@@ -248,17 +280,18 @@ new Date().toISOString()
 // =====================================
 
 return generateResponse(
-command,
-decision,
-personalMemories,
-knowledge,
-reasoning,
-comparison,
-evaluation,
-plan,
-goal,
-confidence,
-conversation
+    command,
+    decision,
+    personalMemories,
+    knowledge,
+    reasoning,
+    comparison,
+    evaluation,
+    plan,
+    goal,
+    confidence,
+    conversation,
+    personality
 );
 
 
