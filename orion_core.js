@@ -1,8 +1,7 @@
 // =====================================
 // ORION CORE
-// Adaptive Intelligence Build 2.2
-// Central Processing System
-// Personality Integration
+// Adaptive Intelligence Build 2.1
+// Intent Routing Integration
 // =====================================
 
 
@@ -12,11 +11,12 @@ const ORION = {
 process(command){
 
 
+
 try{
 
 
 // =====================================
-// COMMAND ANALYSIS
+// BRAIN ANALYSIS
 // =====================================
 
 const brain =
@@ -28,61 +28,14 @@ analyzeCommand(command);
 // CONVERSATION CAPTURE
 // =====================================
 
-if(typeof saveConversation === "function"){
-
 saveConversation(
 "user",
 command
 );
 
-}
-
 
 const conversation =
-
-typeof getConversationContext === "function"
-
-?
-
-getConversationContext()
-
-:
-
-[];
-
-
-
-
-// =====================================
-// PERSONALITY SYSTEM
-// =====================================
-
-const personality =
-
-typeof getPersonalityMode === "function"
-
-?
-
-getPersonalityMode(command)
-
-:
-
-"standard";
-
-
-
-const personalityStyleData =
-
-typeof personalityStyle === "function"
-
-?
-
-personalityStyle(personality)
-
-:
-
-null;
-
+getConversationContext();
 
 
 
@@ -91,17 +44,7 @@ null;
 // =====================================
 
 const context =
-
-typeof getContext === "function"
-
-?
-
-getContext(command)
-
-:
-
-null;
-
+getContext(command);
 
 
 
@@ -110,17 +53,7 @@ null;
 // =====================================
 
 const personalMemories =
-
-typeof getRelevantMemories === "function"
-
-?
-
-getRelevantMemories(command)
-
-:
-
-[];
-
+getRelevantMemories(command);
 
 
 
@@ -129,216 +62,146 @@ getRelevantMemories(command)
 // =====================================
 
 const knowledge =
-
-typeof integrateKnowledge === "function"
-
-?
-
 integrateKnowledge(
 personalMemories
-)
-
-:
-
-null;
-
+);
 
 
 
 // =====================================
-// REASONING
+// RESPONSE-ONLY MODES
+// =====================================
+
+
+// Personality questions do not need decision analysis
+
+if(
+brain.intent === "personality"
+){
+
+return generateResponse(
+command,
+{},
+personalMemories,
+knowledge,
+null,
+null,
+null,
+null,
+null,
+null,
+conversation
+);
+
+}
+
+
+
+// Status requests do not need reasoning
+
+if(
+brain.intent === "status"
+){
+
+return generateResponse(
+command,
+{},
+personalMemories,
+knowledge,
+null,
+null,
+null,
+null,
+null,
+null,
+conversation
+);
+
+}
+
+
+
+// Memory requests prioritize memory
+
+if(
+brain.intent === "memory"
+){
+
+return generateResponse(
+command,
+{},
+personalMemories,
+knowledge,
+null,
+null,
+null,
+null,
+null,
+null,
+conversation
+);
+
+}
+
+
+
+// =====================================
+// FULL REASONING PIPELINE
 // =====================================
 
 const reasoning =
-
-typeof processReasoning === "function"
-
-?
-
 processReasoning(
-
 command,
-
 brain,
-
 context,
-
 personalMemories,
-
 knowledge,
-
 conversation
-
-)
-
-:
-
-null;
+);
 
 
-
-
-// =====================================
-// COMPARISON
-// =====================================
 
 const comparison =
-
-typeof compareOptions === "function"
-
-?
-
-compareOptions(command)
-
-:
-
-null;
+compareOptions(command);
 
 
-
-
-// =====================================
-// EVALUATION
-// =====================================
 
 const evaluation =
-
-typeof evaluateDecision === "function"
-
-?
-
 evaluateDecision(
-
 command,
-
 comparison,
-
 knowledge
-
-)
-
-:
-
-null;
+);
 
 
-
-
-// =====================================
-// DECISION
-// =====================================
 
 const decision =
-
-typeof makeDecision === "function"
-
-?
-
 makeDecision(
-
 command,
-
 comparison,
-
 knowledge,
-
 reasoning
-
-)
-
-:
-
-{
+);
 
 
-decision:
-"No decision available.",
-
-
-reason:
-"Decision engine unavailable.",
-
-
-action:
-"Check system modules."
-
-};
-
-
-
-
-// =====================================
-// CONFIDENCE
-// =====================================
 
 const confidence =
-
-typeof calculateConfidence === "function"
-
-?
-
 calculateConfidence(
-
 command,
-
 decision,
-
 personalMemories,
-
-typeof recallLearning === "function"
-
-?
-
 recallLearning("decisions")
-
-:
-
-[]
-
-)
-
-:
-
-null;
+);
 
 
-
-
-// =====================================
-// PLANNING
-// =====================================
 
 const plan =
-
-typeof createPlan === "function"
-
-?
-
-createPlan(command)
-
-:
-
-null;
+createPlan(command);
 
 
-
-
-// =====================================
-// GOALS
-// =====================================
 
 const goal =
-
-typeof manageGoals === "function"
-
-?
-
-manageGoals(command)
-
-:
-
-null;
-
+manageGoals(command);
 
 
 
@@ -348,8 +211,6 @@ null;
 
 if(
 
-typeof saveLearning === "function" &&
-
 decision &&
 
 decision.decision &&
@@ -358,79 +219,52 @@ decision.decision !== "No decision required."
 
 ){
 
-
 saveLearning(
-
 "decisions",
-
 {
 
-
 command:
-
 command,
 
-
 decision:
-
 decision.decision,
 
-
 reason:
-
 decision.reason,
 
-
 timestamp:
-
 new Date().toISOString()
-
 
 }
 
 );
 
-
 }
 
 
 
-
 // =====================================
-// RESPONSE GENERATION
+// FINAL RESPONSE
 // =====================================
 
 return generateResponse(
-
 command,
-
 decision,
-
 personalMemories,
-
 knowledge,
-
 reasoning,
-
 comparison,
-
 evaluation,
-
 plan,
-
 goal,
-
 confidence,
-
-conversation,
-
-personalityStyleData
-
+conversation
 );
 
 
 
 }
+
 
 catch(error){
 
@@ -448,9 +282,12 @@ Error:
 ${error.message}
 
 
+Please check system modules.
+
 `;
 
 }
+
 
 
 }
