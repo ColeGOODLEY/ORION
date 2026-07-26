@@ -217,7 +217,7 @@ ORION CONVERSATION STATUS
 
 Messages Stored:
 
-${conversationCount()}
+${conversation ? conversation.length : 0}
 
 
 Recent Context:
@@ -336,10 +336,15 @@ My purpose is to help you accomplish your objectives efficiently.
 // STATUS
 // =====================================
 
-if(text.includes("status")){
+if(
+text.includes("conversation status")
+){
 
+if(!conversation){
+    conversation = [];
+}
 
-return `
+return 
 
 ORION SYSTEM STATUS
 
