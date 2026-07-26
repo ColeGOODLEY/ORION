@@ -1,6 +1,6 @@
 // =====================================
 // ORION RESPONSE SYSTEM
-// Personality Recovery Build 1.2
+// Personality Recovery Build 1.3
 // =====================================
 
 
@@ -248,6 +248,25 @@ ${reasoning.analysis}
 
 
 
+let comparisonSection = "";
+
+if(
+decision &&
+decision.comparison
+){
+
+    comparisonSection = `
+
+Option Comparison:
+
+${decision.comparison}
+
+`;
+
+}
+
+
+
 return `
 
 ORION ONLINE
@@ -260,6 +279,9 @@ ${knowledgeSection}
 
 
 ${reasoningSection}
+
+
+${comparisonSection}
 
 
 ${memorySection}
