@@ -1,4 +1,7 @@
+// =====================================
 // ORION MEMORY SYSTEM
+// Recovery Build 1.1
+// =====================================
 
 
 function saveMemory(category, value){
@@ -12,7 +15,7 @@ function saveMemory(category, value){
         memories[category] = [];
     }
 
-    // Don't save duplicate memories
+    // Prevent duplicate memories
     if(!memories[category].includes(value)){
         memories[category].push(value);
     }
@@ -29,18 +32,12 @@ function saveMemory(category, value){
 
 function recallMemory(category){
 
+    let memories =
+    JSON.parse(
+        localStorage.getItem("orion_memory")
+    ) || {};
 
-let memories =
-JSON.parse(
-localStorage.getItem("orion_memory")
-)
-||
-{};
-
-
-
-return memories[category] || [];
-
+    return memories[category] || [];
 
 }
 
@@ -78,5 +75,14 @@ function searchMemory(keyword){
     }
 
     return results;
+
+}
+
+
+
+
+function clearMemory(){
+
+    localStorage.removeItem("orion_memory");
 
 }
