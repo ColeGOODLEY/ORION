@@ -1,25 +1,24 @@
 // =====================================
 // ORION RESPONSE SYSTEM
-// Adaptive Learning Build 1.5
+// Adaptive Learning Build 1.6
 // =====================================
 
-
 function generateResponse(command, decision, memories, knowledge, reasoning, comparison, evaluation){
-
 
 let text =
 command.toLowerCase();
 
 
+// =====================================
+// MEMORY STORAGE
+// =====================================
 
 if(text.startsWith("remember ")){
 
     const memory =
     command.substring(9).trim();
 
-
     let category = "facts";
-
 
     if(
         memory.includes("favorite") ||
@@ -48,12 +47,7 @@ if(text.startsWith("remember ")){
 
     }
 
-
-    saveMemory(
-        category,
-        memory
-    );
-
+    saveMemory(category, memory);
 
     return `
 
@@ -73,6 +67,60 @@ Memory has been successfully stored.
 
 
 
+// =====================================
+// CLEAR LEARNING
+// =====================================
+
+if(text === "clear learning"){
+
+    clearLearning();
+
+    return `
+
+ORION ONLINE
+
+Learning history has been cleared successfully, Mr. Goodley.
+
+Future decision analysis will begin building a new learning history.
+
+`;
+
+}
+
+
+
+// =====================================
+// LEARNING COUNT
+// =====================================
+
+if(
+    text === "learning count" ||
+    text === "how much have you learned"
+){
+
+    const count =
+    learningCount("decisions");
+
+    return `
+
+ORION ONLINE
+
+Current Learning Statistics
+
+Stored Decision Records:
+
+${count}
+
+`;
+
+}
+
+
+
+// =====================================
+// SHOW LEARNING
+// =====================================
+
 if(
 text.includes("what have you learned") ||
 text.includes("show learning") ||
@@ -81,7 +129,6 @@ text.includes("learning status")
 
     const learned =
     recallLearning("decisions");
-
 
     if(
         learned.length === 0
@@ -97,12 +144,9 @@ I currently have no learned decision records, Mr. Goodley.
 
     }
 
-
     let learningOutput = "";
 
-
     learned.forEach(item => {
-
 
         learningOutput += `
 
@@ -124,8 +168,6 @@ ${item.timestamp}
 
     });
 
-
-
     return `
 
 ORION ONLINE
@@ -144,6 +186,10 @@ I will continue using these records to improve future decision analysis.
 
 
 
+// =====================================
+// MEMORY RECALL
+// =====================================
+
 if(
 text.includes("what do you remember") ||
 text.includes("what do you know about me")
@@ -152,15 +198,11 @@ text.includes("what do you know about me")
     const memories = [
 
         ...recallMemory("preferences"),
-
         ...recallMemory("goals"),
-
         ...recallMemory("projects"),
-
         ...recallMemory("facts")
 
     ];
-
 
     if(memories.length === 0){
 
@@ -173,7 +215,6 @@ I currently have no stored personal memories, Mr. Goodley.
 `;
 
     }
-
 
     return `
 
@@ -191,12 +232,15 @@ Here is what I currently remember:
 
 
 
+// =====================================
+// GREETING
+// =====================================
+
 if(
 text.includes("hello") ||
 text.includes("hi") ||
 text.includes("hey")
 ){
-
 
 return `
 
@@ -214,8 +258,11 @@ How may I assist you today, Sir?
 
 
 
-if(text.includes("who are you")){
+// =====================================
+// IDENTITY
+// =====================================
 
+if(text.includes("who are you")){
 
 return `
 
@@ -223,7 +270,7 @@ I am ORION, Sir.
 
 Operational Research & Intelligence for Optimization and Navigation.
 
-I am designed to assist with analysis, strategy, memory, and decision support.
+I am designed to assist with analysis, strategy, memory, decision support, and adaptive learning.
 
 My purpose is to help you accomplish your objectives efficiently.
 
@@ -233,9 +280,11 @@ My purpose is to help you accomplish your objectives efficiently.
 
 
 
+// =====================================
+// STATUS
+// =====================================
 
 if(text.includes("status")){
-
 
 return `
 
@@ -250,15 +299,14 @@ ONLINE
 Memory System:
 ONLINE
 
-Decision Engine:
+Learning System:
 ONLINE
 
-Learning System:
+Decision Engine:
 ONLINE
 
 Personality Layer:
 ACTIVE
-
 
 Everything appears operational, Mr. Goodley.
 
@@ -268,6 +316,10 @@ Everything appears operational, Mr. Goodley.
 
 
 
+// =====================================
+// RESPONSE BUILDING
+// =====================================
+
 let memorySection = "";
 
 if(
@@ -275,7 +327,7 @@ memories &&
 memories.length > 0
 ){
 
-    memorySection = `
+memorySection = `
 
 Relevant Memory:
 
@@ -291,7 +343,7 @@ let knowledgeSection = "";
 
 if(knowledge){
 
-    knowledgeSection = `
+knowledgeSection = `
 
 Strategic Context:
 
@@ -310,7 +362,7 @@ reasoning &&
 reasoning.analysis
 ){
 
-    reasoningSection = `
+reasoningSection = `
 
 Reasoning Analysis:
 
@@ -329,7 +381,7 @@ decision &&
 decision.comparison
 ){
 
-    comparisonSection = `
+comparisonSection = `
 
 Option Comparison:
 
@@ -343,19 +395,15 @@ ${decision.comparison}
 
 let evaluationSection = "";
 
-if(
-evaluation
-){
+if(evaluation){
 
-    evaluationSection = `
+evaluationSection = `
 
 Evaluation Analysis:
 
 ${evaluation.analysis}
 
-
 ${evaluation.optionAEvaluation}
-
 
 ${evaluation.optionBEvaluation}
 
@@ -369,39 +417,29 @@ return `
 
 ORION ONLINE
 
-
 Sir, I have analyzed your request.
-
 
 ${knowledgeSection}
 
-
 ${reasoningSection}
-
 
 ${comparisonSection}
 
-
 ${evaluationSection}
 
-
 ${memorySection}
-
 
 Assessment:
 
 ${decision.reason}
 
-
 Recommendation:
 
 ${decision.decision}
 
-
 Suggested Action:
 
 ${decision.action}
-
 
 Awaiting your next instruction, Mr. Goodley.
 
