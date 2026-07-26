@@ -1,6 +1,6 @@
 // =====================================
 // ORION CORE
-// Recovery Build 1.1
+// Adaptive Learning Build 1.9
 // Central Processing System
 // =====================================
 
@@ -65,6 +65,42 @@ const ORION = {
             knowledge,
             reasoning
         );
+
+
+
+        // =====================================
+        // ORION LEARNING CAPTURE
+        // =====================================
+
+
+        if(
+            decision &&
+            decision.decision
+        ){
+
+            saveLearning(
+                "decisions",
+                {
+
+                    command:
+                    command,
+
+
+                    decision:
+                    decision.decision,
+
+
+                    reason:
+                    decision.reason,
+
+
+                    timestamp:
+                    new Date().toISOString()
+
+                }
+            );
+
+        }
 
 
 
