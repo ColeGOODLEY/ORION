@@ -41,13 +41,22 @@ const ORION = {
             knowledge
         );
 
-        const decision =
-        makeDecision(
-            command,
-            comparison,
-            knowledge,
-            reasoning
-        );
+       const decision =
+makeDecision(
+    command,
+    comparison,
+    knowledge,
+    reasoning
+);
+
+
+const confidence =
+calculateConfidence(
+    command,
+    decision,
+    personalMemories,
+    recallLearning("decisions")
+);
 
         const plan =
 createPlan(command);
@@ -87,7 +96,7 @@ manageGoals(command);
 
         }
 
-     return generateResponse(
+return generateResponse(
     command,
     decision,
     personalMemories,
@@ -96,7 +105,8 @@ manageGoals(command);
     comparison,
     evaluation,
     plan,
-    goal
+    goal,
+    confidence
 );
 
     }
