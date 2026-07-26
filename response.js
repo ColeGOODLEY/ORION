@@ -4,8 +4,7 @@
 // Goal Management Integration
 // =====================================
 
-function generateResponse(command, decision, memories, knowledge, reasoning, comparison, evaluation, plan, goal){
-let text =
+function generateResponse(command, decision, memories, knowledge, reasoning, comparison, evaluation, plan, goal, confidence){let text =
 command.toLowerCase();
 
 
@@ -397,7 +396,33 @@ ${goal.nextMilestone}
 `;
 
 }
+// =====================================
+// CONFIDENCE ENGINE
+// =====================================
 
+if(
+confidence &&
+text.includes("confidence")
+){
+
+return `
+
+ORION CONFIDENCE ANALYSIS
+
+
+Confidence Score:
+
+${confidence.score}%
+
+
+Reasoning:
+
+• ${confidence.reasoning.join("\n• ")}
+
+
+`;
+
+}
 // =====================================
 // RESPONSE BUILDING
 // =====================================
