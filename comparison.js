@@ -1,26 +1,77 @@
 // =====================================
 // ORION COMPARISON ENGINE
-// Recovery Build 1.0
+// Strategic Comparison Build 1.1
 // =====================================
 
 
 function compareOptions(command){
 
 
+    let text =
+    command.toLowerCase();
+
+
+
+    if(
+        text.includes("memory") ||
+        text.includes("internet")
+    ){
+
+
+        return {
+
+
+            optionA:
+            "Improve Memory",
+
+
+            optionB:
+            "Add Internet Access",
+
+
+
+            optionAAnalysis:
+            "Improves personalization, user understanding, and ORION's ability to provide tailored assistance.",
+
+
+
+            optionBAnalysis:
+            "Provides external information access and expands ORION's available knowledge sources.",
+
+
+
+            comparison:
+            "Memory creates a stronger internal foundation, while internet access expands external capability. A personalized foundation improves the value of future external connections."
+
+
+        };
+
+
+    }
+
+
+
     return {
 
 
         optionA:
-        "Improve Memory",
+        "No option detected",
 
 
         optionB:
-        "Add Internet Access",
+        "No option detected",
+
+
+        optionAAnalysis:
+        "",
+
+
+        optionBAnalysis:
+        "",
 
 
         comparison:
-        "Comparing options based on long-term usefulness, capability growth, and strategic value."
-
+        "No comparison required."
 
     };
 
