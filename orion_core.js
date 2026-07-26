@@ -32,7 +32,8 @@ processReasoning(
     command,
     brain,
     context,
-    personalMemories
+    personalMemories,
+    knowledge
 );
 
 
