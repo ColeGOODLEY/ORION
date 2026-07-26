@@ -57,11 +57,12 @@ makeDecision(
 
 
 
-    return generateResponse(
+   return generateResponse(
     command,
     decision,
     personalMemories,
-    knowledge
+    knowledge,
+    reasoning
 );
 
 
