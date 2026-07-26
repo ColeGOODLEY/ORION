@@ -1,63 +1,156 @@
 // =====================================
 // ORION SCRIPT
-// Diagnostic Build
+// Command Interface System
+// Build 2.1
+// =====================================
+
+
+// =====================================
+// EXECUTE ORION COMMAND
 // =====================================
 
 function executeORION(){
 
+
     const input =
     document.getElementById("command");
+
 
     const output =
     document.getElementById("response");
 
 
-    const command =
-    input.value.trim();
 
+    if(!input || !output){
 
-    if(command === ""){
-
-        output.innerHTML =
-        "Awaiting your command, Mr. Goodley.";
+        console.error(
+            "ORION ERROR: Command interface elements missing."
+        );
 
         return;
 
     }
 
 
-    try{
 
-        output.innerHTML =
-        ORION.process(command);
+    const command =
+    input.value.trim();
 
-    }
 
-    catch(error){
+
+    if(command === ""){
+
 
         output.innerHTML = `
 
-ORION DIAGNOSTIC ERROR
+ORION ONLINE
 
-System failed while processing command.
+Awaiting your command, Mr. Goodley.
+
+`;
+
+        return;
+
+    }
+
+
+
+    try{
+
+
+        const response =
+        ORION.process(command);
+
+
+
+        output.innerHTML =
+        response;
+
+
+
+        input.value = "";
+
+
+
+    }
+    catch(error){
+
+
+        console.error(
+            "ORION SYSTEM ERROR:",
+            error
+        );
+
+
+        output.innerHTML = `
+
+ORION SYSTEM ERROR
+
+
+Unable to complete command processing.
+
 
 Error:
 
 ${error.message}
 
 
-Location:
-
-${error.stack}
-
+Please check system modules.
 
 `;
-
-        console.log(error);
 
     }
 
 
-    input.value = "";
-
 }
+
+
+
+// =====================================
+// ENTER KEY SUPPORT
+// =====================================
+
+document.addEventListener(
+"DOMContentLoaded",
+function(){
+
+
+    const input =
+    document.getElementById("command");
+
+
+
+    if(input){
+
+
+        input.addEventListener(
+        "keydown",
+        function(event){
+
+
+            if(event.key === "Enter"){
+
+
+                executeORION();
+
+
+            }
+
+
+        });
+
+
+    }
+
+
+});
+
+
+
+// =====================================
+// SYSTEM READY
+// =====================================
+
+console.log(
+"ORION Interface Loaded Successfully."
+);
