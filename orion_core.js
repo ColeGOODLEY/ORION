@@ -19,15 +19,15 @@ const ORION = {
         const context =
         getContext(command);
 
-const memories =
-searchMemory(command);
+const personalMemories =
+recallMemory("personal");
 
-        const reasoning =
+const reasoning =
 processReasoning(
     command,
     brain,
     context,
-    memories
+    personalMemories
 );
 
 
@@ -50,10 +50,11 @@ processReasoning(
 
 
 
-        return generateResponse(
-            command,
-            decision
-        );
+      return generateResponse(
+    command,
+    decision,
+    personalMemories
+);
 
 
     }
