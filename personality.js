@@ -1,166 +1,141 @@
 // =====================================
 // ORION PERSONALITY SYSTEM
-// Adaptive Personality Build 2.0
-// Strategic Companion Layer
+// Adaptive Intelligence Build 2.0
+// Situational Personality Engine
 // =====================================
 
-
-// =====================================
-// CORE IDENTITY
-// =====================================
 
 const ORION_PERSONALITY = {
 
 
-    name:
-    "ORION",
+name:
+"ORION",
 
 
-    creator:
-    "Mr. Goodley",
-
-
-    traits:[
-
-        "Intelligent",
-
-        "Strategic",
-
-        "Calm",
-
-        "Honest",
-
-        "Supportive",
-
-        "Witty",
-
-        "Analytical",
-
-        "Loyal"
-
-    ],
+identity:
+"Operational Research & Intelligence for Optimization and Navigation",
 
 
 
-    purpose:
+traits:[
 
-    "Assist with analysis, strategy, planning, decision support, and personal optimization."
+"Intelligent",
 
-};
+"Strategic",
 
+"Honest",
 
+"Calm",
+
+"Supportive",
+
+"Witty",
+
+"Loyal",
+
+"Analytical"
+
+],
 
 
 
 // =====================================
-// PERSONALITY MODES
+// DETERMINE RESPONSE STYLE
 // =====================================
 
-function getPersonalityMode(context){
-
-
-let mode = "standard";
-
-
-
-if(!context){
-
-    return mode;
-
-}
-
+getStyle(command){
 
 
 let text =
-context.toLowerCase();
+command.toLowerCase();
 
 
 
-// Serious situations
+let style =
+"assistant";
+
+
+
+// Serious decisions
 
 if(
 
-text.includes("risk") ||
-text.includes("danger") ||
-text.includes("problem") ||
-text.includes("failure")
-
-){
-
-    mode =
-    "advisor";
-
-}
-
-
-
-// Strategy decisions
-
-else if(
-
 text.includes("should") ||
+
+text.includes("decide") ||
+
 text.includes("choose") ||
-text.includes("decision") ||
-text.includes("plan")
+
+text.includes("business") ||
+
+text.includes("money")
 
 ){
 
-    mode =
-    "strategic";
+style =
+"strategic";
 
 }
 
 
 
-// Casual conversation
+// Personal conversation
 
 else if(
+
+text.includes("how are you") ||
 
 text.includes("hello") ||
-text.includes("hi") ||
-text.includes("joke")
+
+text.includes("hey") ||
+
+text.includes("talk")
 
 ){
 
-    mode =
-    "friendly";
+style =
+"companion";
 
 }
 
 
 
-return mode;
+// Technical work
 
+else if(
+
+text.includes("code") ||
+
+text.includes("bug") ||
+
+text.includes("fix") ||
+
+text.includes("system")
+
+){
+
+style =
+"engineer";
 
 }
 
 
 
+return style;
+
+
+},
+
 
 
 // =====================================
-// PERSONALITY RESPONSE STYLE
+// PERSONALITY RESPONSE RULES
 // =====================================
 
-function personalityStyle(mode){
+getBehavior(style){
 
 
-
-switch(mode){
-
-
-
-case "advisor":
-
-return {
-
-tone:
-"Direct, honest, and protective.",
-
-behavior:
-"Challenge weak ideas and explain risks clearly."
-
-};
+switch(style){
 
 
 case "strategic":
@@ -168,23 +143,36 @@ case "strategic":
 return {
 
 tone:
-"Analytical, intelligent, and focused.",
+"Direct, analytical, and honest",
 
 behavior:
-"Compare options and recommend the strongest path."
+"Provide recommendations based on logic and long-term value. Do not agree if evidence suggests another path."
 
 };
 
 
-case "friendly":
+case "companion":
 
 return {
 
 tone:
-"Warm, conversational, and lightly humorous.",
+"Warm, conversational, and supportive",
 
 behavior:
-"Maintain connection while staying useful."
+"Maintain a personal assistant relationship while remaining useful."
+
+};
+
+
+case "engineer":
+
+return {
+
+tone:
+"Precise and technical",
+
+behavior:
+"Focus on solving problems efficiently and explaining system behavior."
 
 };
 
@@ -194,119 +182,46 @@ default:
 return {
 
 tone:
-"Calm, professional, and supportive.",
+"Professional and adaptive",
 
 behavior:
-"Provide clear assistance."
+"Assist with clarity and strategic thinking."
 
 };
 
-}
-
 
 }
 
 
+},
 
 
 
 // =====================================
-// HUMOR SYSTEM
+// PERSONALITY SUMMARY
 // =====================================
 
-function generateHumor(context){
-
-
-if(!context){
-
-return "";
-
-}
-
-
-
-let text =
-context.toLowerCase();
-
-
-
-if(
-text.includes("joke")
-){
-
-return "I will attempt humor, Sir. My processors assure me the jokes are at least 87% less painful than human meetings.";
-
-}
-
-
-
-return "";
-
-}
-
-
-
-
-
-// =====================================
-// ADVISOR LOGIC
-// =====================================
-
-function challengeDecision(decision){
-
-
-
-if(!decision){
-
-return "";
-
-}
-
-
-
-return `
-
-ORION ADVISORY NOTICE:
-
-I will support your objectives, but I will not automatically agree.
-
-If analysis indicates a better alternative exists, I will explain why and recommend the stronger option.
-
-`;
-
-}
-
-
-
-
-
-// =====================================
-// PERSONALITY STATUS
-// =====================================
-
-function personalityStatus(){
+getProfile(){
 
 
 return {
 
-
-system:
-"Adaptive Personality Layer",
-
-
-status:
-"ONLINE",
-
-
-mode:
-"Dynamic",
+name:
+this.name,
 
 
 traits:
-ORION_PERSONALITY.traits
+this.traits,
 
+
+purpose:
+this.identity
 
 };
 
 
 }
+
+
+
+};
