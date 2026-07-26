@@ -3,8 +3,7 @@
 // Personality Recovery Build 1.1
 // =====================================
 
-function generateResponse(command, decision, memories){
-
+function generateResponse(command, decision, memories, knowledge){
     let text =
     command.toLowerCase();
 
@@ -233,6 +232,8 @@ return `
 ORION ONLINE
 
 Sir, I have analyzed your request.
+
+${knowledge}
 
 ${memorySection}
 
