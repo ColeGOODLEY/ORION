@@ -1,255 +1,303 @@
 // =====================================
 // ORION BRAIN SYSTEM
-// Adaptive Intelligence Build 2.0
-// Intent Recognition Engine
+// Adaptive Intelligence Build 3.0
+// Central Intent Recognition Engine
 // =====================================
-
 
 function analyzeCommand(command){
 
+    const text = command.toLowerCase().trim();
 
-let text =
-command.toLowerCase();
+    let intent = "conversation";
+    let confidence = "medium";
+    let category = "general";
 
 
 
-let intent =
-"conversation";
+    // =====================================
+    // MEMORY
+    // =====================================
 
+    if(
 
+        text.startsWith("remember ") ||
 
-let confidence =
-"medium";
+        text.includes("what do you remember") ||
 
+        text.includes("what do you know about me") ||
 
+        text.includes("memory")
 
-// =====================================
-// MEMORY DETECTION
-// =====================================
+    ){
 
-if(
+        intent = "memory";
+        category = "memory";
+        confidence = "high";
 
-text.includes("remember") ||
+    }
 
-text.includes("what do you remember") ||
 
-text.includes("what do you know about me") ||
 
-text.includes("memory")
+    // =====================================
+    // LEARNING
+    // =====================================
 
-){
+    else if(
 
-intent =
-"memory";
+        text.includes("learning") ||
 
-confidence =
-"high";
+        text.includes("what have you learned") ||
 
-}
+        text.includes("show learning") ||
 
+        text.includes("clear learning")
 
+    ){
 
-// =====================================
-// PERSONALITY DETECTION
-// =====================================
+        intent = "learning";
+        category = "learning";
+        confidence = "high";
 
-else if(
+    }
 
-text.includes("who are you") ||
 
-text.includes("personality") ||
 
-text.includes("what are you like") ||
+    // =====================================
+    // PERSONALITY
+    // =====================================
 
-text.includes("describe yourself")
+    else if(
 
-){
+        text.includes("who are you") ||
 
-intent =
-"personality";
+        text.includes("personality") ||
 
-confidence =
-"high";
+        text.includes("describe yourself") ||
 
-}
+        text.includes("what are you like")
 
+    ){
 
+        intent = "personality";
+        category = "identity";
+        confidence = "high";
 
-// =====================================
-// SYSTEM STATUS
-// =====================================
+    }
 
-else if(
 
-text.includes("status") ||
 
-text.includes("systems") ||
+    // =====================================
+    // STATUS
+    // =====================================
 
-text.includes("diagnostic")
+    else if(
 
-){
+        text === "status" ||
 
-intent =
-"status";
+        text.includes("system status") ||
 
-confidence =
-"high";
+        text.includes("diagnostic") ||
 
-}
+        text.includes("systems online")
 
+    ){
 
+        intent = "status";
+        category = "system";
+        confidence = "high";
 
-// =====================================
-// DECISION DETECTION
-// =====================================
+    }
 
-else if(
 
-text.includes("should") ||
 
-text.includes("choose") ||
+    // =====================================
+    // CONFIDENCE
+    // =====================================
 
-text.includes("decide") ||
+    else if(
 
-text.includes("best option") ||
+        text.includes("confidence") ||
 
-text.includes("which")
+        text.includes("certainty")
 
-){
+    ){
 
-intent =
-"decision";
+        intent = "confidence";
+        category = "analysis";
+        confidence = "high";
 
-confidence =
-"high";
+    }
 
-}
 
 
+    // =====================================
+    // GOALS
+    // =====================================
 
-// =====================================
-// PLANNING DETECTION
-// =====================================
+    else if(
 
-else if(
+        text.includes("goal") ||
 
-text.includes("plan") ||
+        text.includes("objective") ||
 
-text.includes("mission") ||
+        text.includes("progress")
 
-text.includes("roadmap") ||
+    ){
 
-text.includes("next step")
+        intent = "goal";
+        category = "planning";
+        confidence = "high";
 
-){
+    }
 
-intent =
-"planning";
 
-confidence =
-"high";
 
-}
+    // =====================================
+    // PLANNING
+    // =====================================
 
+    else if(
 
+        text.includes("plan") ||
 
-// =====================================
-// GOAL DETECTION
-// =====================================
+        text.includes("roadmap") ||
 
-else if(
+        text.includes("next step") ||
 
-text.includes("goal") ||
+        text.includes("mission")
 
-text.includes("objective") ||
+    ){
 
-text.includes("target") ||
+        intent = "planning";
+        category = "planning";
+        confidence = "high";
 
-text.includes("progress")
+    }
 
-){
 
-intent =
-"goal";
 
-confidence =
-"high";
+    // =====================================
+    // ENGINEERING
+    // =====================================
 
-}
+    else if(
 
+        text.includes("bug") ||
 
+        text.includes("fix") ||
 
-// =====================================
-// CONFIDENCE DETECTION
-// =====================================
+        text.includes("javascript") ||
 
-else if(
+        text.includes("js") ||
 
-text.includes("confidence") ||
+        text.includes("html") ||
 
-text.includes("certainty") ||
+        text.includes("css") ||
 
-text.includes("sure")
+        text.includes("code") ||
 
-){
+        text.includes("coding") ||
 
-intent =
-"confidence";
+        text.includes("program") ||
 
-confidence =
-"high";
+        text.includes("error")
 
-}
+    ){
 
+        intent = "engineering";
+        category = "technical";
+        confidence = "high";
 
+    }
 
-// =====================================
-// GREETING DETECTION
-// =====================================
 
-else if(
 
-text.includes("hello") ||
+    // =====================================
+    // DECISIONS
+    // =====================================
 
-text.includes("hi") ||
+    else if(
 
-text.includes("hey")
+        text.includes("should") ||
 
-){
+        text.includes("choose") ||
 
-intent =
-"greeting";
+        text.includes("decide") ||
 
-confidence =
-"high";
+        text.includes("which") ||
 
-}
+        text.includes("best option")
 
+    ){
 
+        intent = "decision";
+        category = "analysis";
+        confidence = "high";
 
-// =====================================
-// RETURN ANALYSIS
-// =====================================
+    }
 
-return {
 
 
-intent:
+    // =====================================
+    // GREETING
+    // =====================================
 
-intent,
+    else if(
 
+        text === "hello" ||
 
-confidence:
+        text === "hi" ||
 
-confidence,
+        text === "hey" ||
 
+        text === "good morning" ||
 
-command:
+        text === "good afternoon" ||
 
-command
+        text === "good evening"
 
+    ){
 
-};
+        intent = "greeting";
+        category = "conversation";
+        confidence = "high";
 
+    }
+
+
+
+    // =====================================
+    // IDENTITY
+    // =====================================
+
+    else if(
+
+        text.includes("your name")
+
+    ){
+
+        intent = "identity";
+        category = "identity";
+        confidence = "high";
+
+    }
+
+
+
+    // =====================================
+    // RETURN ANALYSIS
+    // =====================================
+
+    return {
+
+        intent: intent,
+
+        category: category,
+
+        confidence: confidence,
+
+        command: command
+
+    };
 
 }
