@@ -34,6 +34,17 @@ function makeDecision(command, comparison, knowledge, reasoning){
 
 
 
+    let comparisonAnalysis = "";
+
+    if(comparison){
+
+        comparisonAnalysis =
+        comparison.comparison;
+
+    }
+
+
+
     if(
         text.includes("memory") ||
         text.includes("internet")
@@ -46,7 +57,7 @@ function makeDecision(command, comparison, knowledge, reasoning){
 
 
 
-        // Memory improves personalization foundation
+        // Memory improves personalization and foundation
 
         if(
             strategicContext.includes("ORION") ||
@@ -93,7 +104,11 @@ function makeDecision(command, comparison, knowledge, reasoning){
 
 
                 reasoning:
-                reasoningContext
+                reasoningContext,
+
+
+                comparison:
+                comparisonAnalysis
 
             };
 
@@ -106,6 +121,7 @@ function makeDecision(command, comparison, knowledge, reasoning){
 
 
     return {
+
 
         decision:
         "No decision required.",
@@ -124,7 +140,11 @@ function makeDecision(command, comparison, knowledge, reasoning){
 
 
         reasoning:
-        reasoningContext
+        reasoningContext,
+
+
+        comparison:
+        comparisonAnalysis
 
     };
 
