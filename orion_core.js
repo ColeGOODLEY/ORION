@@ -1,37 +1,26 @@
 // =====================================
 // ORION CORE
-// Adaptive Learning Build 1.9
+// Adaptive Planning Build 2.0
 // Central Processing System
 // =====================================
 
-
 const ORION = {
 
-
     process(command){
-
 
         const brain =
         analyzeCommand(command);
 
-
-
         const context =
         getContext(command);
 
-
-
         const personalMemories =
         getRelevantMemories(command);
-
-
 
         const knowledge =
         integrateKnowledge(
             personalMemories
         );
-
-
 
         const reasoning =
         processReasoning(
@@ -42,12 +31,8 @@ const ORION = {
             knowledge
         );
 
-
-
         const comparison =
         compareOptions(command);
-
-
 
         const evaluation =
         evaluateDecision(
@@ -55,8 +40,6 @@ const ORION = {
             comparison,
             knowledge
         );
-
-
 
         const decision =
         makeDecision(
@@ -66,44 +49,39 @@ const ORION = {
             reasoning
         );
 
-
+        const plan =
+        createPlan(command);
 
         // =====================================
         // ORION LEARNING CAPTURE
         // =====================================
 
-
         if(
-    decision &&
-    decision.decision &&
-    decision.decision !== "No decision required."
-){
+            decision &&
+            decision.decision &&
+            decision.decision !== "No decision required."
+        ){
 
-    saveLearning(
-        "decisions",
-        {
+            saveLearning(
+                "decisions",
+                {
 
-            command:
-            command,
+                    command:
+                    command,
 
+                    decision:
+                    decision.decision,
 
-            decision:
-            decision.decision,
+                    reason:
+                    decision.reason,
 
+                    timestamp:
+                    new Date().toISOString()
 
-            reason:
-            decision.reason,
-
-
-            timestamp:
-            new Date().toISOString()
+                }
+            );
 
         }
-    );
-
-}
-
-
 
         return generateResponse(
             command,
@@ -112,11 +90,10 @@ const ORION = {
             knowledge,
             reasoning,
             comparison,
-            evaluation
+            evaluation,
+            plan
         );
 
-
     }
-
 
 };
