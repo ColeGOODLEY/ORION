@@ -1,23 +1,29 @@
+// =====================================
 // ORION RESPONSE SYSTEM
-// Personality Recovery Build
+// Personality Recovery Build 1.1
+// =====================================
+
+function generateResponse(command, decision){
+
+    let text =
+    command.toLowerCase();
 
 
-function generateResponse(command,decision){
+    // ==========================
+    // REMEMBER
+    // ==========================
 
+    if(text.startsWith("remember ")){
 
-let text =
-command.toLowerCase();
-if(text.startsWith("remember ")){
+        const memory =
+        command.substring(9).trim();
 
-    const memory =
-    command.substring(9).trim();
+        saveMemory(
+            "personal",
+            memory
+        );
 
-    saveMemory(
-        "personal",
-        memory
-    );
-
-    return `
+        return `
 
 ORION ONLINE
 
@@ -31,19 +37,24 @@ Memory has been successfully stored.
 
 `;
 
-}
+    }
 
-if(
-    text.includes("what do you remember") ||
-    text.includes("what do you know about me")
-){
 
-    const memories =
-    recallMemory("personal");
+    // ==========================
+    // RECALL MEMORY
+    // ==========================
 
-    if(memories.length === 0){
+    if(
+        text.includes("what do you remember") ||
+        text.includes("what do you know about me")
+    ){
 
-        return `
+        const memories =
+        recallMemory("personal");
+
+        if(memories.length === 0){
+
+            return `
 
 ORION ONLINE
 
@@ -51,9 +62,9 @@ I currently have no stored personal memories, Mr. Goodley.
 
 `;
 
-    }
+        }
 
-    return `
+        return `
 
 ORION ONLINE
 
@@ -65,15 +76,41 @@ Here is what I currently remember:
 
 `;
 
-}
-if(
-text.includes("hello") ||
-text.includes("hi") ||
-text.includes("hey")
-){
+    }
 
 
-return `
+    // ==========================
+    // CLEAR MEMORY
+    // ==========================
+
+    if(text === "clear memory"){
+
+        clearMemory();
+
+        return `
+
+ORION ONLINE
+
+Understood, Mr. Goodley.
+
+All stored memories have been cleared successfully.
+
+`;
+
+    }
+
+
+    // ==========================
+    // GREETING
+    // ==========================
+
+    if(
+        text.includes("hello") ||
+        text.includes("hi") ||
+        text.includes("hey")
+    ){
+
+        return `
 
 ORION ONLINE
 
@@ -85,14 +122,16 @@ How may I assist you today, Sir?
 
 `;
 
-}
+    }
 
 
+    // ==========================
+    // IDENTITY
+    // ==========================
 
-if(text.includes("who are you")){
+    if(text.includes("who are you")){
 
-
-return `
+        return `
 
 I am ORION, Sir.
 
@@ -104,15 +143,16 @@ My purpose is to help you accomplish your objectives efficiently.
 
 `;
 
-}
+    }
 
 
+    // ==========================
+    // STATUS
+    // ==========================
 
+    if(text.includes("status")){
 
-if(text.includes("status")){
-
-
-return `
+        return `
 
 ORION SYSTEM STATUS
 
@@ -131,38 +171,34 @@ ONLINE
 Personality Layer:
 ACTIVE
 
-
 Everything appears operational, Mr. Goodley.
 
 `;
 
-}
+    }
 
 
+    // ==========================
+    // DEFAULT RESPONSE
+    // ==========================
 
-
-return `
+    return `
 
 ORION ONLINE
 
-
 Sir, I have analyzed your request.
-
 
 Assessment:
 
 ${decision.reason}
 
-
 Recommendation:
 
 ${decision.decision}
 
-
 Suggested Action:
 
 ${decision.action}
-
 
 Awaiting your next instruction, Mr. Goodley.
 
