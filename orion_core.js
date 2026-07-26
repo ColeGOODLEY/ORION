@@ -20,7 +20,7 @@ const ORION = {
         getContext(command);
 
 const personalMemories =
-recallMemory("personal");
+getRelevantMemories(command);
 
 const reasoning =
 processReasoning(
