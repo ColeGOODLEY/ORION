@@ -18,10 +18,33 @@ function generateResponse(command, decision, memories){
         const memory =
         command.substring(9).trim();
 
-        saveMemory(
-            "personal",
-            memory
-        );
+        let category = "facts";
+
+if(
+    memory.includes("favorite") ||
+    memory.includes("like") ||
+    memory.includes("prefer")
+){
+    category = "preferences";
+}
+else if(
+    memory.includes("goal") ||
+    memory.includes("want") ||
+    memory.includes("build")
+){
+    category = "goals";
+}
+else if(
+    memory.includes("orion") ||
+    memory.includes("project")
+){
+    category = "projects";
+}
+
+saveMemory(
+    category,
+    memory
+);
 
         return `
 
