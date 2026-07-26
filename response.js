@@ -1,10 +1,13 @@
 // =====================================
 // ORION RESPONSE SYSTEM
-// Adaptive Learning Build 1.8
-// Goal Management Integration
+// Adaptive Learning Build 1.9
+// Goal Management + Confidence Integration
 // =====================================
 
-function generateResponse(command, decision, memories, knowledge, reasoning, comparison, evaluation, plan, goal, confidence){let text =
+
+function generateResponse(command, decision, memories, knowledge, reasoning, comparison, evaluation, plan, goal, confidence){
+
+let text =
 command.toLowerCase();
 
 
@@ -18,6 +21,7 @@ if(text.startsWith("remember ")){
     command.substring(9).trim();
 
     let category = "facts";
+
 
     if(
         memory.includes("favorite") ||
@@ -46,7 +50,12 @@ if(text.startsWith("remember ")){
 
     }
 
-    saveMemory(category, memory);
+
+    saveMemory(
+        category,
+        memory
+    );
+
 
     return `
 
@@ -74,6 +83,7 @@ if(text === "clear learning"){
 
     clearLearning();
 
+
     return `
 
 ORION ONLINE
@@ -99,6 +109,7 @@ if(
 
     const count =
     learningCount("decisions");
+
 
     return `
 
@@ -129,6 +140,7 @@ text.includes("learning status")
     const learned =
     recallLearning("decisions");
 
+
     if(
         learned.length === 0
     ){
@@ -143,9 +155,12 @@ I currently have no learned decision records, Mr. Goodley.
 
     }
 
+
     let learningOutput = "";
 
+
     learned.forEach(item => {
+
 
         learningOutput += `
 
@@ -166,6 +181,8 @@ ${item.timestamp}
 `;
 
     });
+
+
 
     return `
 
@@ -203,6 +220,7 @@ text.includes("what do you know about me")
 
     ];
 
+
     if(memories.length === 0){
 
         return `
@@ -214,6 +232,7 @@ I currently have no stored personal memories, Mr. Goodley.
 `;
 
     }
+
 
     return `
 
@@ -263,13 +282,14 @@ How may I assist you today, Sir?
 
 if(text.includes("who are you")){
 
+
 return `
 
 I am ORION, Sir.
 
 Operational Research & Intelligence for Optimization and Navigation.
 
-I am designed to assist with analysis, strategy, memory, decision support, and adaptive learning.
+I am designed to assist with analysis, strategy, memory, decision support, planning, and adaptive learning.
 
 My purpose is to help you accomplish your objectives efficiently.
 
@@ -284,6 +304,7 @@ My purpose is to help you accomplish your objectives efficiently.
 // =====================================
 
 if(text.includes("status")){
+
 
 return `
 
@@ -307,10 +328,47 @@ ONLINE
 Planning System:
 ONLINE
 
+Goal Management:
+ONLINE
+
+Confidence Engine:
+ONLINE
+
 Personality Layer:
 ACTIVE
 
+
 Everything appears operational, Mr. Goodley.
+
+`;
+
+}
+
+
+
+// =====================================
+// CONFIDENCE ENGINE
+// =====================================
+
+if(
+confidence &&
+text.includes("confidence")
+){
+
+return `
+
+ORION CONFIDENCE ANALYSIS
+
+
+Confidence Score:
+
+${confidence.score}%
+
+
+Reasoning:
+
+• ${confidence.reasoning.join("\n• ")}
+
 
 `;
 
@@ -357,6 +415,8 @@ Planning engine is operational.
 
 }
 
+
+
 // =====================================
 // GOAL MANAGER
 // =====================================
@@ -396,38 +456,15 @@ ${goal.nextMilestone}
 `;
 
 }
-// =====================================
-// CONFIDENCE ENGINE
-// =====================================
-
-if(
-confidence &&
-text.includes("confidence")
-){
-
-return `
-
-ORION CONFIDENCE ANALYSIS
 
 
-Confidence Score:
 
-${confidence.score}%
-
-
-Reasoning:
-
-• ${confidence.reasoning.join("\n• ")}
-
-
-`;
-
-}
 // =====================================
 // RESPONSE BUILDING
 // =====================================
 
 let memorySection = "";
+
 
 if(
 memories &&
@@ -448,6 +485,7 @@ Relevant Memory:
 
 let knowledgeSection = "";
 
+
 if(knowledge){
 
 knowledgeSection = `
@@ -463,6 +501,7 @@ ${knowledge}
 
 
 let reasoningSection = "";
+
 
 if(
 reasoning &&
@@ -483,6 +522,7 @@ ${reasoning.analysis}
 
 let comparisonSection = "";
 
+
 if(
 decision &&
 decision.comparison
@@ -501,6 +541,7 @@ ${decision.comparison}
 
 
 let evaluationSection = "";
+
 
 if(evaluation){
 
@@ -540,13 +581,16 @@ Assessment:
 
 ${decision.reason}
 
+
 Recommendation:
 
 ${decision.decision}
 
+
 Suggested Action:
 
 ${decision.action}
+
 
 Awaiting your next instruction, Mr. Goodley.
 
