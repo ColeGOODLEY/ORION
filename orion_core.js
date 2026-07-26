@@ -50,7 +50,11 @@ const ORION = {
         );
 
         const plan =
-        createPlan(command);
+createPlan(command);
+
+
+const goal =
+manageGoals(command);
 
         // =====================================
         // ORION LEARNING CAPTURE
@@ -83,16 +87,17 @@ const ORION = {
 
         }
 
-        return generateResponse(
-            command,
-            decision,
-            personalMemories,
-            knowledge,
-            reasoning,
-            comparison,
-            evaluation,
-            plan
-        );
+     return generateResponse(
+    command,
+    decision,
+    personalMemories,
+    knowledge,
+    reasoning,
+    comparison,
+    evaluation,
+    plan,
+    goal
+);
 
     }
 
