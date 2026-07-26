@@ -4,24 +4,26 @@
 // =====================================
 
 
-function processReasoning(command, brain, context, memories){
+function processReasoning(command, brain, context, memories, knowledge){
 
+return {
 
-    return {
+    command: command,
 
-        command: command,
+    intent: brain.intent,
 
-        intent: brain.intent,
+    user: context.user,
 
-        user: context.user,
+    memory:
+    memories,
 
-        memory:
-memories,
+    knowledge:
+    knowledge,
 
-analysis:
-"Evaluating the request using logic, context, and available information."
+    analysis:
+    "Evaluating the request using logic, context, and available information."
 
-    };
+};
 
 
 }
