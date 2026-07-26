@@ -1,177 +1,459 @@
 // =====================================
 // ORION CORE
-// Adaptive Planning Build 2.0
+// Adaptive Intelligence Build 2.2
 // Central Processing System
+// Personality Integration
 // =====================================
 
 
 const ORION = {
 
 
-    process(command){
+process(command){
 
 
-        const brain =
-        analyzeCommand(command);
+try{
 
 
+// =====================================
+// COMMAND ANALYSIS
+// =====================================
 
-        // =====================================
-        // ORION CONVERSATION CAPTURE
-        // =====================================
-
-        saveConversation(
-            "user",
-            command
-        );
-
-
-        const conversation =
-        getConversationContext();
+const brain =
+analyzeCommand(command);
 
 
 
-        const context =
-        getContext(command);
+// =====================================
+// CONVERSATION CAPTURE
+// =====================================
+
+if(typeof saveConversation === "function"){
+
+saveConversation(
+"user",
+command
+);
+
+}
+
+
+const conversation =
+
+typeof getConversationContext === "function"
+
+?
+
+getConversationContext()
+
+:
+
+[];
 
 
 
-        const personalMemories =
-        getRelevantMemories(command);
+
+// =====================================
+// PERSONALITY SYSTEM
+// =====================================
+
+const personality =
+
+typeof getPersonalityMode === "function"
+
+?
+
+getPersonalityMode(command)
+
+:
+
+"standard";
 
 
 
-        const knowledge =
-        integrateKnowledge(
-            personalMemories
-        );
+const personalityStyleData =
+
+typeof personalityStyle === "function"
+
+?
+
+personalityStyle(personality)
+
+:
+
+null;
 
 
 
-        const reasoning =
-        processReasoning(
-            command,
-            brain,
-            context,
-            personalMemories,
-            knowledge,
-            conversation
-        );
+
+// =====================================
+// CONTEXT
+// =====================================
+
+const context =
+
+typeof getContext === "function"
+
+?
+
+getContext(command)
+
+:
+
+null;
 
 
 
-        const comparison =
-        compareOptions(command);
+
+// =====================================
+// MEMORY
+// =====================================
+
+const personalMemories =
+
+typeof getRelevantMemories === "function"
+
+?
+
+getRelevantMemories(command)
+
+:
+
+[];
 
 
 
-        const evaluation =
-        evaluateDecision(
-            command,
-            comparison,
-            knowledge
-        );
+
+// =====================================
+// KNOWLEDGE
+// =====================================
+
+const knowledge =
+
+typeof integrateKnowledge === "function"
+
+?
+
+integrateKnowledge(
+personalMemories
+)
+
+:
+
+null;
 
 
 
-        const decision =
-        makeDecision(
-            command,
-            comparison,
-            knowledge,
-            reasoning
-        );
+
+// =====================================
+// REASONING
+// =====================================
+
+const reasoning =
+
+typeof processReasoning === "function"
+
+?
+
+processReasoning(
+
+command,
+
+brain,
+
+context,
+
+personalMemories,
+
+knowledge,
+
+conversation
+
+)
+
+:
+
+null;
 
 
 
-        // =====================================
-        // CONFIDENCE ENGINE
-        // =====================================
 
-        const confidence =
-        calculateConfidence(
-            command,
-            decision,
-            personalMemories,
-            recallLearning("decisions")
-        );
+// =====================================
+// COMPARISON
+// =====================================
 
+const comparison =
 
+typeof compareOptions === "function"
 
-        // =====================================
-        // PLANNING ENGINE
-        // =====================================
+?
 
-        const plan =
-        createPlan(command);
+compareOptions(command)
+
+:
+
+null;
 
 
 
-        // =====================================
-        // GOAL MANAGER
-        // =====================================
 
-        const goal =
-        manageGoals(command);
+// =====================================
+// EVALUATION
+// =====================================
 
+const evaluation =
 
+typeof evaluateDecision === "function"
 
-        // =====================================
-        // ORION LEARNING CAPTURE
-        // =====================================
+?
 
-        if(
-            decision &&
-            decision.decision &&
-            decision.decision !== "No decision required."
-        ){
+evaluateDecision(
 
-            saveLearning(
-                "decisions",
-                {
+command,
 
-                    command:
-                    command,
+comparison,
 
+knowledge
 
-                    decision:
-                    decision.decision,
+)
 
+:
 
-                    reason:
-                    decision.reason,
-
-
-                    timestamp:
-                    new Date().toISOString()
-
-                }
-            );
-
-        }
+null;
 
 
 
-        // =====================================
-        // RESPONSE GENERATION
-        // =====================================
 
-        return generateResponse(
-            command,
-            decision,
-            personalMemories,
-            knowledge,
-            reasoning,
-            comparison,
-            evaluation,
-            plan,
-            goal,
-            confidence,
-            conversation
-        );
+// =====================================
+// DECISION
+// =====================================
+
+const decision =
+
+typeof makeDecision === "function"
+
+?
+
+makeDecision(
+
+command,
+
+comparison,
+
+knowledge,
+
+reasoning
+
+)
+
+:
+
+{
 
 
-    }
+decision:
+"No decision available.",
+
+
+reason:
+"Decision engine unavailable.",
+
+
+action:
+"Check system modules."
+
+};
+
+
+
+
+// =====================================
+// CONFIDENCE
+// =====================================
+
+const confidence =
+
+typeof calculateConfidence === "function"
+
+?
+
+calculateConfidence(
+
+command,
+
+decision,
+
+personalMemories,
+
+typeof recallLearning === "function"
+
+?
+
+recallLearning("decisions")
+
+:
+
+[]
+
+)
+
+:
+
+null;
+
+
+
+
+// =====================================
+// PLANNING
+// =====================================
+
+const plan =
+
+typeof createPlan === "function"
+
+?
+
+createPlan(command)
+
+:
+
+null;
+
+
+
+
+// =====================================
+// GOALS
+// =====================================
+
+const goal =
+
+typeof manageGoals === "function"
+
+?
+
+manageGoals(command)
+
+:
+
+null;
+
+
+
+
+// =====================================
+// LEARNING CAPTURE
+// =====================================
+
+if(
+
+typeof saveLearning === "function" &&
+
+decision &&
+
+decision.decision &&
+
+decision.decision !== "No decision required."
+
+){
+
+
+saveLearning(
+
+"decisions",
+
+{
+
+
+command:
+
+command,
+
+
+decision:
+
+decision.decision,
+
+
+reason:
+
+decision.reason,
+
+
+timestamp:
+
+new Date().toISOString()
+
+
+}
+
+);
+
+
+}
+
+
+
+
+// =====================================
+// RESPONSE GENERATION
+// =====================================
+
+return generateResponse(
+
+command,
+
+decision,
+
+personalMemories,
+
+knowledge,
+
+reasoning,
+
+comparison,
+
+evaluation,
+
+plan,
+
+goal,
+
+confidence,
+
+conversation,
+
+personalityStyleData
+
+);
+
+
+
+}
+
+catch(error){
+
+
+return `
+
+ORION DIAGNOSTIC ERROR
+
+
+System failed while processing command.
+
+
+Error:
+
+${error.message}
+
+
+`;
+
+}
+
+
+}
 
 
 };
