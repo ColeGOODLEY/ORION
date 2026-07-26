@@ -22,6 +22,11 @@ const ORION = {
 const personalMemories =
 getRelevantMemories(command);
 
+const knowledge =
+integrateKnowledge(
+    personalMemories
+);
+        
 const reasoning =
 processReasoning(
     command,
@@ -50,10 +55,11 @@ processReasoning(
 
 
 
-      return generateResponse(
+    return generateResponse(
     command,
     decision,
-    personalMemories
+    personalMemories,
+    knowledge
 );
 
 
