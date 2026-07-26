@@ -1,51 +1,61 @@
 // =====================================
 // ORION RESPONSE SYSTEM
-// Personality Recovery Build 1.1
+// Personality Recovery Build 1.2
 // =====================================
 
-function generateResponse(command, decision, memories, knowledge){
-    let text =
-    command.toLowerCase();
+
+function generateResponse(command, decision, memories, knowledge, reasoning){
 
 
-    // ==========================
-    // REMEMBER
-    // ==========================
+let text =
+command.toLowerCase();
 
-    if(text.startsWith("remember ")){
 
-        const memory =
-        command.substring(9).trim();
 
-        let category = "facts";
+if(text.startsWith("remember ")){
 
-if(
-    memory.includes("favorite") ||
-    memory.includes("like") ||
-    memory.includes("prefer")
-){
-    category = "preferences";
-}
-else if(
-    memory.includes("goal") ||
-    memory.includes("want") ||
-    memory.includes("build")
-){
-    category = "goals";
-}
-else if(
-    memory.includes("orion") ||
-    memory.includes("project")
-){
-    category = "projects";
-}
+    const memory =
+    command.substring(9).trim();
 
-saveMemory(
-    category,
-    memory
-);
 
-        return `
+    let category = "facts";
+
+
+    if(
+        memory.includes("favorite") ||
+        memory.includes("like") ||
+        memory.includes("prefer")
+    ){
+
+        category = "preferences";
+
+    }
+    else if(
+        memory.includes("goal") ||
+        memory.includes("want") ||
+        memory.includes("build")
+    ){
+
+        category = "goals";
+
+    }
+    else if(
+        memory.includes("orion") ||
+        memory.includes("project")
+    ){
+
+        category = "projects";
+
+    }
+
+
+    saveMemory(
+        category,
+        memory
+    );
+
+
+    return `
 
 ORION ONLINE
 
@@ -59,33 +69,31 @@ Memory has been successfully stored.
 
 `;
 
-    }
+}
 
 
-    // ==========================
-    // RECALL MEMORY
-    // ==========================
 
-    if(
-        text.includes("what do you remember") ||
-        text.includes("what do you know about me")
-    ){
+if(
+text.includes("what do you remember") ||
+text.includes("what do you know about me")
+){
 
-      const memories = [
+    const memories = [
 
-    ...recallMemory("preferences"),
+        ...recallMemory("preferences"),
 
-    ...recallMemory("goals"),
+        ...recallMemory("goals"),
 
-    ...recallMemory("projects"),
+        ...recallMemory("projects"),
 
-    ...recallMemory("facts")
+        ...recallMemory("facts")
 
-];
+    ];
 
-        if(memories.length === 0){
 
-            return `
+    if(memories.length === 0){
+
+        return `
 
 ORION ONLINE
 
@@ -93,9 +101,10 @@ I currently have no stored personal memories, Mr. Goodley.
 
 `;
 
-        }
+    }
 
-        return `
+
+    return `
 
 ORION ONLINE
 
@@ -107,41 +116,18 @@ Here is what I currently remember:
 
 `;
 
-    }
+}
 
 
-    // ==========================
-    // CLEAR MEMORY
-    // ==========================
 
-    if(text === "clear memory"){
-
-        clearMemory();
-
-        return `
-
-ORION ONLINE
-
-Understood, Mr. Goodley.
-
-All stored memories have been cleared successfully.
-
-`;
-
-    }
+if(
+text.includes("hello") ||
+text.includes("hi") ||
+text.includes("hey")
+){
 
 
-    // ==========================
-    // GREETING
-    // ==========================
-
-    if(
-        text.includes("hello") ||
-        text.includes("hi") ||
-        text.includes("hey")
-    ){
-
-        return `
+return `
 
 ORION ONLINE
 
@@ -153,16 +139,14 @@ How may I assist you today, Sir?
 
 `;
 
-    }
+}
 
 
-    // ==========================
-    // IDENTITY
-    // ==========================
 
-    if(text.includes("who are you")){
+if(text.includes("who are you")){
 
-        return `
+
+return `
 
 I am ORION, Sir.
 
@@ -174,16 +158,15 @@ My purpose is to help you accomplish your objectives efficiently.
 
 `;
 
-    }
+}
 
 
-    // ==========================
-    // STATUS
-    // ==========================
 
-    if(text.includes("status")){
 
-        return `
+if(text.includes("status")){
+
+
+return `
 
 ORION SYSTEM STATUS
 
@@ -202,20 +185,21 @@ ONLINE
 Personality Layer:
 ACTIVE
 
+
 Everything appears operational, Mr. Goodley.
 
 `;
 
-    }
+}
 
 
-    // ==========================
-    // DEFAULT RESPONSE
-    // ==========================
 
 let memorySection = "";
 
-if(memories && memories.length > 0){
+if(
+memories &&
+memories.length > 0
+){
 
     memorySection = `
 
@@ -227,16 +211,58 @@ Relevant Memory:
 
 }
 
+
+
+let knowledgeSection = "";
+
+if(knowledge){
+
+    knowledgeSection = `
+
+Strategic Context:
+
+${knowledge}
+
+`;
+
+}
+
+
+
+let reasoningSection = "";
+
+if(
+reasoning &&
+reasoning.analysis
+){
+
+    reasoningSection = `
+
+Reasoning Analysis:
+
+${reasoning.analysis}
+
+`;
+
+}
+
+
+
 return `
 
 ORION ONLINE
 
+
 Sir, I have analyzed your request.
 
 
-Strategic Context:
+${knowledgeSection}
 
-${decision.context || "No additional context available."}
+
+${reasoningSection}
+
+
+${memorySection}
 
 
 Assessment:
@@ -257,4 +283,5 @@ ${decision.action}
 Awaiting your next instruction, Mr. Goodley.
 
 `;
+
 }
