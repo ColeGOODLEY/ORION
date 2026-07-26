@@ -1,11 +1,24 @@
 // =====================================
 // ORION RESPONSE SYSTEM
-// Adaptive Learning Build 2.1
-// Conversation Engine Integration
+// Adaptive Intelligence Build 2.2
+// Complete Module Integration
 // =====================================
 
 
-function generateResponse(command, decision, memories, knowledge, reasoning, comparison, evaluation, plan, goal, confidence, conversation){
+function generateResponse(
+    command,
+    decision,
+    memories,
+    knowledge,
+    reasoning,
+    comparison,
+    evaluation,
+    plan,
+    goal,
+    confidence,
+    conversation
+){
+
 
 let text =
 command.toLowerCase();
@@ -20,6 +33,7 @@ if(text.startsWith("remember ")){
 
     const memory =
     command.substring(9).trim();
+
 
     let category = "facts";
 
@@ -77,50 +91,27 @@ Memory has been successfully stored.
 
 
 // =====================================
-// CLEAR LEARNING
-// =====================================
-
-if(text === "clear learning"){
-
-    clearLearning();
-
-
-    return `
-
-ORION ONLINE
-
-Learning history has been cleared successfully, Mr. Goodley.
-
-Future decision analysis will begin building a new learning history.
-
-`;
-
-}
-
-
-
-// =====================================
-// LEARNING COUNT
+// LEARNING STATUS
 // =====================================
 
 if(
-text === "learning count" ||
-text === "how much have you learned"
+text.includes("learning count") ||
+text.includes("how much have you learned")
 ){
 
-    const count =
-    learningCount("decisions");
+const count =
+learningCount("decisions");
 
 
-    return `
+return `
 
-ORION ONLINE
-
-Current Learning Statistics:
+ORION LEARNING STATUS
 
 Stored Decision Records:
 
 ${count}
+
+Learning engine remains active.
 
 `;
 
@@ -133,36 +124,38 @@ ${count}
 // =====================================
 
 if(
-text.includes("what have you learned") ||
 text.includes("show learning") ||
+text.includes("what have you learned") ||
 text.includes("learning status")
 ){
 
-    const learned =
-    recallLearning("decisions");
+const learned =
+recallLearning("decisions");
 
 
-    if(
-        learned.length === 0
-    ){
+if(
+!learned ||
+learned.length === 0
+){
 
-        return `
+return `
 
 ORION ONLINE
 
-I currently have no learned decision records, Mr. Goodley.
+No learning records currently available.
 
 `;
 
-    }
+}
 
 
-    let learningOutput = "";
+let output = "";
 
 
-    learned.forEach(item => {
+learned.forEach(item=>{
 
-        learningOutput += `
+
+output += `
 
 Decision:
 ${item.decision}
@@ -176,25 +169,20 @@ ${item.command}
 Recorded:
 ${item.timestamp}
 
---------------------
+----------------
 
 `;
 
-    });
+});
 
 
+return `
 
-    return `
+ORION LEARNING RECORDS
 
-ORION ONLINE
+${output}
 
-Mr. Goodley,
-
-Here are my current learning records:
-
-${learningOutput}
-
-I will continue using these records to improve future decision analysis.
+Future decisions will use this information.
 
 `;
 
@@ -226,14 +214,20 @@ ${history.length}
 
 Recent Context:
 
+
 ${
 history.length > 0
+
 ?
+
 history.map(item =>
 item.role + ": " + item.message
 ).join("\n")
+
 :
+
 "No conversation history available."
+
 }
 
 
@@ -252,87 +246,41 @@ text.includes("what do you remember") ||
 text.includes("what do you know about me")
 ){
 
-    const memories = [
+let storedMemories = [
 
-        ...recallMemory("preferences"),
-        ...recallMemory("goals"),
-        ...recallMemory("projects"),
-        ...recallMemory("facts")
+...recallMemory("preferences"),
+...recallMemory("goals"),
+...recallMemory("projects"),
+...recallMemory("facts")
 
-    ];
+];
 
-
-    if(memories.length === 0){
-
-        return `
-
-ORION ONLINE
-
-I currently have no stored personal memories, Mr. Goodley.
-
-`;
-
-    }
-
-
-    return `
-
-ORION ONLINE
-
-Mr. Goodley,
-
-Here is what I currently remember:
-
-• ${memories.join("\n• ")}
-
-`;
-
-}
-
-
-
-// =====================================
-// GREETING
-// =====================================
 
 if(
-text.includes("hello") ||
-text.includes("hi") ||
-text.includes("hey")
+storedMemories.length === 0
 ){
 
 return `
 
 ORION ONLINE
 
-Good day, Mr. Goodley.
-
-All primary systems are operational.
-
-How may I assist you today, Sir?
+I currently have no stored memories, Mr. Goodley.
 
 `;
 
 }
-
-
-
-// =====================================
-// IDENTITY
-// =====================================
-
-if(text.includes("who are you")){
 
 
 return `
 
-I am ORION, Sir.
+ORION MEMORY SYSTEM
 
-Operational Research & Intelligence for Optimization and Navigation.
 
-I am designed to assist with analysis, strategy, memory, decision support, planning, conversation awareness, and adaptive learning.
+Current Stored Information:
 
-My purpose is to help you accomplish your objectives efficiently.
+
+• ${storedMemories.join("\n• ")}
+
 
 `;
 
@@ -341,64 +289,25 @@ My purpose is to help you accomplish your objectives efficiently.
 
 
 // =====================================
-// SYSTEM STATUS
+// CONFIDENCE REPORT
 // =====================================
 
 if(
-text.includes("status")
-){
-
-return `
-
-ORION SYSTEM STATUS
-
-Core System:
-ONLINE
-
-Reasoning Engine:
-ONLINE
-
-Memory System:
-ONLINE
-
-Learning System:
-ONLINE
-
-Conversation Engine:
-ONLINE
-
-Decision Engine:
-ONLINE
-
-Planning System:
-ONLINE
-
-Goal Management:
-ONLINE
-
-Confidence Engine:
-ONLINE
-
-Personality Layer:
-ACTIVE
-
-
-Everything appears operational, Mr. Goodley.
-
-`;
-
-}
-
-
-
-// =====================================
-// CONFIDENCE ENGINE
-// =====================================
-
-if(
-confidence &&
 text.includes("confidence")
 ){
+
+if(!confidence){
+
+return `
+
+ORION CONFIDENCE SYSTEM
+
+No confidence analysis available.
+
+`;
+
+}
+
 
 return `
 
@@ -412,7 +321,19 @@ ${confidence.score}%
 
 Reasoning:
 
-• ${confidence.reasoning.join("\n• ")}
+${
+confidence.reasoning &&
+confidence.reasoning.length > 0
+
+?
+
+"• " + confidence.reasoning.join("\n• ")
+
+:
+
+"No supporting factors available."
+
+}
 
 
 `;
@@ -422,8 +343,13 @@ Reasoning:
 
 
 // =====================================
-// PLANNING ENGINE
+// MISSION PLAN
 // =====================================
+
+if(
+text.includes("mission") ||
+text.includes("plan")
+){
 
 if(plan){
 
@@ -444,27 +370,38 @@ ${plan.currentPhase}
 
 Completed Systems:
 
-✓ ${plan.completed.join("\n✓ ")}
+✓ ${
+plan.completed.join("\n✓ ")
+}
 
 
 Next Objectives:
 
-• ${plan.nextSteps.join("\n• ")}
+• ${
+plan.nextSteps.join("\n• ")
+}
 
 
 Mission Status:
 
-Planning engine is operational.
+Planning engine operational.
 
 `;
+
+}
 
 }
 
 
 
 // =====================================
-// GOAL MANAGER
+// GOAL STATUS
 // =====================================
+
+if(
+text.includes("goal") ||
+text.includes("goals")
+){
 
 if(goal){
 
@@ -502,11 +439,129 @@ ${goal.nextMilestone}
 
 }
 
+}
+
 
 
 // =====================================
-// RESPONSE BUILDING
+// GREETING
 // =====================================
+
+if(
+text.includes("hello") ||
+text === "hi" ||
+text.includes("hey")
+){
+
+return `
+
+ORION ONLINE
+
+Good day, Mr. Goodley.
+
+All primary systems are operational.
+
+How may I assist you today?
+
+`;
+
+}
+
+
+
+// =====================================
+// IDENTITY
+// =====================================
+
+if(
+text.includes("who are you")
+){
+
+return `
+
+I am ORION, Sir.
+
+Operational Research & Intelligence for Optimization and Navigation.
+
+I assist with analysis, strategy, memory, planning, decision support, and adaptive learning.
+
+My purpose is to help you accomplish your objectives efficiently.
+
+`;
+
+}
+
+
+
+// =====================================
+// SYSTEM STATUS
+// =====================================
+
+if(
+text.includes("status")
+){
+
+return `
+
+ORION SYSTEM STATUS
+
+
+Core System:
+ONLINE
+
+
+Memory System:
+ONLINE
+
+
+Knowledge Engine:
+ONLINE
+
+
+Reasoning Engine:
+ONLINE
+
+
+Decision Engine:
+ONLINE
+
+
+Learning Engine:
+ONLINE
+
+
+Planning Engine:
+ONLINE
+
+
+Goal Manager:
+ONLINE
+
+
+Confidence Engine:
+ONLINE
+
+
+Conversation Engine:
+ONLINE
+
+
+Personality Layer:
+ACTIVE
+
+
+All primary systems operational.
+
+`;
+
+}
+
+
+
+// =====================================
+// MAIN RESPONSE
+// =====================================
+
 
 let memorySection = "";
 
@@ -535,7 +590,7 @@ if(knowledge){
 
 knowledgeSection = `
 
-Strategic Context:
+Knowledge:
 
 ${knowledge}
 
@@ -569,15 +624,14 @@ let comparisonSection = "";
 
 
 if(
-decision &&
-decision.comparison
+comparison
 ){
 
 comparisonSection = `
 
-Option Comparison:
+Comparison:
 
-${decision.comparison}
+${JSON.stringify(comparison)}
 
 `;
 
@@ -588,17 +642,15 @@ ${decision.comparison}
 let evaluationSection = "";
 
 
-if(evaluation){
+if(
+evaluation
+){
 
 evaluationSection = `
 
-Evaluation Analysis:
+Evaluation:
 
-${evaluation.analysis}
-
-${evaluation.optionAEvaluation}
-
-${evaluation.optionBEvaluation}
+${evaluation.analysis || ""}
 
 `;
 
@@ -609,6 +661,7 @@ ${evaluation.optionBEvaluation}
 return `
 
 ORION ONLINE
+
 
 Sir, I have analyzed your request.
 
@@ -630,17 +683,35 @@ ${memorySection}
 
 Assessment:
 
-${decision.reason}
+${
+decision && decision.reason
+?
+decision.reason
+:
+"No assessment available."
+}
 
 
 Recommendation:
 
-${decision.decision}
+${
+decision && decision.decision
+?
+decision.decision
+:
+"No recommendation available."
+}
 
 
 Suggested Action:
 
-${decision.action}
+${
+decision && decision.action
+?
+decision.action
+:
+"Awaiting further instruction."
+}
 
 
 Awaiting your next instruction, Mr. Goodley.
