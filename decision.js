@@ -1,14 +1,18 @@
 // =====================================
 // ORION DECISION ENGINE
-// Recovery Build 1.1
+// Strategic Decision Build 1.2
 // =====================================
 
 
-function makeDecision(command, comparison, knowledge){
+function makeDecision(command, comparison, knowledge, reasoning){
+
+
+    let text =
+    command.toLowerCase();
+
 
 
     let strategicContext = "";
-
 
     if(knowledge){
 
@@ -18,8 +22,15 @@ function makeDecision(command, comparison, knowledge){
     }
 
 
-    let text =
-    command.toLowerCase();
+
+    let reasoningContext = "";
+
+    if(reasoning){
+
+        reasoningContext =
+        reasoning.analysis;
+
+    }
 
 
 
@@ -28,21 +39,67 @@ function makeDecision(command, comparison, knowledge){
         text.includes("internet")
     ){
 
-        return {
 
-            decision:
-            "Improve memory first.",
+        let memoryScore = 0;
 
-            reason:
-            "A stronger memory system creates a more personalized foundation for ORION before expanding external capabilities.",
+        let internetScore = 0;
 
-            action:
-            "Prioritize improving ORION's memory system, then expand external connectivity once personalization is stronger.",
 
-            context:
-            strategicContext
 
-        };
+        // Memory improves personalization foundation
+
+        if(
+            strategicContext.includes("ORION") ||
+            strategicContext.includes("personal objective")
+        ){
+
+            memoryScore += 10;
+
+        }
+
+
+
+        // Internet improves external capability
+
+        if(
+            text.includes("internet")
+        ){
+
+            internetScore += 5;
+
+        }
+
+
+
+        if(memoryScore >= internetScore){
+
+
+            return {
+
+                decision:
+                "Improve memory first.",
+
+
+                reason:
+                "Memory provides a stronger personalized foundation before expanding external capabilities.",
+
+
+                action:
+                "Continue improving ORION's memory system, then expand connectivity.",
+
+
+                context:
+                strategicContext,
+
+
+                reasoning:
+                reasoningContext
+
+            };
+
+
+        }
+
 
     }
 
@@ -53,14 +110,21 @@ function makeDecision(command, comparison, knowledge){
         decision:
         "No decision required.",
 
+
         reason:
         "The command does not contain a decision request.",
+
 
         action:
         "Continue normal operation and await the next instruction.",
 
+
         context:
-        strategicContext
+        strategicContext,
+
+
+        reasoning:
+        reasoningContext
 
     };
 
