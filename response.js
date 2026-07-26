@@ -1,10 +1,10 @@
 // =====================================
 // ORION RESPONSE SYSTEM
-// Personality Recovery Build 1.3
+// Personality Recovery Build 1.4
 // =====================================
 
 
-function generateResponse(command, decision, memories, knowledge, reasoning){
+function generateResponse(command, decision, memories, knowledge, reasoning, comparison, evaluation){
 
 
 let text =
@@ -267,6 +267,30 @@ ${decision.comparison}
 
 
 
+let evaluationSection = "";
+
+if(
+evaluation
+){
+
+    evaluationSection = `
+
+Evaluation Analysis:
+
+${evaluation.analysis}
+
+
+${evaluation.optionAEvaluation}
+
+
+${evaluation.optionBEvaluation}
+
+`;
+
+}
+
+
+
 return `
 
 ORION ONLINE
@@ -282,6 +306,9 @@ ${reasoningSection}
 
 
 ${comparisonSection}
+
+
+${evaluationSection}
 
 
 ${memorySection}
