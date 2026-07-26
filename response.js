@@ -72,8 +72,17 @@ Memory has been successfully stored.
         text.includes("what do you know about me")
     ){
 
-        const memories =
-        recallMemory("personal");
+      const memories = [
+
+    ...recallMemory("preferences"),
+
+    ...recallMemory("goals"),
+
+    ...recallMemory("projects"),
+
+    ...recallMemory("facts")
+
+];
 
         if(memories.length === 0){
 
