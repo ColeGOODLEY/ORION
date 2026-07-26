@@ -1,6 +1,6 @@
 // =====================================
 // ORION RESPONSE SYSTEM
-// Adaptive Learning Build 2.0
+// Adaptive Learning Build 2.1
 // Conversation Engine Integration
 // =====================================
 
@@ -9,6 +9,7 @@ function generateResponse(command, decision, memories, knowledge, reasoning, com
 
 let text =
 command.toLowerCase();
+
 
 
 // =====================================
@@ -115,7 +116,7 @@ text === "how much have you learned"
 
 ORION ONLINE
 
-Current Learning Statistics
+Current Learning Statistics:
 
 Stored Decision Records:
 
@@ -160,7 +161,6 @@ I currently have no learned decision records, Mr. Goodley.
 
 
     learned.forEach(item => {
-
 
         learningOutput += `
 
@@ -210,6 +210,10 @@ if(
 text.includes("conversation status")
 ){
 
+let history =
+conversation || [];
+
+
 return `
 
 ORION CONVERSATION STATUS
@@ -217,16 +221,20 @@ ORION CONVERSATION STATUS
 
 Messages Stored:
 
-${conversation ? conversation.length : 0}
+${history.length}
 
 
 Recent Context:
 
-${conversation
-.map(item =>
+${
+history.length > 0
+?
+history.map(item =>
 item.role + ": " + item.message
-)
-.join("\n")}
+).join("\n")
+:
+"No conversation history available."
+}
 
 
 `;
@@ -333,18 +341,14 @@ My purpose is to help you accomplish your objectives efficiently.
 
 
 // =====================================
-// STATUS
+// SYSTEM STATUS
 // =====================================
 
 if(
-text.includes("conversation status")
+text.includes("status")
 ){
 
-if(!conversation){
-    conversation = [];
-}
-
-return 
+return `
 
 ORION SYSTEM STATUS
 
@@ -608,15 +612,21 @@ ORION ONLINE
 
 Sir, I have analyzed your request.
 
+
 ${knowledgeSection}
+
 
 ${reasoningSection}
 
+
 ${comparisonSection}
+
 
 ${evaluationSection}
 
+
 ${memorySection}
+
 
 Assessment:
 
