@@ -39,7 +39,11 @@ processReasoning(
 
 
         const evaluation =
-        evaluateDecision(command);
+evaluateDecision(
+    command,
+    comparison,
+    knowledge
+);
 
 
 
