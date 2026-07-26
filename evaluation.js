@@ -70,10 +70,10 @@ function evaluateDecision(command, comparison, knowledge){
         "- Less valuable without strong personalization";
 
 
+
         evaluation.analysis =
 
         "Memory scores higher because ORION's current priority is building a personalized intelligence foundation before expanding external capabilities.";
-
 
     }
 
