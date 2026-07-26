@@ -48,11 +48,12 @@ processReasoning(
 
 
 
-        const decision =
-        makeDecision(
-            command,
-            comparison
-        );
+     const decision =
+makeDecision(
+    command,
+    comparison,
+    knowledge
+);
 
 
 
