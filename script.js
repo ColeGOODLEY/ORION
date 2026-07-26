@@ -1,9 +1,9 @@
 // =====================================
 // ORION SCRIPT
-// Recovery Build 1.0
+// Diagnostic Build
 // =====================================
 
-function executeORION() {
+function executeORION(){
 
     const input =
     document.getElementById("command");
@@ -26,8 +26,36 @@ function executeORION() {
     }
 
 
-    output.innerHTML =
-    ORION.process(command);
+    try{
+
+        output.innerHTML =
+        ORION.process(command);
+
+    }
+
+    catch(error){
+
+        output.innerHTML = `
+
+ORION DIAGNOSTIC ERROR
+
+System failed while processing command.
+
+Error:
+
+${error.message}
+
+
+Location:
+
+${error.stack}
+
+
+`;
+
+        console.log(error);
+
+    }
 
 
     input.value = "";
