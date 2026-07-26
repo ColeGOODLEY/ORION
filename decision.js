@@ -4,7 +4,7 @@
 // =====================================
 
 
-function makeDecision(command, comparison){
+function makeDecision(command, comparison, knowledge){
 
 
     let text =
