@@ -182,11 +182,27 @@ Everything appears operational, Mr. Goodley.
     // DEFAULT RESPONSE
     // ==========================
 
-    return `
+let memorySection = "";
+
+if(memories && memories.length > 0){
+
+    memorySection = `
+
+Relevant Memory:
+
+• ${memories.join("\n• ")}
+
+`;
+
+}
+
+return `
 
 ORION ONLINE
 
 Sir, I have analyzed your request.
+
+${memorySection}
 
 Assessment:
 
