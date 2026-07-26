@@ -415,12 +415,23 @@ ${personalityInfo}
 // GREETING
 // =====================================
 
-if(
-text.includes("hello") ||
-text.includes("hi") ||
-text.includes("hey")
-){
+const words = text.split(/\s+/);
 
+if(
+
+words.includes("hello") ||
+
+words.includes("hi") ||
+
+words.includes("hey") ||
+
+text === "good morning" ||
+
+text === "good afternoon" ||
+
+text === "good evening"
+
+){
 
 return `
 
