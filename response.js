@@ -3,8 +3,7 @@
 // Adaptive Learning Build 1.6
 // =====================================
 
-function generateResponse(command, decision, memories, knowledge, reasoning, comparison, evaluation){
-
+function generateResponse(command, decision, memories, knowledge, reasoning, comparison, evaluation, plan){
 let text =
 command.toLowerCase();
 
