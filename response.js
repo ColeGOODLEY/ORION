@@ -1,7 +1,7 @@
 // =====================================
 // ORION RESPONSE SYSTEM
-// Adaptive Intelligence Build 2.3
-// JARVIS Personality Integration
+// Adaptive Intelligence Build 2.2
+// Personality Integration Fix
 // =====================================
 
 
@@ -32,79 +32,20 @@ command.toLowerCase();
 
 let personalityInfo = "";
 
-let personalityTone =
-"Professional and adaptive";
-
-
-let personalityBehavior =
-"Assist with strategic thinking and problem solving.";
-
-
 
 if(personalityStyleData){
 
-
-personalityTone =
-personalityStyleData.tone ||
-personalityTone;
-
-
-personalityBehavior =
-personalityStyleData.behavior ||
-personalityBehavior;
-
-
-
 personalityInfo = `
 
-Communication Style:
+Current Communication Style:
 
-${personalityTone}
-
+${personalityStyleData.tone || "Adaptive"}
 
 Behavior:
 
-${personalityBehavior}
+${personalityStyleData.behavior || "Strategic assistant mode"}
 
 `;
-
-}
-
-
-
-// =====================================
-// PERSONALITY RESPONSE PREFIX
-// =====================================
-
-function personalityOpening(){
-
-
-if(
-text.includes("should") ||
-text.includes("choose") ||
-text.includes("decide")
-){
-
-return "Sir, I have evaluated the available options strategically.";
-
-}
-
-
-
-if(
-text.includes("fix") ||
-text.includes("bug") ||
-text.includes("error") ||
-text.includes("code")
-){
-
-return "Sir, I have analyzed the system issue.";
-
-}
-
-
-
-return "Sir, I have analyzed your request.";
 
 }
 
@@ -120,9 +61,7 @@ const memory =
 command.substring(9).trim();
 
 
-let category =
-"facts";
-
+let category = "facts";
 
 
 if(
@@ -131,8 +70,7 @@ memory.includes("like") ||
 memory.includes("prefer")
 ){
 
-category =
-"preferences";
+category = "preferences";
 
 }
 
@@ -142,8 +80,7 @@ memory.includes("want") ||
 memory.includes("build")
 ){
 
-category =
-"goals";
+category = "goals";
 
 }
 
@@ -152,11 +89,9 @@ memory.includes("orion") ||
 memory.includes("project")
 ){
 
-category =
-"projects";
+category = "projects";
 
 }
-
 
 
 saveMemory(
@@ -165,19 +100,15 @@ memory
 );
 
 
-
 return `
 
 ORION ONLINE
 
-
 Understood, Mr. Goodley.
-
 
 I will remember:
 
 "${memory}"
-
 
 Memory has been successfully stored.
 
@@ -193,7 +124,6 @@ Memory has been successfully stored.
 
 if(text === "clear learning"){
 
-
 clearLearning();
 
 
@@ -201,9 +131,7 @@ return `
 
 ORION ONLINE
 
-
 Learning history has been cleared successfully, Mr. Goodley.
-
 
 `;
 
@@ -222,13 +150,11 @@ text === "how much have you learned"
 
 return `
 
-ORION LEARNING STATUS
+ORION ONLINE
 
-
-Stored Decision Records:
+Current Learning Records:
 
 ${learningCount("decisions")}
-
 
 `;
 
@@ -246,16 +172,14 @@ text.includes("show learning")
 ){
 
 const learned =
-recallLearning("decisions") || [];
+recallLearning("decisions");
 
 
-
-if(learned.length === 0){
+if(!learned || learned.length === 0){
 
 return `
 
-ORION LEARNING STATUS
-
+ORION ONLINE
 
 No learned decision records currently available.
 
@@ -264,13 +188,10 @@ No learned decision records currently available.
 }
 
 
-
 let output = "";
 
 
-
 learned.forEach(item=>{
-
 
 output += `
 
@@ -296,7 +217,6 @@ ${item.timestamp}
 });
 
 
-
 return `
 
 ORION LEARNING STATUS
@@ -315,14 +235,11 @@ ${output}
 // CONVERSATION STATUS
 // =====================================
 
-if(
-text.includes("conversation status")
-){
+if(text.includes("conversation status")){
 
 
 let history =
 conversation || [];
-
 
 
 return `
@@ -372,16 +289,12 @@ text.includes("what do you know about me")
 
 const memories = [
 
-...(recallMemory("preferences") || []),
-
-...(recallMemory("goals") || []),
-
-...(recallMemory("projects") || []),
-
-...(recallMemory("facts") || [])
+...recallMemory("preferences"),
+...recallMemory("goals"),
+...recallMemory("projects"),
+...recallMemory("facts")
 
 ];
-
 
 
 return `
@@ -413,18 +326,20 @@ memories.length > 0
 
 
 // =====================================
-// IDENTITY / PERSONALITY
+// PERSONALITY / IDENTITY
 // =====================================
 
 if(
 
 text.includes("who are you") ||
 
-text.includes("personality") ||
+text.includes("what is your personality") ||
 
 text.includes("describe yourself") ||
 
-text.includes("what are you like")
+text.includes("what are you like") ||
+
+text.includes("personality")
 
 ){
 
@@ -457,7 +372,7 @@ My purpose is to assist with:
 
 
 
-My personality framework:
+My Personality:
 
 
 • Intelligent
@@ -483,8 +398,8 @@ My operating principle:
 
 I am designed to assist you, not simply agree with you.
 
+If analysis shows a better path, I will explain why and recommend it.
 
-If your current approach appears inefficient, I will respectfully explain why and recommend a stronger path.
 
 
 ${personalityInfo}
@@ -527,7 +442,7 @@ How may I assist you today, Sir?
 
 
 // =====================================
-// STATUS
+// SYSTEM STATUS
 // =====================================
 
 if(text.includes("status")){
@@ -622,13 +537,7 @@ Reasoning:
 // PLANNING
 // =====================================
 
-if(
-plan &&
-(
-text.includes("plan") ||
-text.includes("mission")
-)
-){
+if(plan){
 
 
 return `
@@ -670,14 +579,7 @@ Planning engine operational.
 // GOALS
 // =====================================
 
-if(
-goal &&
-(
-text.includes("goal") ||
-text.includes("mission") ||
-text.includes("objective")
-)
-){
+if(goal){
 
 
 return `
@@ -720,14 +622,9 @@ ${goal.nextMilestone}
 // FINAL RESPONSE BUILD
 // =====================================
 
-
 let memorySection = "";
 
-
-if(
-memories &&
-memories.length > 0
-){
+if(memories && memories.length > 0){
 
 memorySection = `
 
@@ -742,7 +639,6 @@ Relevant Memory:
 
 
 let knowledgeSection = "";
-
 
 if(knowledge){
 
@@ -760,11 +656,7 @@ ${knowledge}
 
 let reasoningSection = "";
 
-
-if(
-reasoning &&
-reasoning.analysis
-){
+if(reasoning && reasoning.analysis){
 
 reasoningSection = `
 
@@ -780,14 +672,13 @@ ${reasoning.analysis}
 
 let comparisonSection = "";
 
-
 if(comparison){
 
 comparisonSection = `
 
 Comparison:
 
-${comparison.comparison || JSON.stringify(comparison)}
+${JSON.stringify(comparison)}
 
 `;
 
@@ -796,7 +687,6 @@ ${comparison.comparison || JSON.stringify(comparison)}
 
 
 let evaluationSection = "";
-
 
 if(evaluation){
 
@@ -817,7 +707,7 @@ return `
 ORION ONLINE
 
 
-${personalityOpening()}
+Sir, I have analyzed your request.
 
 
 ${personalityInfo}
@@ -841,17 +731,20 @@ ${memorySection}
 
 Assessment:
 
+
 ${decision?.reason || "No assessment available."}
 
 
 
 Recommendation:
 
+
 ${decision?.decision || "No recommendation available."}
 
 
 
 Suggested Action:
+
 
 ${decision?.action || "Continue operation."}
 
