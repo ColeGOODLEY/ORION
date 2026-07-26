@@ -1,11 +1,11 @@
 // =====================================
 // ORION RESPONSE SYSTEM
-// Adaptive Learning Build 1.9
-// Goal Management + Confidence Integration
+// Adaptive Learning Build 2.0
+// Conversation Engine Integration
 // =====================================
 
 
-function generateResponse(command, decision, memories, knowledge, reasoning, comparison, evaluation, plan, goal, confidence){
+function generateResponse(command, decision, memories, knowledge, reasoning, comparison, evaluation, plan, goal, confidence, conversation){
 
 let text =
 command.toLowerCase();
@@ -103,8 +103,8 @@ Future decision analysis will begin building a new learning history.
 // =====================================
 
 if(
-    text === "learning count" ||
-    text === "how much have you learned"
+text === "learning count" ||
+text === "how much have you learned"
 ){
 
     const count =
@@ -203,6 +203,39 @@ I will continue using these records to improve future decision analysis.
 
 
 // =====================================
+// CONVERSATION STATUS
+// =====================================
+
+if(
+text.includes("conversation status")
+){
+
+return `
+
+ORION CONVERSATION STATUS
+
+
+Messages Stored:
+
+${conversationCount()}
+
+
+Recent Context:
+
+${conversation
+.map(item =>
+item.role + ": " + item.message
+)
+.join("\n")}
+
+
+`;
+
+}
+
+
+
+// =====================================
 // MEMORY RECALL
 // =====================================
 
@@ -289,7 +322,7 @@ I am ORION, Sir.
 
 Operational Research & Intelligence for Optimization and Navigation.
 
-I am designed to assist with analysis, strategy, memory, decision support, planning, and adaptive learning.
+I am designed to assist with analysis, strategy, memory, decision support, planning, conversation awareness, and adaptive learning.
 
 My purpose is to help you accomplish your objectives efficiently.
 
@@ -320,6 +353,9 @@ Memory System:
 ONLINE
 
 Learning System:
+ONLINE
+
+Conversation Engine:
 ONLINE
 
 Decision Engine:
