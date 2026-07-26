@@ -3,7 +3,7 @@
 // Personality Recovery Build 1.1
 // =====================================
 
-function generateResponse(command, decision){
+function generateResponse(command, decision, memories){
 
     let text =
     command.toLowerCase();
