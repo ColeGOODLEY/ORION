@@ -614,15 +614,65 @@ text-align:left;
 
 /* Mobile Support */
 
+@media (max-width:1000px){
 
-@media(max-width:1000px){
+    .hud{
 
+        grid-template-columns:1fr;
 
-.hud {
-
-grid-template-columns:1fr;
+    }
 
 }
 
+
+/* =====================================
+   ORION BOOT SCREEN
+===================================== */
+
+#boot-screen{
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:100%;
+
+    background:#050A12;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-family:"Orbitron",sans-serif;
+
+    z-index:9999;
+
+    text-align:center;
+
+}
+
+#boot-screen h1{
+
+    font-size:80px;
+
+    letter-spacing:15px;
+
+    text-shadow:
+        0 0 20px #00BFFF,
+        0 0 50px #00BFFF;
+
+}
+
+#boot-status{
+
+    margin-top:30px;
+
+    font-family:"Courier New", monospace;
 
 }
