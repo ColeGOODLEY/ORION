@@ -7,6 +7,8 @@
 
 <link rel="stylesheet" href="style.css">
 
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+
 </head>
 
 
@@ -14,69 +16,306 @@
 <body>
 
 
+<div class="hud">
+
+
+<!-- LEFT PANEL -->
+
+<aside class="left-panel">
+
+
+<div class="logo">
+
 <h1>ORION</h1>
 
-<h3>
-Operational Research & Intelligence for Optimization & Navigation
-</h3>
+<span>
+Operational Research & Intelligence
+</span>
+
+</div>
+
 
 
 <div class="panel">
 
-<h2>CORE STATUS</h2>
+<h2>SYSTEM STATUS</h2>
+
 
 <p class="online">
 🟦 SYSTEM ONLINE
 </p>
 
+
 <p>
-AI CORE: INITIALIZING
-<br>
-MEMORY: READY
-<br>
-VERSION: 0.3
+VERSION: 2.0
 </p>
 
-</div>
 
-
-
-<div class="panel">
-
-<h2>MISSION CONTROL</h2>
-
-<textarea placeholder="Today's Mission"></textarea>
-
+<p>
+MODE:
 <br>
+Adaptive Intelligence
+</p>
 
-<textarea placeholder="Objectives"></textarea>
+
+<p>
+AI CORE:
+<span class="online">
+ONLINE
+</span>
+</p>
+
+
+<p>
+MEMORY:
+<span class="online">
+READY
+</span>
+</p>
+
+
+<p>
+LEARNING:
+<span class="online">
+ACTIVE
+</span>
+</p>
+
+
+<p>
+CPU ACTIVITY</p>
+
+
+<div class="cpu-bar">
+<div></div>
+</div>
+
+
+</div>
+
+
+</aside>
+
+
+
+
+
+<!-- CENTER PANEL -->
+
+<main class="center-panel">
+
+
+
+<div class="system-cards">
+
+
+<div class="system-card">
+🧠 BRAIN
+<br>
+<span>ONLINE</span>
+</div>
+
+
+<div class="system-card">
+💾 MEMORY
+<br>
+<span>ONLINE</span>
+</div>
+
+
+<div class="system-card">
+⚡ LEARNING
+<br>
+<span>ONLINE</span>
+</div>
+
+
+<div class="system-card">
+🎭 PERSONALITY
+<br>
+<span>ONLINE</span>
+</div>
+
+
+<div class="system-card">
+🎯 PLANNING
+<br>
+<span>ONLINE</span>
+</div>
+
 
 </div>
 
 
 
-<div class="panel">
 
-<h2>COMMAND INTERFACE</h2>
 
-<input id="command" placeholder="Speak to ORION...">
+<div class="panel command-panel">
+
+
+<h2>
+COMMAND CONSOLE
+</h2>
+
+
+
+<input 
+id="command"
+placeholder="Speak to ORION..."
+>
+
+
 
 <br><br>
 
+
+
 <button onclick="executeORION()">
+
 EXECUTE
+
 </button>
 
 
-<h2>ORION RESPONSE</h2>
+
+</div>
+
+
+
+
+
+<div class="panel response-panel">
+
+
+<h2>
+ORION RESPONSE
+</h2>
+
 
 <p id="response">
-Awaiting command...
+
+> Awaiting command...
+
 </p>
 
 
 </div>
 
+
+
+</main>
+
+
+
+
+
+
+<!-- RIGHT PANEL -->
+
+
+<aside class="right-panel">
+
+
+<div class="panel">
+
+
+<h2>
+MISSION DASHBOARD
+</h2>
+
+
+
+<h3>
+MISSION
+</h3>
+
+
+<div class="progress">
+
+<div></div>
+
+</div>
+
+
+
+<p>
+CURRENT GOAL:
+<br>
+Complete AI Foundation
+</p>
+
+
+
+<p>
+CURRENT PHASE:
+<br>
+Response Engine 3.0
+</p>
+
+
+
+<p>
+NEXT MILESTONE:
+<br>
+AI Brain Integration
+</p>
+
+
+</div>
+
+
+</aside>
+
+
+
+</div>
+
+
+
+
+
+
+<!-- ACTIVITY LOG -->
+
+
+<div class="panel activity">
+
+
+<h2>
+LIVE ACTIVITY LOG
+</h2>
+
+
+<p>
+09:42 - Memory Retrieved
+</p>
+
+
+<p>
+09:43 - Reasoning Complete
+</p>
+
+
+<p>
+09:43 - Decision Generated
+</p>
+
+
+<p>
+09:44 - Learning Updated
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+
+<!-- KEEP ALL SCRIPTS EXACTLY THE SAME -->
 
 
 <script src="memory.js"></script>
@@ -101,6 +340,7 @@ Awaiting command...
 <script src="response.js"></script>
 <script src="orion_core.js"></script>
 <script src="script.js"></script>
+
 
 </body>
 
