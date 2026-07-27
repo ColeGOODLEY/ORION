@@ -201,13 +201,17 @@ function executeORION(){
 
 
 
-        // HUD RETURN TO READY
+     // HUD RETURN TO READY AFTER PROCESSING
 
-        if(typeof ORION_HUD !== "undefined"){
+if(typeof ORION_HUD !== "undefined"){
 
-            ORION_HUD.ready();
+    setTimeout(function(){
 
-        }
+        ORION_HUD.ready();
+
+    },1000);
+
+}
 
 
 
