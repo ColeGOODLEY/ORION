@@ -1,7 +1,7 @@
 // =====================================
 // ORION SCRIPT
 // Command Interface System
-// Build 2.2
+// Build 2.3
 // HUD Integration
 // =====================================
 
@@ -19,7 +19,6 @@ function typeResponse(element, text){
 
 
     let index = 0;
-
 
 
     const cursor = "_";
@@ -172,6 +171,15 @@ function executeORION(){
     try{
 
 
+        // HUD STATUS UPDATE
+
+        if(typeof ORION_HUD !== "undefined"){
+
+            ORION_HUD.processing();
+
+        }
+
+
 
         addActivity(
         "Command Received"
@@ -185,8 +193,21 @@ function executeORION(){
 
 
 
+
         const response =
         ORION.process(command);
+
+
+
+
+
+        // HUD RETURN TO READY
+
+        if(typeof ORION_HUD !== "undefined"){
+
+            ORION_HUD.ready();
+
+        }
 
 
 
