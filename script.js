@@ -1,19 +1,125 @@
 // =====================================
 // ORION SCRIPT
 // Command Interface System
-// Build 2.1
+// Build 2.2
+// HUD Integration
 // =====================================
+
+
+
+// =====================================
+// TYPEWRITER RESPONSE EFFECT
+// =====================================
+
+
+function typeResponse(element, text){
+
+
+    element.innerHTML = "";
+
+
+    let index = 0;
+
+
+
+    const cursor = "_";
+
+
+
+    const interval = setInterval(function(){
+
+
+        element.innerHTML =
+        text.substring(0,index)
+        +
+        cursor;
+
+
+
+        index++;
+
+
+
+        if(index > text.length){
+
+
+            clearInterval(interval);
+
+
+            element.innerHTML = text;
+
+
+        }
+
+
+
+    },25);
+
+
+
+}
+
+
+
+
+// =====================================
+// ACTIVITY LOG
+// =====================================
+
+
+function addActivity(message){
+
+
+    const log =
+    document.querySelector(".activity");
+
+
+
+    if(!log){
+
+        return;
+
+    }
+
+
+
+    const entry =
+    document.createElement("p");
+
+
+
+    const time =
+    new Date().toLocaleTimeString();
+
+
+
+    entry.innerHTML =
+
+    `${time} - ${message}`;
+
+
+
+    log.appendChild(entry);
+
+
+
+}
+
+
 
 
 // =====================================
 // EXECUTE ORION COMMAND
 // =====================================
 
+
 function executeORION(){
+
 
 
     const input =
     document.getElementById("command");
+
 
 
     const output =
@@ -23,13 +129,17 @@ function executeORION(){
 
     if(!input || !output){
 
+
         console.error(
-            "ORION ERROR: Command interface elements missing."
+        "ORION ERROR: Command interface elements missing."
         );
+
 
         return;
 
+
     }
+
 
 
 
@@ -38,24 +148,41 @@ function executeORION(){
 
 
 
+
     if(command === ""){
 
 
-        output.innerHTML = `
+        typeResponse(
 
-ORION ONLINE
+        output,
 
-Awaiting your command, Mr. Goodley.
+        "ORION ONLINE\n\nAwaiting your command, Mr. Goodley."
 
-`;
+        );
+
 
         return;
+
 
     }
 
 
 
+
     try{
+
+
+
+        addActivity(
+        "Command Received"
+        );
+
+
+
+        addActivity(
+        "Brain Processing"
+        );
+
 
 
         const response =
@@ -63,8 +190,22 @@ Awaiting your command, Mr. Goodley.
 
 
 
-        output.innerHTML =
-        response;
+
+        addActivity(
+        "Response Generated"
+        );
+
+
+
+
+        typeResponse(
+
+        output,
+
+        response
+
+        );
+
 
 
 
@@ -73,36 +214,54 @@ Awaiting your command, Mr. Goodley.
 
 
     }
+
+
+
     catch(error){
 
 
+
         console.error(
-            "ORION SYSTEM ERROR:",
-            error
+
+        "ORION SYSTEM ERROR:",
+
+        error
+
         );
 
 
-        output.innerHTML = `
 
-ORION SYSTEM ERROR
+        typeResponse(
 
+        output,
+
+        `ORION SYSTEM ERROR
 
 Unable to complete command processing.
-
 
 Error:
 
 ${error.message}
 
+Please check system modules.`
 
-Please check system modules.
+        );
 
-`;
+
+
+        addActivity(
+        "System Error Detected"
+        );
+
+
 
     }
 
 
+
 }
+
+
 
 
 
@@ -110,9 +269,13 @@ Please check system modules.
 // ENTER KEY SUPPORT
 // =====================================
 
+
 document.addEventListener(
+
 "DOMContentLoaded",
+
 function(){
+
 
 
     const input =
@@ -123,9 +286,13 @@ function(){
     if(input){
 
 
+
         input.addEventListener(
+
         "keydown",
+
         function(event){
+
 
 
             if(event.key === "Enter"){
@@ -137,13 +304,18 @@ function(){
             }
 
 
+
         });
+
 
 
     }
 
 
+
 });
+
+
 
 
 
@@ -151,6 +323,9 @@ function(){
 // SYSTEM READY
 // =====================================
 
+
 console.log(
+
 "ORION Interface Loaded Successfully."
+
 );
