@@ -340,7 +340,97 @@ function(){
 
 });
 
+// =====================================
+// ORION BOOT SEQUENCE
+// =====================================
 
+
+document.addEventListener(
+"DOMContentLoaded",
+function(){
+
+
+const boot =
+document.getElementById("boot-screen");
+
+
+const status =
+document.getElementById("boot-status");
+
+
+
+if(!boot || !status){
+
+return;
+
+}
+
+
+
+const messages = [
+
+"AI CORE ........ ONLINE",
+
+"MEMORY ......... ONLINE",
+
+"REASONING ...... ONLINE",
+
+"DECISION ....... ONLINE",
+
+"PERSONALITY .... ONLINE",
+
+"SYSTEM READY"
+
+];
+
+
+
+let index = 0;
+
+
+
+const interval =
+setInterval(function(){
+
+
+status.innerHTML =
+messages[index];
+
+
+
+index++;
+
+
+
+if(index >= messages.length){
+
+
+clearInterval(interval);
+
+
+
+setTimeout(function(){
+
+    boot.style.opacity = "0";
+
+    setTimeout(function(){
+
+        boot.remove();
+
+    },1000);
+
+},800);
+
+
+}
+
+
+
+},700);
+
+
+
+});
 
 
 
