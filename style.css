@@ -1,68 +1,628 @@
+/* =====================================
+   ORION HUD v2
+   Tactical AI Interface
+===================================== */
+
+
+* {
+    box-sizing: border-box;
+}
+
+
 body {
-background: #05070d;
-color: #00bfff;
-font-family: "Courier New", monospace;
-text-align: center;
-padding: 30px;
+
+    background: #050A12;
+
+    color: #00BFFF;
+
+    font-family: "Inter", sans-serif;
+
+    margin: 0;
+
+    padding: 20px;
+
+    overflow-x: hidden;
+
 }
 
-h1 {
-font-size: 70px;
-letter-spacing: 10px;
-text-shadow: 0 0 20px #00bfff;
+
+/* Animated Grid Background */
+
+body::before {
+
+    content: "";
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-image:
+    linear-gradient(
+    rgba(0,191,255,.08) 1px,
+    transparent 1px
+    ),
+    linear-gradient(
+    90deg,
+    rgba(0,191,255,.08) 1px,
+    transparent 1px
+    );
+
+
+    background-size: 50px 50px;
+
+    animation: gridMove 20s linear infinite;
+
+    z-index: -1;
+
 }
 
-h2 {
-text-shadow: 0 0 10px #00bfff;
+
+
+@keyframes gridMove {
+
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(50px);
+    }
+
 }
 
-.panel {
-border: 1px solid #00bfff;
-box-shadow: 0 0 15px #00bfff;
-border-radius: 15px;
-padding: 25px;
-margin: 25px auto;
-max-width: 700px;
+
+
+
+/* Main HUD Layout */
+
+
+.hud {
+
+    display: grid;
+
+    grid-template-columns: 280px 1fr 300px;
+
+    gap: 25px;
+
+    max-width: 1600px;
+
+    margin:auto;
+
 }
+
+
+
+
+/* Logo */
+
+
+.logo h1 {
+
+    font-family: "Orbitron", sans-serif;
+
+    font-size: 60px;
+
+    letter-spacing: 8px;
+
+    margin-bottom: 5px;
+
+    text-shadow:
+    0 0 10px #00BFFF,
+    0 0 30px #00BFFF;
+
+}
+
+
+.logo span {
+
+    font-size: 12px;
+
+    opacity: .8;
+
+}
+
+
+
+
+
+/* Panels */
+
+
+.panel,
+.system-card {
+
+
+    background:
+
+    rgba(17,26,36,.85);
+
+
+    border:
+
+    1px solid rgba(0,191,255,.3);
+
+
+    border-radius: 15px;
+
+
+    padding: 20px;
+
+
+    box-shadow:
+
+    0 0 20px rgba(0,191,255,.25);
+
+
+    backdrop-filter: blur(10px);
+
+
+}
+
+
+
+
+
+.panel h2 {
+
+    font-family:"Orbitron", sans-serif;
+
+    letter-spacing:3px;
+
+}
+
+
+
+
+
+/* Status Cards */
+
+
+.system-cards {
+
+
+    display:flex;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+
+    margin-bottom:25px;
+
+}
+
+
+
+.system-card {
+
+    flex:1;
+
+    min-width:120px;
+
+    text-align:center;
+
+    transition:.3s;
+
+}
+
+
+
+.system-card:hover {
+
+    transform:scale(1.05);
+
+    box-shadow:
+    0 0 25px #00BFFF;
+
+}
+
+
+
+.system-card span {
+
+    color:#55E3FF;
+
+    font-size:14px;
+
+}
+
+
+
+
+/* Online Indicator */
+
+
+.online {
+
+    animation:pulse 2s infinite;
+
+    color:#55E3FF;
+
+}
+
+
+
+@keyframes pulse {
+
+
+0% {
+
+opacity:.5;
+
+}
+
+
+50% {
+
+opacity:1;
+
+}
+
+
+100% {
+
+opacity:.5;
+
+}
+
+
+}
+
+
+
+
+
+/* Inputs */
+
 
 input,
 textarea {
-background: #020409;
-color: #00bfff;
-border: 1px solid #00bfff;
-width: 85%;
-padding: 15px;
-border-radius: 8px;
-font-family: inherit;
+
+
+background:#020409;
+
+
+color:#55E3FF;
+
+
+border:
+
+1px solid #00BFFF;
+
+
+width:90%;
+
+
+padding:15px;
+
+
+border-radius:8px;
+
+
+font-family:"Inter", sans-serif;
+
+
+outline:none;
+
+
+box-shadow:
+
+0 0 10px rgba(0,191,255,.2);
+
+
 }
+
+
+
+
+input:focus {
+
+
+box-shadow:
+
+0 0 20px #00BFFF;
+
+
+}
+
+
+
+
+
+/* Execute Button */
+
 
 button {
-background: transparent;
-color: #00bfff;
-border: 1px solid #00bfff;
-padding: 15px 40px;
-border-radius: 10px;
-cursor: pointer;
-font-family: inherit;
-box-shadow: 0 0 10px #00bfff;
+
+
+background:transparent;
+
+
+color:#00BFFF;
+
+
+border:
+
+1px solid #00BFFF;
+
+
+padding:
+
+15px 45px;
+
+
+border-radius:10px;
+
+
+font-family:"Orbitron",sans-serif;
+
+
+letter-spacing:2px;
+
+
+cursor:pointer;
+
+
+transition:.3s;
+
+
+box-shadow:
+
+0 0 15px rgba(0,191,255,.5);
+
+
 }
+
+
 
 button:hover {
-background: #00bfff;
-color: black;
+
+
+background:#00BFFF;
+
+
+color:#050A12;
+
+
+transform:scale(1.08);
+
+
+box-shadow:
+
+0 0 30px #00BFFF;
+
+
 }
 
-#response {
-min-height: 60px;
-margin-top: 20px;
+
+
+
+/* Response Terminal */
+
+
+.response-panel p {
+
+
+background:#020409;
+
+
+padding:20px;
+
+
+border-left:
+
+3px solid #00BFFF;
+
+
+font-family:
+
+"Courier New", monospace;
+
+
+min-height:100px;
+
+
+text-align:left;
+
+
 }
 
-.online {
-animation: pulse 2s infinite;
+
+
+
+
+/* Mission Progress */
+
+
+.progress {
+
+
+height:15px;
+
+
+background:#020409;
+
+
+border:
+
+1px solid #00BFFF;
+
+
+border-radius:10px;
+
+
+overflow:hidden;
+
+
 }
 
-@keyframes pulse {
-0% { opacity: .5; }
-50% { opacity: 1; }
-100% { opacity: .5; }
+
+
+.progress div {
+
+
+height:100%;
+
+
+width:82%;
+
+
+background:#00BFFF;
+
+
+box-shadow:
+
+0 0 15px #00BFFF;
+
+
+animation:
+
+progressPulse 2s infinite;
+
+
+}
+
+
+
+@keyframes progressPulse {
+
+
+0% {
+
+opacity:.6;
+
+}
+
+
+50% {
+
+opacity:1;
+
+}
+
+
+100% {
+
+opacity:.6;
+
+}
+
+
+}
+
+
+
+
+
+/* CPU Animation */
+
+
+.cpu-bar {
+
+
+height:10px;
+
+
+background:#020409;
+
+
+border:
+
+1px solid #00BFFF;
+
+
+overflow:hidden;
+
+
+}
+
+
+
+.cpu-bar div {
+
+
+height:100%;
+
+
+width:60%;
+
+
+background:#55E3FF;
+
+
+animation:
+
+cpuMove 1.5s infinite;
+
+
+}
+
+
+
+@keyframes cpuMove {
+
+
+0% {
+
+width:20%;
+
+}
+
+
+50% {
+
+width:90%;
+
+}
+
+
+100% {
+
+width:40%;
+
+}
+
+
+}
+
+
+
+
+
+/* Activity Log */
+
+
+.activity {
+
+
+max-width:1000px;
+
+margin:25px auto;
+
+
+text-align:left;
+
+
+}
+
+
+
+
+
+/* Mobile Support */
+
+
+@media(max-width:1000px){
+
+
+.hud {
+
+grid-template-columns:1fr;
+
+}
+
+
 }
