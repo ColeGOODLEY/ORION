@@ -50,6 +50,18 @@ this.update(
 );
 
 
+this.update(
+"learning",
+"ACTIVE"
+);
+
+
+this.update(
+"planning",
+"THINKING"
+);
+
+
 },
 
 
@@ -67,6 +79,18 @@ this.update(
 this.update(
 "memory",
 "ONLINE"
+);
+
+
+this.update(
+"learning",
+"ACTIVE"
+);
+
+
+this.update(
+"planning",
+"READY"
 );
 
 
