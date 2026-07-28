@@ -1,7 +1,7 @@
 // =====================================
 // ORION BRAIN SYSTEM
-// Adaptive Intelligence Build 3.2
-// Context + AI Integration Fix
+// Adaptive Intelligence Build 3.3
+// Local Routing + AI Integration Fix
 // =====================================
 
 
@@ -327,144 +327,35 @@ async function processBrain(command){
 
 
     // =====================================
-    // LOCAL COMMANDS
+    // LOCAL SYSTEM ROUTING
     // =====================================
 
 
- // =====================================
-// LOCAL COMMANDS
-// =====================================
+    const localIntents = [
 
+        "memory",
 
-const localIntents = [
+        "learning",
 
-    "memory",
+        "personality",
 
-    "learning",
+        "status"
 
-    "personality",
+    ];
 
-    "status"
 
-];
 
+    if(localIntents.includes(analysis.intent)){
 
-// Allow local systems to handle commands,
-// but still provide AI context
 
-let localResponse = null;
 
+        return {
 
-if(localIntents.includes(analysis.intent)){
 
-
-    localResponse =
-    null;
-
-
-}
-
-
-
-
-    // =====================================
-    // AI BRAIN CONNECTION
-    // =====================================
-
-
-    let aiResponse;
-
-
-
-
-   if(typeof ORION_BRAIN !== "undefined"){
-
-
-    aiResponse =
-
-    await ORION_BRAIN.think(
-
-
-        command,
-
-
-        {
-
-
-            identity:
-
-            typeof ORION_IDENTITY !== "undefined"
-
-            ?
-
-            ORION_IDENTITY
-
-            :
-
-            {},
-
-
-
-            personality:
-
-            typeof ORION_PERSONALITY !== "undefined"
-
-            ?
-
-            ORION_PERSONALITY
-
-            :
-
-            {},
-
-
-
-memory:
-
-typeof searchRelevantMemories === "function"
-
-?
-
-searchRelevantMemories(command)
-
-:
-
-[],
-
-
-knowledge:
-
-typeof integrateKnowledge === "function"
-
-?
-
-integrateKnowledge(
-    searchRelevantMemories(command)
-)
-
-:
-
-"",
-            conversation:
-
-            typeof ORION_CONTEXT !== "undefined"
-
-            &&
-
-            typeof ORION_CONTEXT.getRecent === "function"
-
-            ?
-
-            ORION_CONTEXT.getRecent()
-
-            :
-
-            [],
-
+            source:"ORION_CORE",
 
 
             analysis:analysis,
-
 
 
             reasoning:
@@ -483,71 +374,238 @@ integrateKnowledge(
 
             :
 
-            ""
-
-
-        }
-
-
-    );
-
-
-}
-
-else{
-
-
-    aiResponse =
-
-    "AI Brain connection unavailable.";
-
-
-}
+            "",
 
 
 
+            knowledge:
 
-return {
+            typeof integrateKnowledge === "function"
 
+            ?
 
-    source:"AI_BRAIN",
+            integrateKnowledge(
 
-    analysis:analysis,
+                searchRelevantMemories(command)
 
-    reasoning:
-    typeof buildReasoningSummary === "function"
+            )
 
-    ?
+            :
 
-    buildReasoningSummary(
-        command,
-        analysis
-    )
-
-    :
-
-    "",
+            "",
 
 
-    knowledge:
 
-    typeof integrateKnowledge === "function"
-
-    ?
-
-    integrateKnowledge(
-        searchRelevantMemories(command)
-    )
-
-    :
-
-    "",
+            response:null
 
 
-    response:aiResponse
+        };
 
 
-};
+    }
+
+
+
+
+
+    // =====================================
+    // AI BRAIN CONNECTION
+    // =====================================
+
+
+    let aiResponse;
+
+
+
+    if(typeof ORION_BRAIN !== "undefined"){
+
+
+
+        aiResponse =
+
+        await ORION_BRAIN.think(
+
+
+            command,
+
+
+            {
+
+
+                identity:
+
+                typeof ORION_IDENTITY !== "undefined"
+
+                ?
+
+                ORION_IDENTITY
+
+                :
+
+                {},
+
+
+
+                personality:
+
+                typeof ORION_PERSONALITY !== "undefined"
+
+                ?
+
+                ORION_PERSONALITY
+
+                :
+
+                {},
+
+
+
+                memory:
+
+                typeof searchRelevantMemories === "function"
+
+                ?
+
+                searchRelevantMemories(command)
+
+                :
+
+                [],
+
+
+
+                knowledge:
+
+                typeof integrateKnowledge === "function"
+
+                ?
+
+                integrateKnowledge(
+
+                    searchRelevantMemories(command)
+
+                )
+
+                :
+
+                "",
+
+
+
+                conversation:
+
+                typeof ORION_CONTEXT !== "undefined"
+
+                &&
+
+                typeof ORION_CONTEXT.getRecent === "function"
+
+                ?
+
+                ORION_CONTEXT.getRecent()
+
+                :
+
+                [],
+
+
+
+                analysis:analysis,
+
+
+
+                reasoning:
+
+                typeof buildReasoningSummary === "function"
+
+                ?
+
+                buildReasoningSummary(
+
+                    command,
+
+                    analysis
+
+                )
+
+                :
+
+                ""
+
+
+            }
+
+
+        );
+
+
+    }
+
+    else{
+
+
+        aiResponse =
+
+        "AI Brain connection unavailable.";
+
+
+    }
+
+
+
+
+    return {
+
+
+        source:"AI_BRAIN",
+
+
+        analysis:analysis,
+
+
+
+        reasoning:
+
+        typeof buildReasoningSummary === "function"
+
+        ?
+
+        buildReasoningSummary(
+
+            command,
+
+            analysis
+
+        )
+
+        :
+
+        "",
+
+
+
+        knowledge:
+
+        typeof integrateKnowledge === "function"
+
+        ?
+
+        integrateKnowledge(
+
+            searchRelevantMemories(command)
+
+        )
+
+        :
+
+        "",
+
+
+
+        response:aiResponse
+
+
+    };
 
 
 }
