@@ -2,7 +2,7 @@
 // ORION IDENTITY SYSTEM v1.0
 // =====================================
 
-const ORION = {
+const ORION_IDENTITY = {
 
  // =====================================
  // Core Identity
