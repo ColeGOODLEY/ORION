@@ -1,7 +1,7 @@
 // =====================================
 // ORION BRAIN SYSTEM
-// Adaptive Intelligence Build 3.0
-// Central Intent Recognition Engine
+// Adaptive Intelligence Build 3.1
+// Context Integration Update
 // =====================================
 
 function analyzeCommand(command){
@@ -284,19 +284,15 @@ function analyzeCommand(command){
 
 
 
-    // =====================================
-    // RETURN ANALYSIS
-    // =====================================
-
     return {
 
-        intent: intent,
+        intent:intent,
 
-        category: category,
+        category:category,
 
-        confidence: confidence,
+        confidence:confidence,
 
-        command: command
+        command:command
 
     };
 
@@ -306,7 +302,7 @@ function analyzeCommand(command){
 
 // =====================================
 // ORION AI BRAIN ROUTER
-// Adaptive Intelligence Connection
+// Context Integration Build
 // =====================================
 
 
@@ -323,14 +319,14 @@ async function processBrain(command){
     // =====================================
 
 
-const localIntents = [
+    const localIntents = [
 
-    "memory",
-    "learning",
-    "personality",
-    "status"
+        "memory",
+        "learning",
+        "personality",
+        "status"
 
-];
+    ];
 
 
 
@@ -375,6 +371,23 @@ const localIntents = [
                 personality:ORION_PERSONALITY,
 
                 memory:getAllMemories(),
+
+
+                // NEW:
+                // Short term conversation memory
+
+                conversation:
+
+                typeof ORION_CONTEXT !== "undefined"
+
+                ?
+
+                ORION_CONTEXT.getRecent()
+
+                :
+
+                [],
+
 
                 analysis:analysis
 
