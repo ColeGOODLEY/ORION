@@ -44,29 +44,62 @@ function recallMemory(category){
 
 
 
-function searchMemory(keyword){
+function searchMemory(command){
 
     let memories =
     JSON.parse(
         localStorage.getItem("orion_memory")
     ) || {};
 
-    let results = [];
+    const words =
+    command
+    .toLowerCase()
+    .replace(/[^\w\s]/g,"")
+    .split(/\s+/)
+    .filter(word => word.length > 2);
 
-    for(let category in memories){
+    let scored = [];
+
+    for(const category in memories){
 
         if(!Array.isArray(memories[category])){
+
             continue;
+
         }
 
-        memories[category].forEach(item => {
+        memories[category].forEach(item=>{
 
-            if(
-                typeof item === "string" &&
-                item.toLowerCase().includes(keyword.toLowerCase())
-            ){
+            if(typeof item !== "string"){
 
-                results.push(item);
+                return;
+
+            }
+
+            let score = 0;
+
+            const lower =
+            item.toLowerCase();
+
+            words.forEach(word=>{
+
+                if(lower.includes(word)){
+
+                    score++;
+
+                }
+
+            });
+
+            if(score > 0){
+
+                scored.push({
+
+                    memory:item,
+
+                    score:score
+
+                });
 
             }
 
@@ -74,11 +107,28 @@ function searchMemory(keyword){
 
     }
 
-    return results;
+    scored.sort(function(a,b){
+
+        return b.score-a.score;
+
+    });
+
+    return scored.map(item=>item.memory);
 
 }
 
+// =====================================
+// GET RELEVANT MEMORIES
+// =====================================
 
+function searchRelevantMemories(command){
+
+    const results =
+    searchMemory(command);
+
+    return results.slice(0,5);
+
+}
 
 
 function clearMemory(){
