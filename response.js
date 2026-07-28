@@ -1,8 +1,9 @@
 // =====================================
 // ORION RESPONSE SYSTEM
-// Adaptive Intelligence Build 2.3
-// AI Response Formatting + Personality Integration
+// Adaptive Intelligence Build 2.4
+// AI Response Routing + Formatting Fix
 // =====================================
+
 
 
 function generateResponse(
@@ -22,9 +23,16 @@ aiResponse
 ){
 
 
+
 let text =
 command.toLowerCase();
 
+
+
+
+// =====================================
+// PERSONALITY DATA
+// =====================================
 
 
 let personalityInfo = "";
@@ -40,6 +48,7 @@ Communication Style:
 
 ${personalityStyleData.tone || "Adaptive"}
 
+
 Behavior:
 
 ${personalityStyleData.behavior || "Strategic assistant mode"}
@@ -51,36 +60,85 @@ ${personalityStyleData.behavior || "Strategic assistant mode"}
 
 
 
+
 // =====================================
-// AI BRAIN RESPONSE FORMAT
+// AI RESPONSE FORMAT
 // =====================================
 
 
 if(aiResponse){
 
 
+
 let memorySection = "";
 
 
-if(
-memories &&
-memories.length > 0
-){
+
+if(memories){
+
+
+
+let memoryList = [];
+
+
+
+if(Array.isArray(memories)){
+
+
+memoryList = memories;
+
+
+}
+
+
+else if(typeof memories === "object"){
+
+
+
+Object.values(memories)
+
+.forEach(category => {
+
+
+if(Array.isArray(category)){
+
+
+memoryList.push(...category);
+
+
+}
+
+
+});
+
+
+
+}
+
+
+
+
+if(memoryList.length > 0){
 
 
 memorySection = `
 
 Relevant Memories:
 
-• ${memories.join("\n• ")}
+• ${memoryList.join("\n• ")}
 
 `;
 
 }
 
 
+}
+
+
+
 
 let knowledgeSection = "";
+
 
 
 if(knowledge){
@@ -98,7 +156,9 @@ ${knowledge}
 
 
 
+
 let reasoningSection = "";
+
 
 
 if(reasoning){
@@ -113,6 +173,7 @@ ${reasoning}
 `;
 
 }
+
 
 
 
@@ -135,10 +196,14 @@ ${reasoningSection}
 
 ${aiResponse}
 
-
 `;
 
+
+
 }
+
+
+
 
 
 
@@ -150,7 +215,9 @@ ${aiResponse}
 if(text.startsWith("remember ")){
 
 
+
 const memory =
+
 command.substring(9).trim();
 
 
@@ -169,7 +236,9 @@ memory.includes("prefer")
 
 ){
 
+
 category = "preferences";
+
 
 }
 
@@ -184,7 +253,9 @@ memory.includes("build")
 
 ){
 
+
 category = "goals";
+
 
 }
 
@@ -197,16 +268,23 @@ memory.includes("project")
 
 ){
 
+
 category = "projects";
+
 
 }
 
 
 
+
 saveMemory(
+
 category,
+
 memory
+
 );
+
 
 
 
@@ -230,7 +308,12 @@ ${category}
 
 `;
 
+
+
 }
+
+
+
 
 
 
@@ -240,6 +323,7 @@ ${category}
 
 
 if(text === "clear learning"){
+
 
 
 clearLearning();
@@ -253,10 +337,13 @@ ORION ONLINE
 
 Learning history cleared successfully, Mr. Goodley.
 
-
 `;
 
+
+
 }
+
+
 
 
 
@@ -275,6 +362,7 @@ text === "how much have you learned"
 ){
 
 
+
 return `
 
 ORION ONLINE
@@ -288,7 +376,10 @@ ${learningCount("decisions")}
 
 `;
 
+
+
 }
+
 
 
 
@@ -308,14 +399,20 @@ text.includes("show learning")
 ){
 
 
+
 const learned =
+
 recallLearning("decisions");
 
 
 
+
 if(
+
 !learned ||
+
 learned.length === 0
+
 ){
 
 
@@ -326,10 +423,12 @@ ORION ONLINE
 
 No learning records available.
 
-
 `;
 
+
+
 }
+
 
 
 
@@ -337,7 +436,9 @@ let output = "";
 
 
 
+
 learned.forEach(item=>{
+
 
 
 output += `
@@ -361,7 +462,11 @@ ${item.timestamp}
 
 `;
 
+
+
 });
+
+
 
 
 
@@ -375,7 +480,12 @@ ${output}
 
 `;
 
+
+
 }
+
+
+
 
 
 
@@ -393,8 +503,16 @@ text.includes("what do you know about me")
 ){
 
 
-const storedMemories = [
 
+let storedMemories = [];
+
+
+
+if(typeof recallMemory === "function"){
+
+
+
+storedMemories = [
 
 ...recallMemory("preferences"),
 
@@ -404,8 +522,12 @@ const storedMemories = [
 
 ...recallMemory("facts")
 
-
 ];
+
+
+
+}
+
 
 
 
@@ -433,7 +555,10 @@ storedMemories.length > 0
 
 `;
 
+
+
 }
+
 
 
 
@@ -516,7 +641,10 @@ ${personalityInfo}
 
 `;
 
+
+
 }
+
 
 
 
@@ -528,7 +656,9 @@ ${personalityInfo}
 
 
 const words =
+
 text.split(/\s+/);
+
 
 
 
@@ -549,6 +679,7 @@ text === "good evening"
 ){
 
 
+
 return `
 
 ORION ONLINE
@@ -565,7 +696,10 @@ How may I assist you today, Sir?
 
 `;
 
+
+
 }
+
 
 
 
@@ -596,6 +730,10 @@ Memory System:
 ONLINE
 
 
+Knowledge System:
+ONLINE
+
+
 Learning System:
 ONLINE
 
@@ -612,14 +750,6 @@ Planning System:
 ONLINE
 
 
-Goal Management:
-ONLINE
-
-
-Confidence Engine:
-ONLINE
-
-
 Personality Layer:
 ONLINE
 
@@ -630,7 +760,10 @@ All systems operational, Mr. Goodley.
 
 `;
 
+
+
 }
+
 
 
 
@@ -657,17 +790,15 @@ ORION CONFIDENCE ANALYSIS
 
 Confidence:
 
-${confidence.score}%
-
-
-Reasoning:
-
-• ${confidence.reasoning.join("\n• ")}
+${confidence.score || confidence}
 
 
 `;
 
+
+
 }
+
 
 
 
@@ -679,6 +810,7 @@ Reasoning:
 
 
 if(plan){
+
 
 
 return `
@@ -708,7 +840,10 @@ Next Steps:
 
 `;
 
+
+
 }
+
 
 
 
@@ -720,6 +855,7 @@ Next Steps:
 
 
 if(goal){
+
 
 
 return `
@@ -754,7 +890,10 @@ ${goal.nextMilestone}
 
 `;
 
+
+
 }
+
 
 
 
@@ -773,10 +912,13 @@ ORION ONLINE
 Sir, I have analyzed your request.
 
 
+
 ${knowledge || ""}
 
 
+
 ${reasoning || ""}
+
 
 
 Assessment:
@@ -804,5 +946,7 @@ Awaiting your next instruction, Mr. Goodley.
 
 
 `;
+
+
 
 }
