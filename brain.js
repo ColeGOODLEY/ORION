@@ -308,33 +308,17 @@ function analyzeCommand(command){
 // =====================================
 
 
+// =====================================
+// ORION AI BRAIN ROUTER
+// Adaptive Intelligence Connection
+// =====================================
+
+
 async function processBrain(command){
 
-    const analysis = analyzeCommand(command);
 
-
-    ...
-
-    const aiResponse =
-    await ORION_BRAIN.think(
-
-        command,
-
-        {
-
-            identity:ORION_IDENTITY,
-
-            personality:ORION_PERSONALITY,
-
-            memory:getAllMemories(),
-
-            analysis:analysis
-
-        }
-
-    );
-
-}
+    const analysis =
+    analyzeCommand(command);
 
 
 
@@ -383,41 +367,42 @@ async function processBrain(command){
     // =====================================
 
 
-   let aiResponse;
+    let aiResponse;
 
 
-if(typeof ORION_BRAIN !== "undefined"){
+
+    if(typeof ORION_BRAIN !== "undefined"){
 
 
-    aiResponse =
-    await ORION_BRAIN.think(
+        aiResponse =
+        await ORION_BRAIN.think(
 
-        command,
+            command,
 
-        {
+            {
 
-           identity:ORION,
+                identity:ORION_IDENTITY,
 
-personality:ORION_PERSONALITY,
+                personality:ORION_PERSONALITY,
 
-            memory:getAllMemories(),
+                memory:getAllMemories(),
 
-            analysis:analysis
+                analysis:analysis
 
-        }
+            }
 
-    );
-
-
-}
-else{
+        );
 
 
-    aiResponse =
-    "AI Brain connection unavailable.";
+    }
+    else{
 
 
-}
+        aiResponse =
+        "AI Brain connection unavailable.";
+
+
+    }
 
 
 
