@@ -379,117 +379,135 @@ async function processBrain(command){
 
 
 
-    if(typeof ORION_BRAIN !== "undefined"){
+   if(typeof ORION_BRAIN !== "undefined"){
 
 
+    aiResponse =
 
-        aiResponse =
+    await ORION_BRAIN.think(
 
-        await ORION_BRAIN.think(
 
+        command,
 
-            command,
 
+        {
 
-            {
 
+            identity:
 
-                identity:
+            typeof ORION_IDENTITY !== "undefined"
 
-                typeof ORION_IDENTITY !== "undefined"
+            ?
 
-                ?
+            ORION_IDENTITY
 
-                ORION_IDENTITY
+            :
 
-                :
+            {},
 
-                {},
 
 
+            personality:
 
-                personality:
+            typeof ORION_PERSONALITY !== "undefined"
 
-                typeof ORION_PERSONALITY !== "undefined"
+            ?
 
-                ?
+            ORION_PERSONALITY
 
-                ORION_PERSONALITY
+            :
 
-                :
+            {},
 
-                {},
 
 
+            memory:
 
-           memory:
+            typeof searchRelevantMemories === "function"
 
-typeof searchRelevantMemories === "function"
+            ?
 
-?
+            searchRelevantMemories(command)
 
-searchRelevantMemories(command)
+            :
 
-:
+            [],
 
-[],
 
 
+            conversation:
 
-                conversation:
+            typeof ORION_CONTEXT !== "undefined"
 
-                typeof ORION_CONTEXT !== "undefined"
+            &&
 
-                &&
+            typeof ORION_CONTEXT.getRecent === "function"
 
-                typeof ORION_CONTEXT.getRecent === "function"
+            ?
 
-                ?
+            ORION_CONTEXT.getRecent()
 
-                ORION_CONTEXT.getRecent()
+            :
 
-                :
+            [],
 
-                [],
 
 
+            analysis:analysis,
 
-                analysis:analysis
 
 
-            }
+            reasoning:
 
+            typeof buildReasoningSummary === "function"
 
-        );
+            ?
 
+            buildReasoningSummary(
 
+                command,
 
-    }
+                analysis
 
-    else{
+            )
 
+            :
 
-        aiResponse =
+            ""
 
-        "AI Brain connection unavailable.";
 
+        }
 
-    }
 
+    );
 
 
+}
 
-    return {
+else{
 
 
-        source:"AI_BRAIN",
+    aiResponse =
 
-        analysis:analysis,
+    "AI Brain connection unavailable.";
 
-        response:aiResponse
 
+}
 
-    };
+
+
+
+return {
+
+
+    source:"AI_BRAIN",
+
+    analysis:analysis,
+
+    response:aiResponse
+
+
+};
 
 
 }
