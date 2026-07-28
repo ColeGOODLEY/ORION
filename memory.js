@@ -86,3 +86,19 @@ function clearMemory(){
     localStorage.removeItem("orion_memory");
 
 }
+
+// =====================================
+// GET ALL MEMORIES
+// =====================================
+
+function getAllMemories(){
+
+    let memories =
+    JSON.parse(
+        localStorage.getItem("orion_memory")
+    ) || {};
+
+
+    return memories;
+
+}
