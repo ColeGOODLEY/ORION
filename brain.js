@@ -331,17 +331,25 @@ async function processBrain(command){
     // =====================================
 
 
-    const localIntents = [
+   const localIntents = [
 
-        "memory",
+    "memory",
 
-        "learning",
+    "learning",
 
-        "personality",
+    "personality",
 
-        "status"
+    "status",
 
-    ];
+    "greeting",
+
+    "identity",
+
+    "confidence",
+
+    "goal"
+
+];
 
 
 
