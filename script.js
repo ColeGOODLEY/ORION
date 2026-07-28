@@ -145,10 +145,36 @@ async function executeORION(){
     const command =
     input.value.trim();
 
+// =====================================
+// SAVE USER MESSAGE TO CONTEXT
+// =====================================
 
+if(typeof ORION_CONTEXT !== "undefined"){
+
+    ORION_CONTEXT.addMessage(
+        "user",
+        command
+    );
+
+}
 
 
    if(command === ""){
+
+
+    typeResponse(
+
+        output,
+
+        "ORION ONLINE\n\nAwaiting your command, Mr. Goodley."
+
+    );
+
+
+    return;
+
+
+}
 
 
     
@@ -273,7 +299,18 @@ if(typeof ORION_HUD !== "undefined"){
         );
 
 
+// =====================================
+// SAVE ORION RESPONSE TO CONTEXT
+// =====================================
 
+if(typeof ORION_CONTEXT !== "undefined"){
+
+    ORION_CONTEXT.addMessage(
+        "assistant",
+        response
+    );
+
+}
 
         input.value = "";
 
