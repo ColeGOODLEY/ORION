@@ -378,9 +378,30 @@ ORION_IDENTITY
 {}
 ,
 
-                personality:ORION_PERSONALITY,
+                personality:
 
-                memory:getAllMemories(),
+typeof ORION_PERSONALITY !== "undefined"
+
+?
+
+ORION_PERSONALITY
+
+:
+
+{}
+,
+
+               memory:
+
+typeof getAllMemories !== "undefined"
+
+?
+
+getAllMemories()
+
+:
+
+[],
 
 
                 // NEW:
