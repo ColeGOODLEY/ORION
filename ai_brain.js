@@ -9,7 +9,7 @@ const ORION_BRAIN = {
 
     provider: "OpenAI",
 
-    model: "gpt-5.5-mini",
+   model: "gpt-5-mini",
 
 
     connected:false,
