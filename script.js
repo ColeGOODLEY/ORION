@@ -112,7 +112,7 @@ function addActivity(message){
 // =====================================
 
 
-function executeORION(){
+async function executeORION(){
 
 
 
@@ -194,8 +194,58 @@ function executeORION(){
 
 
 
-        const response =
-        ORION.process(command);
+        let response;
+
+
+const brainResult =
+await processBrain(command);
+
+
+
+if(brainResult.source === "AI_BRAIN"){
+
+
+    response =
+    generateResponse(
+
+        command,
+
+        null,
+
+        getAllMemories(),
+
+        null,
+
+        null,
+
+        null,
+
+        null,
+
+        null,
+
+        null,
+
+        null,
+
+        null,
+
+        ORION_PERSONALITY.getStyle(command),
+
+        brainResult.response
+
+    );
+
+
+}
+else{
+
+
+    response =
+    ORION.process(command);
+
+
+}
 
 
 
