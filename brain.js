@@ -373,9 +373,9 @@ if(typeof ORION_BRAIN !== "undefined"){
 
         {
 
-            identity:ORION_IDENTITY,
+           identity:ORION,
 
-            personality:ORION_PERSONALITY,
+personality:ORION_PERSONALITY,
 
             memory:getAllMemories(),
 
