@@ -1,8 +1,8 @@
 // =====================================
 // ORION SCRIPT
 // Command Interface System
-// Build 2.3
-// HUD Integration
+// Build 2.4
+// AI Brain Pipeline Integration
 // =====================================
 
 
@@ -145,37 +145,46 @@ async function executeORION(){
     const command =
     input.value.trim();
 
+
+
+
+    if(command === ""){
+
+
+        typeResponse(
+
+            output,
+
+            "ORION ONLINE\n\nAwaiting your command, Mr. Goodley."
+
+        );
+
+
+        return;
+
+
+    }
+
+
+
 // =====================================
 // SAVE USER MESSAGE TO CONTEXT
 // =====================================
 
+
 if(typeof ORION_CONTEXT !== "undefined"){
 
+
     ORION_CONTEXT.addMessage(
+
         "user",
+
         command
-    );
-
-}
-
-
-   if(command === ""){
-
-
-    typeResponse(
-
-        output,
-
-        "ORION ONLINE\n\nAwaiting your command, Mr. Goodley."
 
     );
 
 
-    return;
-
-
 }
-
 
 
 
@@ -206,55 +215,128 @@ if(typeof ORION_CONTEXT !== "undefined"){
 
 
 
-        let response;
+// =====================================
+// BRAIN ANALYSIS
+// =====================================
 
 
 const brainResult =
+
 await processBrain(command);
 
+
+
+
+let response;
+
+
+
+
+// =====================================
+// AI BRAIN RESPONSE
+// =====================================
 
 
 if(brainResult.source === "AI_BRAIN"){
 
 
-    response =
-    generateResponse(
 
-        command,
+response =
 
-        null,
+generateResponse(
 
-        getAllMemories(),
+    command,
 
-        null,
+    null,
 
-        null,
+    typeof getAllMemories === "function"
 
-        null,
+    ?
 
-        null,
+    getAllMemories()
 
-        null,
+    :
 
-        null,
+    [],
 
-        null,
 
-        null,
+    brainResult.knowledge || "",
 
-        ORION_PERSONALITY.getStyle(command),
 
-        brainResult.response
+    brainResult.reasoning || "",
 
-    );
+
+    null,
+
+
+    null,
+
+
+    null,
+
+
+    null,
+
+
+    brainResult.analysis?.confidence || null,
+
+
+    typeof ORION_CONTEXT !== "undefined"
+
+    &&
+
+    typeof ORION_CONTEXT.getRecent === "function"
+
+    ?
+
+    ORION_CONTEXT.getRecent()
+
+    :
+
+    [],
+
+
+
+    typeof ORION_PERSONALITY !== "undefined"
+
+    &&
+
+    typeof ORION_PERSONALITY.getStyle === "function"
+
+    ?
+
+    ORION_PERSONALITY.getStyle(command)
+
+    :
+
+    {},
+
+
+
+    brainResult.response
+
+
+);
+
 
 
 }
+
+
+
+
+
+// =====================================
+// LOCAL ORION CORE RESPONSE
+// =====================================
+
+
 else{
 
 
-    response =
-    await ORION.process(command);
+response =
+
+await ORION.process(command);
 
 
 }
@@ -263,51 +345,70 @@ else{
 
 
 
-     // HUD RETURN TO READY AFTER PROCESSING
+// =====================================
+// HUD READY
+// =====================================
+
 
 if(typeof ORION_HUD !== "undefined"){
 
+
     setTimeout(function(){
+
 
         ORION_HUD.ready();
 
+
     },1000);
+
 
 }
 
 
 
 
-        addActivity(
-        "Response Generated"
-        );
+addActivity(
+
+"Response Generated"
+
+);
 
 
 
 
-        typeResponse(
+typeResponse(
 
-        output,
+output,
 
-        response
+response
 
-        );
+);
+
+
 
 
 // =====================================
-// SAVE ORION RESPONSE TO CONTEXT
+// SAVE ORION RESPONSE
 // =====================================
+
 
 if(typeof ORION_CONTEXT !== "undefined"){
 
+
     ORION_CONTEXT.addMessage(
+
         "assistant",
+
         response
+
     );
+
 
 }
 
-        input.value = "";
+
+
+input.value = "";
 
 
 
@@ -348,7 +449,9 @@ Please check system modules.`
 
 
         addActivity(
+
         "System Error Detected"
+
         );
 
 
@@ -413,13 +516,18 @@ function(){
 
 });
 
+
+
+
 // =====================================
 // ORION BOOT SEQUENCE
 // =====================================
 
 
 document.addEventListener(
+
 "DOMContentLoaded",
+
 function(){
 
 
@@ -446,6 +554,8 @@ const messages = [
 
 "MEMORY ......... ONLINE",
 
+"KNOWLEDGE ...... ONLINE",
+
 "REASONING ...... ONLINE",
 
 "DECISION ....... ONLINE",
@@ -463,10 +573,13 @@ let index = 0;
 
 
 const interval =
+
 setInterval(function(){
 
 
+
 status.innerHTML =
+
 messages[index];
 
 
@@ -484,15 +597,21 @@ clearInterval(interval);
 
 setTimeout(function(){
 
-    boot.style.opacity = "0";
 
-    setTimeout(function(){
+boot.style.opacity = "0";
 
-        boot.remove();
 
-    },1000);
+setTimeout(function(){
+
+
+boot.remove();
+
+
+},1000);
+
 
 },800);
+
 
 
 }
@@ -504,6 +623,7 @@ setTimeout(function(){
 
 
 });
+
 
 
 
