@@ -200,7 +200,13 @@ async function executeORION(){
 const brainResult =
 await processBrain(command);
 
+typeResponse(
+    output,
+    "BRAIN RESULT:\n\n" +
+    JSON.stringify(brainResult,null,2)
+);
 
+return;
 
 if(brainResult.source === "AI_BRAIN"){
 
