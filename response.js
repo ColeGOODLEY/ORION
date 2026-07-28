@@ -729,7 +729,23 @@ ${evaluation.analysis || ""}
 
 }
 
+// =====================================
+// AI BRAIN RESPONSE
+// =====================================
 
+if(arguments.length > 12 && arguments[12]){
+
+return `
+
+ORION AI RESPONSE
+
+
+${arguments[12]}
+
+
+`;
+
+}
 
 return `
 
