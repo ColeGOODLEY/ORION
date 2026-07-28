@@ -9,7 +9,7 @@
 const ORION = {
 
 
-process(command){
+async process(command){
 
 
 try{
@@ -22,7 +22,61 @@ try{
 const brain =
 analyzeCommand(command);
 
+// =====================================
+// AI BRAIN ROUTING
+// =====================================
 
+if(brain.intent === "conversation"){
+
+
+const aiResponse =
+await processBrain(command);
+
+
+
+if(
+aiResponse &&
+aiResponse.source === "AI_BRAIN"
+){
+
+
+return generateResponse(
+
+    command,
+
+    null,
+
+    getRelevantMemories(command),
+
+    null,
+
+    null,
+
+    null,
+
+    null,
+
+    null,
+
+    null,
+
+    null,
+
+    getConversationContext(),
+
+    ORION_PERSONALITY.getBehavior(
+        ORION_PERSONALITY.getStyle(command)
+    ),
+
+    aiResponse.response
+
+);
+
+
+}
+
+
+}
 
 // =====================================
 // PERSONALITY ANALYSIS
