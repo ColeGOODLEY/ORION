@@ -15,6 +15,7 @@ const ORION_BRAIN = {
     connected:false,
 
 
+
     async think(prompt, context){
 
 
@@ -26,11 +27,15 @@ const ORION_BRAIN = {
             );
 
 
-     const response = await fetch(
-    "https://sparkling-meadow-17f4.colehgoodley.workers.dev",
-    {
+
+            const response = await fetch(
+
+                "https://sparkling-meadow-17f4.colehgoodley.workers.dev",
+
+                {
 
                     method:"POST",
+
 
                     headers:{
 
@@ -51,22 +56,49 @@ const ORION_BRAIN = {
                     })
 
                 }
+
             );
 
 
 
+
+
+            // =====================================
+            // SERVER ERROR HANDLING
+            // =====================================
+
+
             if(!response.ok){
 
+
+                const errorText =
+                await response.text();
+
+
+
                 throw new Error(
-                    "Brain server unavailable"
+
+                    errorText ||
+
+                    "Brain server unavailable."
+
                 );
+
 
             }
 
 
 
+
+
+            // =====================================
+            // RECEIVE AI RESPONSE
+            // =====================================
+
+
             const data =
             await response.json();
+
 
 
 
@@ -81,12 +113,17 @@ const ORION_BRAIN = {
         }
 
 
+
         catch(error){
 
 
+
             console.error(
+
                 "ORION Brain Error:",
+
                 error
+
             );
 
 
@@ -95,11 +132,15 @@ const ORION_BRAIN = {
 
 
 
-        return `
+            return `
 
 ORION AI BRAIN ERROR:
 
+
 ${error.message}
+
+
+Core systems remain operational.
 
 `;
 
