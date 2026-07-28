@@ -65,3 +65,68 @@ function processReasoning(command, brain, context, memories, knowledge){
 
 
 }
+
+// =====================================
+// BUILD REASONING SUMMARY
+// =====================================
+
+function buildReasoningSummary(command, analysis){
+
+    let summary = "";
+
+    summary += "Intent: " + analysis.intent + "\n";
+    summary += "Category: " + analysis.category + "\n";
+    summary += "Confidence: " + analysis.confidence + "\n\n";
+
+    if(typeof searchRelevantMemories === "function"){
+
+        const memories = searchRelevantMemories(command);
+
+        if(memories.length > 0){
+
+            summary += "Relevant Memories:\n";
+
+            memories.forEach(function(memory){
+
+                summary += "- " + memory + "\n";
+
+            });
+
+            summary += "\n";
+
+        }
+
+    }
+
+    if(
+        typeof ORION_CONTEXT !== "undefined"
+        &&
+        typeof ORION_CONTEXT.getRecent === "function"
+    ){
+
+        const conversation =
+        ORION_CONTEXT.getRecent();
+
+        if(conversation.length > 0){
+
+            summary +=
+            "Recent Conversation:\n";
+
+            conversation.forEach(function(entry){
+
+                summary +=
+                entry.role +
+                ": " +
+                entry.message +
+                "\n";
+
+            });
+
+        }
+
+    }
+summary += "\nCurrent Command:\n";
+summary += command;
+    return summary;
+
+}
