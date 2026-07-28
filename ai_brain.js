@@ -1,15 +1,16 @@
 // =====================================
 // ORION AI BRAIN CONNECTOR
 // Model Connection Layer
+// Memory + Identity Integration Build
 // =====================================
 
 
 const ORION_BRAIN = {
 
 
-    provider: "OpenAI",
+    provider: "Hugging Face",
 
-   model: "gpt-5-mini",
+    model: "meta-llama/Llama-3.1-8B-Instruct",
 
 
     connected:false,
@@ -47,26 +48,88 @@ const ORION_BRAIN = {
 
                     body:JSON.stringify({
 
-    model:this.model,
 
-    prompt:prompt,
+                        model:this.model,
 
-    context:{
 
-        identity: ORION_IDENTITY,
+                        prompt:prompt,
 
-        personality:
-        ORION_PERSONALITY,
 
-        memory:
-        getAllMemories(),
+                        context:{
 
-        analysis:
-        context
 
-    }
 
-})
+                            // =====================================
+                            // ORION IDENTITY
+                            // =====================================
+
+                            identity:
+
+                            typeof ORION_IDENTITY !== "undefined"
+
+                            ?
+
+                            ORION_IDENTITY
+
+                            :
+
+                            "ORION identity unavailable.",
+
+
+
+
+                            // =====================================
+                            // PERSONALITY
+                            // =====================================
+
+                            personality:
+
+                            typeof ORION_PERSONALITY !== "undefined"
+
+                            ?
+
+                            ORION_PERSONALITY
+
+                            :
+
+                            "ORION personality unavailable.",
+
+
+
+
+                            // =====================================
+                            // MEMORY
+                            // =====================================
+
+                            memories:
+
+                            typeof getAllMemories === "function"
+
+                            ?
+
+                            getAllMemories()
+
+                            :
+
+                            "No memory system available.",
+
+
+
+
+                            // =====================================
+                            // BRAIN ANALYSIS
+                            // =====================================
+
+                            analysis:
+
+                            context
+
+
+
+                        }
+
+
+                    })
 
                 }
 
