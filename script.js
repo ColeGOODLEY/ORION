@@ -242,7 +242,7 @@ else{
 
 
     response =
-    ORION.process(command);
+    await ORION.process(command);
 
 
 }
