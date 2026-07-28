@@ -331,40 +331,38 @@ async function processBrain(command){
     // =====================================
 
 
-    const localIntents = [
+ // =====================================
+// LOCAL COMMANDS
+// =====================================
 
 
-        "memory",
+const localIntents = [
 
-        "learning",
+    "memory",
 
-        "personality",
+    "learning",
 
-        "status"
+    "personality",
 
+    "status"
 
-    ];
-
-
-
-
-    if(localIntents.includes(analysis.intent)){
+];
 
 
-        return {
+// Allow local systems to handle commands,
+// but still provide AI context
+
+let localResponse = null;
 
 
-            source:"ORION_CORE",
-
-            analysis:analysis,
-
-            response:null
+if(localIntents.includes(analysis.intent)){
 
 
-        };
+    localResponse =
+    null;
 
 
-    }
+}
 
 
 
@@ -515,6 +513,36 @@ return {
     source:"AI_BRAIN",
 
     analysis:analysis,
+
+    reasoning:
+    typeof buildReasoningSummary === "function"
+
+    ?
+
+    buildReasoningSummary(
+        command,
+        analysis
+    )
+
+    :
+
+    "",
+
+
+    knowledge:
+
+    typeof integrateKnowledge === "function"
+
+    ?
+
+    integrateKnowledge(
+        searchRelevantMemories(command)
+    )
+
+    :
+
+    "",
+
 
     response:aiResponse
 
