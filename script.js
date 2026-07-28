@@ -151,16 +151,7 @@ async function executeORION(){
    if(command === ""){
 
 
-    typeResponse(
-
-    output,
-
-    "ORION ONLINE\n\nAwaiting your command, Mr. Goodley."
-
-    );
-
-
-    return;
+    
 
 
 }
