@@ -188,3 +188,9 @@ function getContext(command){
 
 
 }
+
+// =====================================
+// INITIALIZE CONTEXT
+// =====================================
+
+ORION_CONTEXT.load();
