@@ -12,7 +12,7 @@ const ORION_CONTEXT = {
     history: [],
 
 
-    maxHistory: 10,
+   maxHistory: 6,
 
 
 
@@ -102,17 +102,29 @@ const ORION_CONTEXT = {
     // GET RECENT CONTEXT
     // =====================================
 
-    getRecent(){
+getRecent(){
 
 
-        return this.history.slice(
+    return this.history
 
-            -this.maxHistory
+    .slice(-this.maxHistory)
 
-        );
+    .map(item => {
 
 
-    },
+        return {
+
+            role:item.role,
+
+            message:item.message
+
+        };
+
+
+    });
+
+
+},
 
 
 
