@@ -421,20 +421,32 @@ async function processBrain(command){
 
 
 
-            memory:
+memory:
 
-            typeof searchRelevantMemories === "function"
+typeof searchRelevantMemories === "function"
 
-            ?
+?
 
-            searchRelevantMemories(command)
+searchRelevantMemories(command)
 
-            :
+:
 
-            [],
+[],
 
 
+knowledge:
 
+typeof integrateKnowledge === "function"
+
+?
+
+integrateKnowledge(
+    searchRelevantMemories(command)
+)
+
+:
+
+"",
             conversation:
 
             typeof ORION_CONTEXT !== "undefined"
