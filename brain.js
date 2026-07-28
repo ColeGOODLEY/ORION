@@ -422,17 +422,17 @@ async function processBrain(command){
 
 
 
-                memory:
+           memory:
 
-                typeof getAllMemories !== "undefined"
+typeof searchRelevantMemories === "function"
 
-                ?
+?
 
-                getAllMemories()
+searchRelevantMemories(command)
 
-                :
+:
 
-                [],
+[],
 
 
 
