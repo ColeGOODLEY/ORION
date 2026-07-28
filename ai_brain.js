@@ -12,25 +12,32 @@ const ORION_BRAIN = {
     model: "gpt-5.5-mini",
 
 
-    connected: false,
+    connected:false,
 
 
     async think(prompt, context){
 
+
         try{
 
 
-            console.log("ORION Brain Activated");
+            console.log(
+                "ORION Brain Activated"
+            );
 
 
-            const response = await fetch(
-                "YOUR_API_ENDPOINT",
+            const response =
+            await fetch(
+                "YOUR_BACKEND_ENDPOINT",
                 {
 
                     method:"POST",
 
                     headers:{
-                        "Content-Type":"application/json"
+
+                        "Content-Type":
+                        "application/json"
+
                     },
 
 
@@ -48,29 +55,59 @@ const ORION_BRAIN = {
             );
 
 
-            const data = await response.json();
+
+            if(!response.ok){
+
+                throw new Error(
+                    "Brain server unavailable"
+                );
+
+            }
+
+
+
+            const data =
+            await response.json();
+
 
 
             this.connected = true;
+
 
 
             return data.response;
 
 
 
-        }catch(error){
+        }
+
+
+        catch(error){
 
 
             console.error(
-                "Brain Connection Failed:",
+                "ORION Brain Error:",
                 error
             );
 
 
-            return "Brain connection unavailable.";
 
+            this.connected = false;
+
+
+
+            return `
+
+ORION AI BRAIN STATUS:
+
+Connection unavailable.
+
+Core systems remain operational.
+
+`;
 
         }
+
 
     }
 
