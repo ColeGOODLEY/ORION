@@ -301,3 +301,114 @@ function analyzeCommand(command){
     };
 
 }
+
+// =====================================
+// ORION AI BRAIN ROUTER
+// Adaptive Intelligence Connection
+// =====================================
+
+
+async function processBrain(command){
+
+
+    const analysis = analyzeCommand(command);
+
+
+
+    // =====================================
+    // LOCAL SYSTEM COMMANDS
+    // =====================================
+
+
+    const localIntents = [
+
+        "memory",
+        "learning",
+        "personality",
+        "status",
+        "confidence",
+        "goal",
+        "planning",
+        "engineering",
+        "decision",
+        "greeting",
+        "identity"
+
+    ];
+
+
+
+    if(localIntents.includes(analysis.intent)){
+
+
+        return {
+
+            source:"ORION_CORE",
+
+            analysis:analysis,
+
+            response:null
+
+        };
+
+    }
+
+
+
+    // =====================================
+    // AI BRAIN REQUEST
+    // =====================================
+
+
+   let aiResponse;
+
+
+if(typeof ORION_BRAIN !== "undefined"){
+
+
+    aiResponse =
+    await ORION_BRAIN.think(
+
+        command,
+
+        {
+
+            identity:ORION_IDENTITY,
+
+            personality:ORION_PERSONALITY,
+
+            memory:getAllMemories(),
+
+            analysis:analysis
+
+        }
+
+    );
+
+
+}
+else{
+
+
+    aiResponse =
+    "AI Brain connection unavailable.";
+
+
+}
+
+
+
+    return {
+
+
+        source:"AI_BRAIN",
+
+        analysis:analysis,
+
+        response:aiResponse
+
+
+    };
+
+
+}
