@@ -338,8 +338,7 @@ async function processBrain(command){
         "planning",
         "engineering",
         "decision",
-        "greeting",
-        "identity"
+        "greeting"
 
     ];
 
