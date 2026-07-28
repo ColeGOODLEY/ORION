@@ -18,7 +18,7 @@ goal,
 confidence,
 conversation,
 personalityStyleData,
-brainResponse
+aiResponse
 ){
 
 
@@ -50,22 +50,17 @@ ${personalityStyleData.behavior || "Strategic assistant mode"}
 
 }
 
-// =====================================
-// AI BRAIN RESPONSE
-// =====================================
-
-if(brainResponse){
+if(aiResponse){
 
 return `
 
-ORION ONLINE
+ORION AI RESPONSE
 
 
-${brainResponse}
+${aiResponse}
 
 
 `;
-
 
 }
 
@@ -729,23 +724,6 @@ ${evaluation.analysis || ""}
 
 }
 
-// =====================================
-// AI BRAIN RESPONSE
-// =====================================
-
-if(arguments.length > 12 && arguments[12]){
-
-return `
-
-ORION AI RESPONSE
-
-
-${arguments[12]}
-
-
-`;
-
-}
 
 return `
 
