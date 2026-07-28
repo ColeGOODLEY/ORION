@@ -95,13 +95,11 @@ const ORION_BRAIN = {
 
 
 
-            return `
+        return `
 
-ORION AI BRAIN STATUS:
+ORION AI BRAIN ERROR:
 
-Connection unavailable.
-
-Core systems remain operational.
+${error.message}
 
 `;
 
