@@ -47,13 +47,26 @@ const ORION_BRAIN = {
 
                     body:JSON.stringify({
 
-                        model:this.model,
+    model:this.model,
 
-                        prompt:prompt,
+    prompt:prompt,
 
-                        context:context
+    context:{
 
-                    })
+        identity: ORION_IDENTITY,
+
+        personality:
+        ORION_PERSONALITY,
+
+        memory:
+        getAllMemories(),
+
+        analysis:
+        context
+
+    }
+
+})
 
                 }
 
