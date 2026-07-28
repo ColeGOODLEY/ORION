@@ -1,15 +1,22 @@
 // =====================================
 // ORION BRAIN SYSTEM
-// Adaptive Intelligence Build 3.1
-// Context Integration Update
+// Adaptive Intelligence Build 3.2
+// Context + AI Integration Fix
 // =====================================
+
+
 
 function analyzeCommand(command){
 
-    const text = command.toLowerCase().trim();
+
+    const text =
+    command.toLowerCase().trim();
+
 
     let intent = "conversation";
+
     let confidence = "medium";
+
     let category = "general";
 
 
@@ -213,7 +220,7 @@ function analyzeCommand(command){
 
 
     // =====================================
-    // DECISIONS
+    // DECISION
     // =====================================
 
     else if(
@@ -286,6 +293,7 @@ function analyzeCommand(command){
 
     return {
 
+
         intent:intent,
 
         category:category,
@@ -294,19 +302,22 @@ function analyzeCommand(command){
 
         command:command
 
+
     };
+
 
 }
 
 
 
+
 // =====================================
 // ORION AI BRAIN ROUTER
-// Context Integration Build
 // =====================================
 
 
 async function processBrain(command){
+
 
 
     const analysis =
@@ -314,19 +325,26 @@ async function processBrain(command){
 
 
 
+
     // =====================================
-    // LOCAL SYSTEM COMMANDS
+    // LOCAL COMMANDS
     // =====================================
 
 
     const localIntents = [
 
+
         "memory",
+
         "learning",
+
         "personality",
+
         "status"
 
+
     ];
+
 
 
 
@@ -335,20 +353,24 @@ async function processBrain(command){
 
         return {
 
+
             source:"ORION_CORE",
 
             analysis:analysis,
 
             response:null
 
+
         };
+
 
     }
 
 
 
+
     // =====================================
-    // AI BRAIN REQUEST
+    // AI BRAIN CONNECTION
     // =====================================
 
 
@@ -356,60 +378,71 @@ async function processBrain(command){
 
 
 
+
     if(typeof ORION_BRAIN !== "undefined"){
 
 
+
         aiResponse =
+
         await ORION_BRAIN.think(
+
 
             command,
 
+
             {
 
-               identity:
-typeof ORION_IDENTITY !== "undefined"
 
-?
+                identity:
 
-ORION_IDENTITY
+                typeof ORION_IDENTITY !== "undefined"
 
-:
+                ?
 
-{}
-,
+                ORION_IDENTITY
+
+                :
+
+                {},
+
+
 
                 personality:
 
-typeof ORION_PERSONALITY !== "undefined"
+                typeof ORION_PERSONALITY !== "undefined"
 
-?
+                ?
 
-ORION_PERSONALITY
+                ORION_PERSONALITY
 
-:
+                :
 
-{}
-,
-
-               memory:
-
-typeof getAllMemories !== "undefined"
-
-?
-
-getAllMemories()
-
-:
-
-[],
+                {},
 
 
-                // NEW:
-                // Short term conversation memory
+
+                memory:
+
+                typeof getAllMemories !== "undefined"
+
+                ?
+
+                getAllMemories()
+
+                :
+
+                [],
+
+
 
                 conversation:
 
                 typeof ORION_CONTEXT !== "undefined"
+
+                &&
+
+                typeof ORION_CONTEXT.getRecent === "function"
 
                 ?
 
@@ -420,22 +453,29 @@ getAllMemories()
                 [],
 
 
+
                 analysis:analysis
 
+
             }
+
 
         );
 
 
+
     }
+
     else{
 
 
         aiResponse =
+
         "AI Brain connection unavailable.";
 
 
     }
+
 
 
 
