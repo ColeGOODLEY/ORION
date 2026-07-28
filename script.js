@@ -1,8 +1,8 @@
 // =====================================
 // ORION SCRIPT
 // Command Interface System
-// Build 2.4
-// AI Brain Pipeline Integration
+// Build 2.5
+// Brain Routing Stability Fix
 // =====================================
 
 
@@ -130,7 +130,7 @@ async function executeORION(){
 
 
         console.error(
-        "ORION ERROR: Command interface elements missing."
+        "ORION ERROR: Command interface missing."
         );
 
 
@@ -144,7 +144,6 @@ async function executeORION(){
 
     const command =
     input.value.trim();
-
 
 
 
@@ -167,8 +166,9 @@ async function executeORION(){
 
 
 
+
 // =====================================
-// SAVE USER MESSAGE TO CONTEXT
+// SAVE USER MESSAGE
 // =====================================
 
 
@@ -189,34 +189,37 @@ if(typeof ORION_CONTEXT !== "undefined"){
 
 
 
-    try{
+try{
 
 
-        // HUD STATUS UPDATE
-
-        if(typeof ORION_HUD !== "undefined"){
-
-            ORION_HUD.processing();
-
-        }
+// =====================================
+// HUD PROCESSING
+// =====================================
 
 
+if(typeof ORION_HUD !== "undefined"){
 
-        addActivity(
-        "Command Received"
-        );
+    ORION_HUD.processing();
+
+}
 
 
 
-        addActivity(
-        "Brain Processing"
-        );
+addActivity(
+"Command Received"
+);
+
+
+
+addActivity(
+"Brain Processing"
+);
 
 
 
 
 // =====================================
-// BRAIN ANALYSIS
+// PROCESS COMMAND
 // =====================================
 
 
@@ -226,8 +229,27 @@ await processBrain(command);
 
 
 
+let response = "";
 
-let response;
+
+
+
+// =====================================
+// ORION CORE RESPONSE
+// =====================================
+
+
+if(
+brainResult.source === "ORION_CORE"
+){
+
+
+    response =
+
+    await ORION.process(command);
+
+
+}
 
 
 
@@ -237,7 +259,9 @@ let response;
 // =====================================
 
 
-if(brainResult.source === "AI_BRAIN"){
+else if(
+brainResult.source === "AI_BRAIN"
+){
 
 
 
@@ -248,6 +272,7 @@ generateResponse(
     command,
 
     null,
+
 
     typeof getAllMemories === "function"
 
@@ -260,14 +285,14 @@ generateResponse(
     [],
 
 
+
     brainResult.knowledge || "",
+
 
 
     brainResult.reasoning || "",
 
 
-    null,
-
 
     null,
 
@@ -276,9 +301,14 @@ generateResponse(
 
 
     null,
+
+
+    null,
+
 
 
     brainResult.analysis?.confidence || null,
+
 
 
     typeof ORION_CONTEXT !== "undefined"
@@ -294,6 +324,7 @@ generateResponse(
     :
 
     [],
+
 
 
 
@@ -325,9 +356,8 @@ generateResponse(
 
 
 
-
 // =====================================
-// LOCAL ORION CORE RESPONSE
+// FALLBACK
 // =====================================
 
 
@@ -336,11 +366,9 @@ else{
 
 response =
 
-await ORION.process(command);
-
+"ORION ERROR: Unknown response source.";
 
 }
-
 
 
 
@@ -353,13 +381,13 @@ await ORION.process(command);
 if(typeof ORION_HUD !== "undefined"){
 
 
-    setTimeout(function(){
+setTimeout(function(){
 
 
-        ORION_HUD.ready();
+ORION_HUD.ready();
 
 
-    },1000);
+},1000);
 
 
 }
@@ -368,9 +396,7 @@ if(typeof ORION_HUD !== "undefined"){
 
 
 addActivity(
-
 "Response Generated"
-
 );
 
 
@@ -388,23 +414,24 @@ response
 
 
 // =====================================
-// SAVE ORION RESPONSE
+// SAVE ASSISTANT RESPONSE
 // =====================================
 
 
 if(typeof ORION_CONTEXT !== "undefined"){
 
 
-    ORION_CONTEXT.addMessage(
+ORION_CONTEXT.addMessage(
 
-        "assistant",
+    "assistant",
 
-        response
+    response
 
-    );
+);
 
 
 }
+
 
 
 
@@ -412,56 +439,53 @@ input.value = "";
 
 
 
-    }
+}
 
 
 
-    catch(error){
+catch(error){
 
 
 
-        console.error(
+console.error(
 
-        "ORION SYSTEM ERROR:",
+"ORION SYSTEM ERROR:",
 
-        error
+error
 
-        );
+);
 
 
 
-        typeResponse(
+typeResponse(
 
-        output,
+output,
 
-        `ORION SYSTEM ERROR
+`ORION SYSTEM ERROR
 
-Unable to complete command processing.
+Unable to complete command.
 
 Error:
 
 ${error.message}
 
-Please check system modules.`
+`
 
-        );
-
-
-
-        addActivity(
-
-        "System Error Detected"
-
-        );
+);
 
 
 
-    }
+addActivity(
+"System Error Detected"
+);
 
 
 
 }
 
+
+
+}
 
 
 
@@ -479,38 +503,38 @@ function(){
 
 
 
-    const input =
-    document.getElementById("command");
+const input =
+document.getElementById("command");
 
 
 
-    if(input){
+if(input){
 
 
 
-        input.addEventListener(
+input.addEventListener(
 
-        "keydown",
+"keydown",
 
-        function(event){
-
-
-
-            if(event.key === "Enter"){
-
-
-                executeORION();
-
-
-            }
+function(event){
 
 
 
-        });
+if(event.key === "Enter"){
+
+
+executeORION();
+
+
+}
 
 
 
-    }
+});
+
+
+
+}
 
 
 
@@ -550,6 +574,7 @@ return;
 
 const messages = [
 
+
 "AI CORE ........ ONLINE",
 
 "MEMORY ......... ONLINE",
@@ -563,6 +588,7 @@ const messages = [
 "PERSONALITY .... ONLINE",
 
 "SYSTEM READY"
+
 
 ];
 
@@ -601,6 +627,7 @@ setTimeout(function(){
 boot.style.opacity = "0";
 
 
+
 setTimeout(function(){
 
 
@@ -608,6 +635,7 @@ boot.remove();
 
 
 },1000);
+
 
 
 },800);
