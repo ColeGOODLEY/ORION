@@ -366,7 +366,17 @@ async function processBrain(command){
 
             {
 
-                identity:ORION,
+               identity:
+typeof ORION_IDENTITY !== "undefined"
+
+?
+
+ORION_IDENTITY
+
+:
+
+{}
+,
 
                 personality:ORION_PERSONALITY,
 
