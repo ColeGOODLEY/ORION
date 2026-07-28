@@ -201,6 +201,18 @@ const brainResult =
 await processBrain(command);
 
 
+typeResponse(
+    output,
+    "BRAIN ROUTE TEST:\n\n" +
+    JSON.stringify(brainResult, null, 2)
+);
+
+return;
+
+
+
+if(brainResult.source === "AI_BRAIN"){
+
 
 if(brainResult.source === "AI_BRAIN"){
 
