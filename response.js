@@ -17,7 +17,8 @@ plan,
 goal,
 confidence,
 conversation,
-personalityStyleData
+personalityStyleData,
+brainResponse
 ){
 
 
@@ -49,7 +50,24 @@ ${personalityStyleData.behavior || "Strategic assistant mode"}
 
 }
 
+// =====================================
+// AI BRAIN RESPONSE
+// =====================================
 
+if(brainResponse){
+
+return `
+
+ORION ONLINE
+
+
+${brainResponse}
+
+
+`;
+
+
+}
 
 // =====================================
 // MEMORY STORAGE
