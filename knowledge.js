@@ -1,66 +1,158 @@
 // =====================================
 // ORION KNOWLEDGE ENGINE
-// Recovery Build 1.1
+// Adaptive Knowledge Build 2.0
+// Memory Intelligence Integration
 // =====================================
 
 
+
+// =====================================
+// ANALYZE STORED KNOWLEDGE
+// =====================================
+
 function integrateKnowledge(memories){
 
-    if(!memories || memories.length === 0){
+
+    if(
+        !memories ||
+        Object.keys(memories).length === 0
+    ){
 
         return "";
 
     }
 
 
+
     let insights = [];
 
 
-    memories.forEach(memory => {
+
+    for(const category in memories){
 
 
-        let text =
-        memory.toLowerCase();
+        if(!Array.isArray(memories[category])){
 
-
-        if(
-            text.includes("project") ||
-            text.includes("orion")
-        ){
-
-            insights.push(
-                "The user has an active long-term project related to ORION."
-            );
+            continue;
 
         }
 
 
-        if(
-            text.includes("goal") ||
-            text.includes("want")
-        ){
 
-            insights.push(
-                "The user has identified this as an important personal objective."
-            );
-
-        }
+        memories[category].forEach(memory=>{
 
 
-        if(
-            text.includes("favorite") ||
-            text.includes("like") ||
-            text.includes("prefer")
-        ){
+            if(typeof memory !== "string"){
 
-            insights.push(
-                "The user has stored personal preferences that may improve personalization."
-            );
+                return;
 
-        }
+            }
 
 
-    });
+
+            const text =
+            memory.toLowerCase();
+
+
+
+
+            // =============================
+            // PROJECT KNOWLEDGE
+            // =============================
+
+            if(
+
+                text.includes("orion") ||
+
+                text.includes("project") ||
+
+                text.includes("ai")
+
+            ){
+
+                insights.push(
+                "The user is actively developing an AI project and values long-term system improvement."
+                );
+
+            }
+
+
+
+
+            // =============================
+            // GOAL KNOWLEDGE
+            // =============================
+
+            if(
+
+                text.includes("goal") ||
+
+                text.includes("want") ||
+
+                text.includes("achieve")
+
+            ){
+
+                insights.push(
+                "The user has identified personal objectives that should influence strategic recommendations."
+                );
+
+            }
+
+
+
+
+            // =============================
+            // PREFERENCE KNOWLEDGE
+            // =============================
+
+            if(
+
+                text.includes("favorite") ||
+
+                text.includes("like") ||
+
+                text.includes("prefer")
+
+            ){
+
+                insights.push(
+                "The user has stored preferences that can improve personalization."
+                );
+
+            }
+
+
+
+
+            // =============================
+            // SKILL KNOWLEDGE
+            // =============================
+
+            if(
+
+                text.includes("learn") ||
+
+                text.includes("skill") ||
+
+                text.includes("coding")
+
+            ){
+
+                insights.push(
+                "The user is focused on learning and capability development."
+                );
+
+            }
+
+
+
+        });
+
+
+    }
+
+
 
 
     if(insights.length === 0){
@@ -70,12 +162,49 @@ function integrateKnowledge(memories){
     }
 
 
+
     return `
 
-Knowledge Insights:
+ORION KNOWLEDGE INSIGHTS:
 
 • ${[...new Set(insights)].join("\n• ")}
 
 `;
+
+}
+
+
+
+
+
+// =====================================
+// BUILD KNOWLEDGE CONTEXT
+// =====================================
+
+
+function buildKnowledgeContext(command){
+
+
+
+    if(
+        typeof getAllMemories !== "function"
+    ){
+
+        return "";
+
+    }
+
+
+
+
+    const memories =
+    getAllMemories();
+
+
+
+
+    return integrateKnowledge(memories);
+
+
 
 }
