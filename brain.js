@@ -310,8 +310,31 @@ function analyzeCommand(command){
 
 async function processBrain(command){
 
-
     const analysis = analyzeCommand(command);
+
+
+    ...
+
+    const aiResponse =
+    await ORION_BRAIN.think(
+
+        command,
+
+        {
+
+            identity:ORION_IDENTITY,
+
+            personality:ORION_PERSONALITY,
+
+            memory:getAllMemories(),
+
+            analysis:analysis
+
+        }
+
+    );
+
+}
 
 
 
