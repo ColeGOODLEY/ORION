@@ -302,10 +302,6 @@ function analyzeCommand(command){
 
 }
 
-// =====================================
-// ORION AI BRAIN ROUTER
-// Adaptive Intelligence Connection
-// =====================================
 
 
 // =====================================
@@ -380,7 +376,7 @@ async function processBrain(command){
 
             {
 
-                identity:ORION_IDENTITY,
+                identity:ORION,
 
                 personality:ORION_PERSONALITY,
 
