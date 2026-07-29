@@ -265,6 +265,21 @@ brainResult.source === "AI_BRAIN"
 
 
 
+const aiOutput =
+
+brainResult.response?.response
+
+||
+
+brainResult.response
+
+||
+
+"ORION AI response unavailable.";
+
+
+
+
 response =
 
 generateResponse(
@@ -344,7 +359,7 @@ generateResponse(
 
 
 
-    brainResult.response
+    aiOutput
 
 
 );
