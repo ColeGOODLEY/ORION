@@ -1,7 +1,7 @@
 // =====================================
 // ORION RESPONSE SYSTEM
-// Adaptive Intelligence Build 2.4
-// AI Response Routing + Formatting Fix
+// Adaptive Intelligence Build 2.5
+// AI Response Priority Restore
 // =====================================
 
 
@@ -38,7 +38,6 @@ command.toLowerCase();
 let personalityInfo = "";
 
 
-
 if(personalityStyleData){
 
 
@@ -60,14 +59,14 @@ ${personalityStyleData.behavior || "Strategic assistant mode"}
 
 
 
-
 // =====================================
 // AI RESPONSE FORMAT
-// AI OUTPUT EXTRACTION FIX
+// AI RESPONSE HAS PRIORITY
 // =====================================
 
 
 if(aiResponse){
+
 
 
 let cleanAIResponse = aiResponse;
@@ -77,17 +76,17 @@ let cleanAIResponse = aiResponse;
 if(typeof aiResponse === "object"){
 
 
-    cleanAIResponse =
+cleanAIResponse =
 
-    aiResponse.response
+aiResponse.response
 
-    ||
+||
 
-    aiResponse.message
+aiResponse.message
 
-    ||
+||
 
-    JSON.stringify(aiResponse);
+JSON.stringify(aiResponse);
 
 
 }
@@ -138,7 +137,6 @@ memory.includes("prefer")
 
 ){
 
-
 category = "preferences";
 
 
@@ -155,7 +153,6 @@ memory.includes("build")
 
 ){
 
-
 category = "goals";
 
 
@@ -170,12 +167,10 @@ memory.includes("project")
 
 ){
 
-
 category = "projects";
 
 
 }
-
 
 
 
@@ -186,7 +181,6 @@ category,
 memory
 
 );
-
 
 
 
@@ -206,7 +200,6 @@ Memory Stored:
 Category:
 
 ${category}
-
 
 `;
 
@@ -251,44 +244,7 @@ Learning history cleared successfully, Mr. Goodley.
 
 
 // =====================================
-// LEARNING COUNT
-// =====================================
-
-
-if(
-
-text === "learning count" ||
-
-text === "how much have you learned"
-
-){
-
-
-
-return `
-
-ORION ONLINE
-
-
-Learning Records:
-
-
-${learningCount("decisions")}
-
-
-`;
-
-
-
-}
-
-
-
-
-
-
-// =====================================
-// SHOW LEARNING
+// LEARNING
 // =====================================
 
 
@@ -308,14 +264,7 @@ recallLearning("decisions");
 
 
 
-
-if(
-
-!learned ||
-
-learned.length === 0
-
-){
+if(!learned || learned.length === 0){
 
 
 return `
@@ -327,20 +276,14 @@ No learning records available.
 
 `;
 
-
-
 }
-
-
 
 
 let output = "";
 
 
 
-
 learned.forEach(item=>{
-
 
 
 output += `
@@ -365,10 +308,7 @@ ${item.timestamp}
 `;
 
 
-
 });
-
-
 
 
 
@@ -378,7 +318,6 @@ ORION LEARNING STATUS
 
 
 ${output}
-
 
 `;
 
@@ -413,7 +352,6 @@ let storedMemories = [];
 if(typeof recallMemory === "function"){
 
 
-
 storedMemories = [
 
 ...recallMemory("preferences"),
@@ -425,7 +363,6 @@ storedMemories = [
 ...recallMemory("facts")
 
 ];
-
 
 
 }
@@ -453,7 +390,6 @@ storedMemories.length > 0
 "No memories stored."
 
 }
-
 
 `;
 
@@ -532,14 +468,10 @@ Personality:
 
 
 
-My purpose is not simply to answer.
-
-
 My purpose is to help you think, improve, and execute.
 
 
 ${personalityInfo}
-
 
 `;
 
@@ -557,10 +489,7 @@ ${personalityInfo}
 // =====================================
 
 
-const words =
-
-text.split(/\s+/);
-
+const words = text.split(/\s+/);
 
 
 
@@ -595,7 +524,6 @@ All primary systems are operational.
 
 How may I assist you today, Sir?
 
-
 `;
 
 
@@ -608,7 +536,7 @@ How may I assist you today, Sir?
 
 
 // =====================================
-// SYSTEM STATUS
+// STATUS
 // =====================================
 
 
@@ -659,7 +587,6 @@ ONLINE
 
 All systems operational, Mr. Goodley.
 
-
 `;
 
 
@@ -694,7 +621,6 @@ Confidence:
 
 ${confidence.score || confidence}
 
-
 `;
 
 
@@ -712,7 +638,6 @@ ${confidence.score || confidence}
 
 
 if(plan){
-
 
 
 return `
@@ -739,7 +664,6 @@ Next Steps:
 
 • ${plan.nextSteps.join("\n• ")}
 
-
 `;
 
 
@@ -757,7 +681,6 @@ Next Steps:
 
 
 if(goal){
-
 
 
 return `
@@ -789,7 +712,6 @@ Next Milestone:
 
 ${goal.nextMilestone}
 
-
 `;
 
 
@@ -815,14 +737,6 @@ Sir, I have analyzed your request.
 
 
 
-${knowledge || ""}
-
-
-
-${reasoning || ""}
-
-
-
 Assessment:
 
 
@@ -845,7 +759,6 @@ ${decision?.action || "Continue operation."}
 
 
 Awaiting your next instruction, Mr. Goodley.
-
 
 `;
 
