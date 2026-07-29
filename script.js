@@ -1,8 +1,8 @@
 // =====================================
 // ORION SCRIPT
 // Command Interface System
-// Build 2.5
-// Brain Routing Stability Fix
+// Build 2.6
+// Response Routing Stability Fix
 // =====================================
 
 
@@ -128,17 +128,13 @@ async function executeORION(){
 
     if(!input || !output){
 
-
         console.error(
         "ORION ERROR: Command interface missing."
         );
 
-
         return;
 
-
     }
-
 
 
 
@@ -192,11 +188,6 @@ if(typeof ORION_CONTEXT !== "undefined"){
 try{
 
 
-// =====================================
-// HUD PROCESSING
-// =====================================
-
-
 if(typeof ORION_HUD !== "undefined"){
 
     ORION_HUD.processing();
@@ -229,54 +220,37 @@ await processBrain(command);
 
 
 
+
 let response = "";
 
 
 
 
 // =====================================
-// ORION CORE RESPONSE
+// RESPONSE ROUTING
 // =====================================
 
 
 if(
-brainResult.source === "ORION_CORE"
-){
-
-
-    response =
-
-    await ORION.process(command);
-
-
-}
-
-
-
-
-// =====================================
-// AI BRAIN RESPONSE
-// =====================================
-
-
-else if(
 brainResult.source === "AI_BRAIN"
 ){
 
 
-
 const aiOutput =
+
+typeof brainResult.response === "string"
+
+?
+
+brainResult.response
+
+:
 
 brainResult.response?.response
 
 ||
 
-brainResult.response
-
-||
-
 "ORION AI response unavailable.";
-
 
 
 
@@ -288,7 +262,6 @@ generateResponse(
 
     null,
 
-
     typeof getAllMemories === "function"
 
     ?
@@ -299,32 +272,19 @@ generateResponse(
 
     [],
 
-
-
     brainResult.knowledge || "",
-
-
 
     brainResult.reasoning || "",
 
-
+    null,
 
     null,
 
-
     null,
 
-
     null,
-
-
-    null,
-
-
 
     brainResult.analysis?.confidence || null,
-
-
 
     typeof ORION_CONTEXT !== "undefined"
 
@@ -340,9 +300,6 @@ generateResponse(
 
     [],
 
-
-
-
     typeof ORION_PERSONALITY !== "undefined"
 
     &&
@@ -357,10 +314,7 @@ generateResponse(
 
     {},
 
-
-
     aiOutput
-
 
 );
 
@@ -370,10 +324,22 @@ generateResponse(
 
 
 
+else if(
 
-// =====================================
-// FALLBACK
-// =====================================
+brainResult.source === "ORION_CORE"
+
+){
+
+
+
+response =
+
+await ORION.process(command);
+
+
+
+}
+
 
 
 else{
@@ -382,6 +348,7 @@ else{
 response =
 
 "ORION ERROR: Unknown response source.";
+
 
 }
 
