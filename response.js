@@ -680,7 +680,7 @@ Next Steps:
 // =====================================
 
 
-if(goal){
+if(goal && !decision){
 
 
 return `
