@@ -1,10 +1,8 @@
 // =====================================
 // ORION BRAIN SYSTEM
-// Adaptive Intelligence Build 3.3
-// Local Routing + AI Integration Fix
-// AI Response Extraction Patch
+// Adaptive Intelligence Build 3.4
+// Decision Priority Routing Fix
 // =====================================
-
 
 
 function analyzeCommand(command){
@@ -12,6 +10,7 @@ function analyzeCommand(command){
 
     const text =
     command.toLowerCase().trim();
+
 
 
     let intent = "conversation";
@@ -23,32 +22,67 @@ function analyzeCommand(command){
 
 
     // =====================================
+    // DECISION (HIGH PRIORITY)
+    // =====================================
+
+    if(
+
+        text.includes("should") ||
+
+        text.includes("choose") ||
+
+        text.includes("decide") ||
+
+        text.includes("which") ||
+
+        text.includes("best option") ||
+
+        (
+            text.includes("or") &&
+            (
+                text.includes("first") ||
+                text.includes("better") ||
+                text.includes("improve")
+            )
+        )
+
+    ){
+
+        intent = "decision";
+        category = "analysis";
+        confidence = "high";
+
+    }
+
+
+
+    // =====================================
     // MEMORY
     // =====================================
 
- if(
+    else if(
 
-    text.startsWith("remember ") ||
+        text.startsWith("remember ") ||
 
-    text.includes("what do you remember") ||
+        text.includes("what do you remember") ||
 
-    text.includes("what do you know about me") ||
+        text.includes("what do you know about me") ||
 
-    text === "memory" ||
+        text === "memory" ||
 
-    text === "show memory" ||
+        text === "show memory" ||
 
-    text === "memory status" ||
+        text === "memory status" ||
 
-    text === "clear memory"
+        text === "clear memory"
 
-){
+    ){
 
-    intent = "memory";
-    category = "memory";
-    confidence = "high";
+        intent = "memory";
+        category = "memory";
+        confidence = "high";
 
-}
+    }
 
 
 
@@ -227,32 +261,6 @@ function analyzeCommand(command){
 
 
     // =====================================
-    // DECISION
-    // =====================================
-
-    else if(
-
-        text.includes("should") ||
-
-        text.includes("choose") ||
-
-        text.includes("decide") ||
-
-        text.includes("which") ||
-
-        text.includes("best option")
-
-    ){
-
-        intent = "decision";
-        category = "analysis";
-        confidence = "high";
-
-    }
-
-
-
-    // =====================================
     // GREETING
     // =====================================
 
@@ -300,7 +308,6 @@ function analyzeCommand(command){
 
     return {
 
-
         intent:intent,
 
         category:category,
@@ -309,11 +316,11 @@ function analyzeCommand(command){
 
         command:command
 
-
     };
 
 
 }
+
 
 
 
@@ -326,54 +333,35 @@ function analyzeCommand(command){
 async function processBrain(command){
 
 
-
     const analysis =
     analyzeCommand(command);
 
 
 
+    const localIntents = [
 
-    // =====================================
-    // LOCAL SYSTEM ROUTING
-    // =====================================
+        "memory",
+        "learning",
+        "personality",
+        "status",
+        "greeting",
+        "identity",
+        "confidence",
+        "goal",
+        "decision"
 
-
-   const localIntents = [
-
-"memory",
-
-"learning",
-
-"personality",
-
-"status",
-
-"greeting",
-
-"identity",
-
-"confidence",
-
-"goal",
-
-"decision"
-
-];
+    ];
 
 
 
     if(localIntents.includes(analysis.intent)){
 
 
-
         return {
-
 
             source:"ORION_CORE",
 
-
             analysis:analysis,
-
 
             reasoning:
 
@@ -382,17 +370,13 @@ async function processBrain(command){
             ?
 
             buildReasoningSummary(
-
                 command,
-
                 analysis
-
             )
 
             :
 
             "",
-
 
 
             knowledge:
@@ -402,9 +386,7 @@ async function processBrain(command){
             ?
 
             integrateKnowledge(
-
                 searchRelevantMemories(command)
-
             )
 
             :
@@ -412,22 +394,13 @@ async function processBrain(command){
             "",
 
 
-
             response:null
-
 
         };
 
 
     }
 
-
-
-
-
-    // =====================================
-    // AI BRAIN CONNECTION
-    // =====================================
 
 
     let aiResponse;
@@ -437,156 +410,54 @@ async function processBrain(command){
     if(typeof ORION_BRAIN !== "undefined"){
 
 
-
-        aiResponse =
-
-        await ORION_BRAIN.think(
-
+        aiResponse = await ORION_BRAIN.think(
 
             command,
 
-
             {
-
-
-                identity:
-
-                typeof ORION_IDENTITY !== "undefined"
-
-                ?
-
-                ORION_IDENTITY
-
-                :
-
-                {},
-
-
-
-                personality:
-
-                typeof ORION_PERSONALITY !== "undefined"
-
-                ?
-
-                ORION_PERSONALITY
-
-                :
-
-                {},
-
-
-
-                memory:
-
-                typeof searchRelevantMemories === "function"
-
-                ?
-
-                searchRelevantMemories(command)
-
-                :
-
-                [],
-
-
-
-                knowledge:
-
-                typeof integrateKnowledge === "function"
-
-                ?
-
-                integrateKnowledge(
-
-                    searchRelevantMemories(command)
-
-                )
-
-                :
-
-                "",
-
-
-
-                conversation:
-
-                typeof ORION_CONTEXT !== "undefined"
-
-                &&
-
-                typeof ORION_CONTEXT.getRelevant === "function"
-
-                ?
-
-                ORION_CONTEXT.getRelevant(command)
-
-                :
-
-                typeof ORION_CONTEXT !== "undefined"
-
-                &&
-
-                typeof ORION_CONTEXT.getRecent === "function"
-
-                ?
-
-                ORION_CONTEXT.getRecent()
-
-                :
-
-                [],
-
-
-
-                conversationSummary:
-
-                typeof ORION_CONTEXT !== "undefined"
-
-                &&
-
-                typeof ORION_CONTEXT.getSummary === "function"
-
-                ?
-
-                ORION_CONTEXT.getSummary()
-
-                :
-
-                "",
-
-
 
                 analysis:analysis,
 
+                identity:
+                typeof ORION_IDENTITY !== "undefined"
+                ?
+                ORION_IDENTITY
+                :
+                {},
 
-                timestamp:
 
-                new Date().toISOString(),
+                personality:
+                typeof ORION_PERSONALITY !== "undefined"
+                ?
+                ORION_PERSONALITY
+                :
+                {},
 
+
+                memory:
+                typeof searchRelevantMemories === "function"
+                ?
+                searchRelevantMemories(command)
+                :
+                [],
+
+
+                conversation:
+                typeof ORION_CONTEXT !== "undefined"
+                ?
+                ORION_CONTEXT.getRecent()
+                :
+                [],
 
 
                 reasoning:
-
                 typeof buildReasoningSummary === "function"
-
                 ?
-
-                buildReasoningSummary(
-
-                    command,
-
-                    analysis
-
-                )
-
+                buildReasoningSummary(command,analysis)
                 :
-
                 ""
 
-
             }
-
 
         );
 
@@ -597,64 +468,17 @@ async function processBrain(command){
 
 
         aiResponse =
-
         "AI Brain connection unavailable.";
-
 
     }
 
 
 
-
     return {
-
 
         source:"AI_BRAIN",
 
-
         analysis:analysis,
-
-
-
-        reasoning:
-
-        typeof buildReasoningSummary === "function"
-
-        ?
-
-        buildReasoningSummary(
-
-            command,
-
-            analysis
-
-        )
-
-        :
-
-        "",
-
-
-
-        knowledge:
-
-        typeof integrateKnowledge === "function"
-
-        ?
-
-        integrateKnowledge(
-
-            searchRelevantMemories(command)
-
-        )
-
-        :
-
-        "",
-
-
-
-        // FIX: Extract actual AI text from Worker response
 
         response:
 
@@ -671,7 +495,6 @@ async function processBrain(command){
         :
 
         aiResponse
-
 
     };
 
