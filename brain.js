@@ -506,6 +506,18 @@ async function processBrain(command){
 
                 &&
 
+                typeof ORION_CONTEXT.getRelevant === "function"
+
+                ?
+
+                ORION_CONTEXT.getRelevant(command)
+
+                :
+
+                typeof ORION_CONTEXT !== "undefined"
+
+                &&
+
                 typeof ORION_CONTEXT.getRecent === "function"
 
                 ?
@@ -518,7 +530,30 @@ async function processBrain(command){
 
 
 
+                conversationSummary:
+
+                typeof ORION_CONTEXT !== "undefined"
+
+                &&
+
+                typeof ORION_CONTEXT.getSummary === "function"
+
+                ?
+
+                ORION_CONTEXT.getSummary()
+
+                :
+
+                "",
+
+
+
                 analysis:analysis,
+
+
+                timestamp:
+
+                new Date().toISOString(),
 
 
 
