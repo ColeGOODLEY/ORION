@@ -1,7 +1,7 @@
 // =====================================
 // ORION CORE
-// Adaptive Intelligence Build 2.3
-// Decision Routing Priority Fix
+// Adaptive Intelligence Build 2.4
+// Decision Priority Routing Fix
 // Central Processing System
 // =====================================
 
@@ -25,66 +25,7 @@ analyzeCommand(command);
 
 
 // =====================================
-// AI BRAIN ROUTING
-// Conversation Only
-// =====================================
-
-if(brain.intent === "conversation"){
-
-
-const aiResponse =
-await processBrain(command);
-
-
-
-if(
-aiResponse &&
-aiResponse.source === "AI_BRAIN"
-){
-
-
-return generateResponse(
-
-    command,
-
-    null,
-
-    getRelevantMemories(command),
-
-    null,
-
-    null,
-
-    null,
-
-    null,
-
-    null,
-
-    null,
-
-    null,
-
-    getConversationContext(),
-
-    ORION_PERSONALITY.getBehavior(
-        ORION_PERSONALITY.getStyle(command)
-    ),
-
-    aiResponse.response
-
-);
-
-
-}
-
-
-}
-
-
-
-// =====================================
-// PERSONALITY ANALYSIS
+// PERSONALITY
 // =====================================
 
 const personalityStyle =
@@ -147,8 +88,6 @@ integrateKnowledge(
 // =====================================
 
 
-// Personality
-
 if(
 brain.intent === "personality"
 ){
@@ -172,8 +111,6 @@ return generateResponse(
 
 
 
-// Status
-
 if(
 brain.intent === "status"
 ){
@@ -196,8 +133,6 @@ return generateResponse(
 }
 
 
-
-// Memory
 
 if(
 brain.intent === "memory"
@@ -264,7 +199,18 @@ makeDecision(
 
 
 // =====================================
-// CONFIDENCE ENGINE
+// DEBUG DECISION
+// =====================================
+
+console.log(
+"ORION DECISION:",
+decision
+);
+
+
+
+// =====================================
+// CONFIDENCE
 // =====================================
 
 const confidence =
@@ -278,7 +224,7 @@ calculateConfidence(
 
 
 // =====================================
-// PLANNING ENGINE
+// PLANNING
 // =====================================
 
 const plan =
@@ -287,7 +233,7 @@ createPlan(command);
 
 
 // =====================================
-// GOAL MANAGEMENT
+// GOALS
 // =====================================
 
 const goal =
@@ -296,7 +242,7 @@ manageGoals(command);
 
 
 // =====================================
-// LEARNING CAPTURE
+// LEARNING
 // =====================================
 
 if(
@@ -310,25 +256,23 @@ decision.decision !== "No decision required."
 ){
 
 saveLearning(
-    "decisions",
-    {
+"decisions",
+{
 
-        command:
-        command,
+command:
+command,
 
+decision:
+decision.decision,
 
-        decision:
-        decision.decision,
+reason:
+decision.reason,
 
+timestamp:
+new Date().toISOString()
 
-        reason:
-        decision.reason,
+}
 
-
-        timestamp:
-        new Date().toISOString()
-
-    }
 );
 
 }
@@ -338,7 +282,6 @@ saveLearning(
 // =====================================
 // FINAL RESPONSE
 // =====================================
-
 
 return generateResponse(
     command,
