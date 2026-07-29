@@ -1,13 +1,14 @@
 // =====================================
 // ORION DECISION ENGINE
-// Strategic Decision Build 1.2
+// Strategic Decision Build 1.3
+// Deterministic Decision Logic Fix
 // =====================================
 
 
 function makeDecision(command, comparison, knowledge, reasoning){
 
 
-    let text =
+    const text =
     command.toLowerCase();
 
 
@@ -16,8 +17,7 @@ function makeDecision(command, comparison, knowledge, reasoning){
 
     if(knowledge){
 
-        strategicContext =
-        knowledge;
+        strategicContext = knowledge;
 
     }
 
@@ -28,7 +28,7 @@ function makeDecision(command, comparison, knowledge, reasoning){
     if(reasoning){
 
         reasoningContext =
-        reasoning.analysis;
+        reasoning.analysis || "";
 
     }
 
@@ -39,122 +39,200 @@ function makeDecision(command, comparison, knowledge, reasoning){
     if(comparison){
 
         comparisonAnalysis =
-        comparison.comparison;
+        comparison.comparison || "";
 
     }
 
 
 
-   if(
-    text.includes("memory") ||
-    text.includes("internet") ||
-    text.includes("search") ||
-    text.includes("knowledge") ||
-    text.includes("connect") ||
-    text.includes("online")
-){
 
+// =====================================
+// MEMORY VS INTERNET DECISION
+// =====================================
 
-        let memoryScore = 0;
-
-        let internetScore = 0;
-
-
-
-        // Memory improves personalization and foundation
-
-        if(
-            strategicContext.includes("ORION") ||
-            strategicContext.includes("personal objective")
-        ){
-
-            memoryScore += 10;
-
-        }
-
-
-
-        // Internet improves external capability
 
 if(
-    text.includes("internet") ||
-    text.includes("search") ||
-    text.includes("knowledge") ||
-    text.includes("connect") ||
-    text.includes("online")
+
+    text.includes("memory") &&
+
+    (
+
+        text.includes("internet") ||
+
+        text.includes("online") ||
+
+        text.includes("connect") ||
+
+        text.includes("search") ||
+
+        text.includes("knowledge")
+
+    )
+
 ){
 
-    internetScore += 5;
+
+
+return {
+
+
+    decision:
+
+    "Improve memory first.",
+
+
+
+    reason:
+
+    "ORION's memory system creates the personalized foundation required for better future intelligence. A stronger understanding of the user improves every future capability, including internet-based features.",
+
+
+
+    action:
+
+    "Continue improving ORION's memory, learning, and personalization systems before adding external connectivity.",
+
+
+
+    context:
+
+    strategicContext,
+
+
+
+    reasoning:
+
+    reasoningContext,
+
+
+
+    comparison:
+
+    comparisonAnalysis
+
+
+
+};
+
+
 
 }
 
 
 
-        if(memoryScore >= internetScore){
+
+// =====================================
+// INTERNET PRIORITY
+// =====================================
 
 
-            return {
+if(
 
-                decision:
-                "Improve memory first.",
+    text.includes("internet") ||
 
+    text.includes("online") ||
 
-                reason:
-                "Memory provides a stronger personalized foundation before expanding external capabilities.",
+    text.includes("connect") ||
 
+    text.includes("search")
 
-                action:
-                "Continue improving ORION's memory system, then expand connectivity.",
-
-
-                context:
-                strategicContext,
-
-
-                reasoning:
-                reasoningContext,
-
-
-                comparison:
-                comparisonAnalysis
-
-            };
-
-
-        }
-
-
-    }
+){
 
 
 
-    return {
+return {
 
 
-        decision:
-        "No decision required.",
+    decision:
+
+    "Expand ORION's external knowledge capabilities.",
 
 
-        reason:
-        "The command does not contain a decision request.",
+
+    reason:
+
+    "Internet connectivity would increase ORION's access to external information and enable more advanced capabilities.",
 
 
-        action:
-        "Continue normal operation and await the next instruction.",
+
+    action:
+
+    "Develop secure internet integration while maintaining existing memory systems.",
 
 
-        context:
-        strategicContext,
+
+    context:
+
+    strategicContext,
 
 
-        reasoning:
-        reasoningContext,
+
+    reasoning:
+
+    reasoningContext,
 
 
-        comparison:
-        comparisonAnalysis
 
-    };
+    comparison:
+
+    comparisonAnalysis
+
+
+
+};
+
+
+
+}
+
+
+
+
+// =====================================
+// DEFAULT
+// =====================================
+
+
+return {
+
+
+    decision:
+
+    "No decision required.",
+
+
+
+    reason:
+
+    "The command does not contain a decision request.",
+
+
+
+    action:
+
+    "Continue normal operation and await the next instruction.",
+
+
+
+    context:
+
+    strategicContext,
+
+
+
+    reasoning:
+
+    reasoningContext,
+
+
+
+    comparison:
+
+    comparisonAnalysis
+
+
+
+};
 
 
 }
