@@ -1,7 +1,7 @@
 // =====================================
 // ORION CORE
-// Adaptive Intelligence Build 2.2
-// Intent Routing + AI Decision Integration
+// Adaptive Intelligence Build 2.3
+// Decision Routing Priority Fix
 // Central Processing System
 // =====================================
 
@@ -26,6 +26,7 @@ analyzeCommand(command);
 
 // =====================================
 // AI BRAIN ROUTING
+// Conversation Only
 // =====================================
 
 if(brain.intent === "conversation"){
@@ -142,11 +143,11 @@ integrateKnowledge(
 
 
 // =====================================
-// RESPONSE-ONLY MODES
+// RESPONSE ONLY MODES
 // =====================================
 
 
-// Personality requests
+// Personality
 
 if(
 brain.intent === "personality"
@@ -171,7 +172,7 @@ return generateResponse(
 
 
 
-// Status requests
+// Status
 
 if(
 brain.intent === "status"
@@ -196,7 +197,7 @@ return generateResponse(
 
 
 
-// Memory requests
+// Memory
 
 if(
 brain.intent === "memory"
@@ -259,53 +260,6 @@ makeDecision(
     knowledge,
     reasoning
 );
-
-
-
-// =====================================
-// AI STRATEGIC ANALYSIS
-// =====================================
-
-
-let aiDecisionResponse = null;
-
-
-
-if(
-
-brain.intent === "decision" ||
-
-brain.intent === "planning" ||
-
-brain.intent === "engineering"
-
-){
-
-
-const aiBrainResult =
-
-await processBrain(command);
-
-
-
-if(
-
-aiBrainResult &&
-
-aiBrainResult.source === "AI_BRAIN"
-
-){
-
-
-aiDecisionResponse =
-
-aiBrainResult.response;
-
-
-}
-
-
-}
 
 
 
@@ -399,7 +353,7 @@ return generateResponse(
     confidence,
     conversation,
     personality,
-    aiDecisionResponse
+    null
 );
 
 
