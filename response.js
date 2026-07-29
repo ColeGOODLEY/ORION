@@ -63,11 +63,11 @@ ${personalityStyleData.behavior || "Strategic assistant mode"}
 
 // =====================================
 // AI RESPONSE FORMAT
-// AI OUTPUT EXTRACTION FIX
+// DECISION PRIORITY FIX
 // =====================================
 
 
-if(aiResponse){
+if(aiResponse && !decision){
 
 
 let cleanAIResponse = aiResponse;
