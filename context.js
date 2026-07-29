@@ -1,6 +1,6 @@
 // =====================================
 // ORION CONTEXT ENGINE
-// Adaptive Context Build 2.0
+// Adaptive Context Build 3.0
 // Conversation Awareness System
 // =====================================
 
@@ -12,7 +12,41 @@ const ORION_CONTEXT = {
     history: [],
 
 
-   maxHistory: 6,
+    maxHistory: 10,
+
+
+    maxMessageLength: 300,
+
+
+
+    // =====================================
+    // SANITIZE MESSAGE
+    // =====================================
+
+    sanitizeMessage(message){
+
+
+        if(!message){
+
+            return "";
+
+        }
+
+
+        message = String(message).trim();
+
+
+        if(message.length <= this.maxMessageLength){
+
+            return message;
+
+        }
+
+
+        return message.substring(0, this.maxMessageLength) + "...";
+
+
+    },
 
 
 
@@ -27,7 +61,7 @@ const ORION_CONTEXT = {
 
             role: role,
 
-            message: message,
+            message: this.sanitizeMessage(message),
 
             timestamp:
             new Date().toISOString()
@@ -36,7 +70,7 @@ const ORION_CONTEXT = {
 
 
 
-        if(this.history.length > this.maxHistory){
+        while(this.history.length > this.maxHistory){
 
             this.history.shift();
 
@@ -102,29 +136,130 @@ const ORION_CONTEXT = {
     // GET RECENT CONTEXT
     // =====================================
 
-getRecent(){
+    getRecent(){
 
 
-    return this.history
+        return this.history
 
-    .slice(-this.maxHistory)
+        .slice(-this.maxHistory)
 
-    .map(item => {
-
-
-        return {
-
-            role:item.role,
-
-            message:item.message
-
-        };
+        .map(item => {
 
 
-    });
+            return {
+
+                role:item.role,
+
+                message:item.message
+
+            };
 
 
-},
+        });
+
+
+    },
+
+
+
+
+    // =====================================
+    // GET RELEVANT CONTEXT
+    // =====================================
+
+    getRelevant(command){
+
+
+        if(!command){
+
+            return this.getRecent();
+
+        }
+
+
+        const keywords =
+
+        command
+
+        .toLowerCase()
+
+        .split(/\s+/)
+
+        .filter(word => word.length > 2);
+
+
+        const relevant = this.history.filter(item=>{
+
+
+            const text =
+
+            item.message.toLowerCase();
+
+
+            return keywords.some(
+
+                word=>text.includes(word)
+
+            );
+
+
+        });
+
+
+        if(relevant.length === 0){
+
+            return this.getRecent();
+
+        }
+
+
+        return relevant.slice(-this.maxHistory).map(item=>{
+
+
+            return{
+
+                role:item.role,
+
+                message:item.message
+
+            };
+
+
+        });
+
+
+    },
+
+
+
+
+    // =====================================
+    // CONTEXT SUMMARY
+    // =====================================
+
+    getSummary(){
+
+
+        if(this.history.length === 0){
+
+            return "";
+
+        }
+
+
+        const recent =
+
+        this.history
+
+        .slice(-3)
+
+        .map(item=>item.message);
+
+
+        return recent.join(" ");
+
+
+    },
 
 
 
@@ -190,9 +325,15 @@ function getContext(command){
 
 
 
+        conversationSummary:
+
+        ORION_CONTEXT.getSummary(),
+
+
+
         conversationHistory:
 
-        ORION_CONTEXT.getRecent()
+        ORION_CONTEXT.getRelevant(command)
 
 
 
@@ -200,6 +341,9 @@ function getContext(command){
 
 
 }
+
+
+
 
 // =====================================
 // INITIALIZE CONTEXT
