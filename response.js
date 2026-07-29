@@ -57,15 +57,16 @@ ${personalityStyleData.behavior || "Strategic assistant mode"}
 }
 
 
-
-
 // =====================================
 // AI RESPONSE FORMAT
-// AI RESPONSE HAS PRIORITY
+// AI RESPONSE HAS PRIORITY EXCEPT DECISIONS
 // =====================================
 
 
-if(aiResponse){
+if(
+aiResponse &&
+!decision
+){
 
 
 
