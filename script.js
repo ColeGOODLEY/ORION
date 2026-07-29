@@ -218,7 +218,10 @@ const brainResult =
 
 await processBrain(command);
 
-
+console.log(
+"ORION BRAIN RESULT:",
+brainResult
+);
 
 
 let response = "";
