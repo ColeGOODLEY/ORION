@@ -1,8 +1,8 @@
 // =====================================
 // ORION SCRIPT
 // Command Interface System
-// Build 2.5
-// Brain Routing Debug Version
+// Build 2.6
+// AI Response Formatting Stabilization
 // =====================================
 
 
@@ -10,7 +10,6 @@
 // =====================================
 // TYPEWRITER RESPONSE EFFECT
 // =====================================
-
 
 function typeResponse(element, text){
 
@@ -48,10 +47,10 @@ function typeResponse(element, text){
 
 
 
+
 // =====================================
 // ACTIVITY LOG
 // =====================================
-
 
 function addActivity(message){
 
@@ -75,7 +74,6 @@ function addActivity(message){
 
 
     entry.innerHTML =
-
     `${time} - ${message}`;
 
 
@@ -86,10 +84,52 @@ function addActivity(message){
 
 
 
+
+// =====================================
+// CLEAN AI RESPONSE
+// =====================================
+
+function cleanAIResponse(response){
+
+
+    if(!response){
+
+        return "ORION AI response unavailable.";
+
+    }
+
+
+
+    let text = response.trim();
+
+
+
+    // Remove unnecessary long explanations
+
+    if(text.length > 1200){
+
+
+        text =
+        text.substring(0,1200)
+        +
+        "\n\n[Response shortened for efficiency.]";
+
+
+    }
+
+
+
+    return text;
+
+}
+
+
+
+
+
 // =====================================
 // EXECUTE ORION COMMAND
 // =====================================
-
 
 async function executeORION(){
 
@@ -102,15 +142,13 @@ async function executeORION(){
     document.getElementById("response");
 
 
-    if(!input || !output){
 
-        console.error(
-        "ORION ERROR: Command interface missing."
-        );
+    if(!input || !output){
 
         return;
 
     }
+
 
 
 
@@ -159,7 +197,6 @@ if(typeof ORION_CONTEXT !== "undefined"){
 
 
 
-
 try{
 
 
@@ -183,10 +220,10 @@ addActivity(
 
 
 
-// =====================================
-// PROCESS COMMAND
-// =====================================
 
+// =====================================
+// PROCESS BRAIN
+// =====================================
 
 const brainResult =
 
@@ -194,45 +231,164 @@ await processBrain(command);
 
 
 
+
+console.log(
+"DEBUG BRAIN RESULT:",
+brainResult
+);
+
+
+
+
+let response = "";
+
+
+
+
+
 // =====================================
-// DEBUG OUTPUT
+// ORION CORE
 // =====================================
+
+if(
+brainResult.source === "ORION_CORE"
+){
+
+
+    response =
+
+    await ORION.process(command);
+
+
+}
+
+
+
+
+
+// =====================================
+// AI BRAIN
+// =====================================
+
+else if(
+brainResult.source === "AI_BRAIN"
+){
+
+
+const aiOutput =
+
+brainResult.response?.response
+
+||
+
+brainResult.response
+
+||
+
+"ORION AI response unavailable.";
+
+
+
+
+
+response =
+
+cleanAIResponse(aiOutput);
+
+
+
+}
+
+
+
+
+
+else{
+
+
+response =
+"ORION ERROR: Unknown response source.";
+
+
+}
+
+
+
+
+
+
+
+// =====================================
+// HUD READY
+// =====================================
+
+if(typeof ORION_HUD !== "undefined"){
+
+
+setTimeout(function(){
+
+ORION_HUD.ready();
+
+},1000);
+
+
+}
+
+
+
+
+addActivity(
+"Response Generated"
+);
+
+
+
 
 
 typeResponse(
 
 output,
 
-"DEBUG BRAIN RESULT:\n\n" +
-
-JSON.stringify(
-
-brainResult,
-
-null,
-
-2
-
-)
+response
 
 );
 
 
-return;
 
 
 
 
 // =====================================
-// NORMAL RESPONSE CODE BELOW
-// TEMPORARILY DISABLED
+// SAVE RESPONSE
 // =====================================
+
+if(typeof ORION_CONTEXT !== "undefined"){
+
+
+ORION_CONTEXT.addMessage(
+
+"assistant",
+
+response
+
+);
+
+
+}
+
+
+
+input.value = "";
 
 
 
 }
 
+
+
+
 catch(error){
+
 
 
 console.error(
@@ -251,23 +407,10 @@ output,
 
 `ORION SYSTEM ERROR
 
-Unable to complete command.
-
-Error:
-
-${error.message}
-
-`
+${error.message}`
 
 );
 
-
-addActivity(
-"System Error Detected"
-);
-
-
-}
 
 
 }
@@ -275,10 +418,15 @@ addActivity(
 
 
 
-// =====================================
-// ENTER KEY SUPPORT
-// =====================================
+}
 
+
+
+
+
+// =====================================
+// ENTER KEY
+// =====================================
 
 document.addEventListener(
 
@@ -289,6 +437,7 @@ function(){
 
 const input =
 document.getElementById("command");
+
 
 
 if(input){
@@ -321,16 +470,19 @@ executeORION();
 
 
 
-// =====================================
-// ORION BOOT SEQUENCE
-// =====================================
 
+
+
+// =====================================
+// BOOT SEQUENCE
+// =====================================
 
 document.addEventListener(
 
 "DOMContentLoaded",
 
 function(){
+
 
 
 const boot =
@@ -352,7 +504,6 @@ return;
 
 const messages = [
 
-
 "AI CORE ........ ONLINE",
 
 "MEMORY ......... ONLINE",
@@ -367,7 +518,6 @@ const messages = [
 
 "SYSTEM READY"
 
-
 ];
 
 
@@ -376,17 +526,15 @@ let index = 0;
 
 
 
-const interval =
-
-setInterval(function(){
+const interval = setInterval(function(){
 
 
 status.innerHTML =
-
 messages[index];
 
 
 index++;
+
 
 
 if(index >= messages.length){
@@ -399,7 +547,7 @@ clearInterval(interval);
 setTimeout(function(){
 
 
-boot.style.opacity = "0";
+boot.style.opacity="0";
 
 
 setTimeout(function(){
@@ -419,6 +567,7 @@ boot.remove();
 }
 
 
+
 },700);
 
 
@@ -427,10 +576,6 @@ boot.remove();
 
 
 
-
-// =====================================
-// SYSTEM READY
-// =====================================
 
 
 console.log(
