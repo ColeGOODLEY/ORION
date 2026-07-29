@@ -1,7 +1,7 @@
 // =====================================
 // ORION CORE
-// Adaptive Intelligence Build 2.1
-// Intent Routing + Personality Integration
+// Adaptive Intelligence Build 2.2
+// Intent Routing + AI Decision Integration
 // Central Processing System
 // =====================================
 
@@ -21,6 +21,8 @@ try{
 
 const brain =
 analyzeCommand(command);
+
+
 
 // =====================================
 // AI BRAIN ROUTING
@@ -77,6 +79,8 @@ return generateResponse(
 
 
 }
+
+
 
 // =====================================
 // PERSONALITY ANALYSIS
@@ -221,6 +225,7 @@ return generateResponse(
 // FULL REASONING PIPELINE
 // =====================================
 
+
 const reasoning =
 processReasoning(
     command,
@@ -254,6 +259,53 @@ makeDecision(
     knowledge,
     reasoning
 );
+
+
+
+// =====================================
+// AI STRATEGIC ANALYSIS
+// =====================================
+
+
+let aiDecisionResponse = null;
+
+
+
+if(
+
+brain.intent === "decision" ||
+
+brain.intent === "planning" ||
+
+brain.intent === "engineering"
+
+){
+
+
+const aiBrainResult =
+
+await processBrain(command);
+
+
+
+if(
+
+aiBrainResult &&
+
+aiBrainResult.source === "AI_BRAIN"
+
+){
+
+
+aiDecisionResponse =
+
+aiBrainResult.response;
+
+
+}
+
+
+}
 
 
 
@@ -333,6 +385,7 @@ saveLearning(
 // FINAL RESPONSE
 // =====================================
 
+
 return generateResponse(
     command,
     decision,
@@ -345,12 +398,14 @@ return generateResponse(
     goal,
     confidence,
     conversation,
-    personality
+    personality,
+    aiDecisionResponse
 );
 
 
 
 }
+
 
 
 catch(error){
