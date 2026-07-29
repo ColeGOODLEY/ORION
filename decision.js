@@ -45,10 +45,14 @@ function makeDecision(command, comparison, knowledge, reasoning){
 
 
 
-    if(
-        text.includes("memory") ||
-        text.includes("internet")
-    ){
+   if(
+    text.includes("memory") ||
+    text.includes("internet") ||
+    text.includes("search") ||
+    text.includes("knowledge") ||
+    text.includes("connect") ||
+    text.includes("online")
+){
 
 
         let memoryScore = 0;
@@ -72,13 +76,17 @@ function makeDecision(command, comparison, knowledge, reasoning){
 
         // Internet improves external capability
 
-        if(
-            text.includes("internet")
-        ){
+if(
+    text.includes("internet") ||
+    text.includes("search") ||
+    text.includes("knowledge") ||
+    text.includes("connect") ||
+    text.includes("online")
+){
 
-            internetScore += 5;
+    internetScore += 5;
 
-        }
+}
 
 
 
