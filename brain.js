@@ -26,23 +26,29 @@ function analyzeCommand(command){
     // MEMORY
     // =====================================
 
-    if(
+ if(
 
-        text.startsWith("remember ") ||
+    text.startsWith("remember ") ||
 
-        text.includes("what do you remember") ||
+    text.includes("what do you remember") ||
 
-        text.includes("what do you know about me") ||
+    text.includes("what do you know about me") ||
 
-        text.includes("memory")
+    text === "memory" ||
 
-    ){
+    text === "show memory" ||
 
-        intent = "memory";
-        category = "memory";
-        confidence = "high";
+    text === "memory status" ||
 
-    }
+    text === "clear memory"
+
+){
+
+    intent = "memory";
+    category = "memory";
+    confidence = "high";
+
+}
 
 
 
