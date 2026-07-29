@@ -1,8 +1,8 @@
 // =====================================
 // ORION SCRIPT
 // Command Interface System
-// Build 2.6
-// Response Routing Stability Fix
+// Build 2.5
+// Brain Routing Debug Version
 // =====================================
 
 
@@ -14,19 +14,14 @@
 
 function typeResponse(element, text){
 
-
     element.innerHTML = "";
 
-
     let index = 0;
-
 
     const cursor = "_";
 
 
-
     const interval = setInterval(function(){
-
 
         element.innerHTML =
         text.substring(0,index)
@@ -34,27 +29,19 @@ function typeResponse(element, text){
         cursor;
 
 
-
         index++;
-
 
 
         if(index > text.length){
 
-
             clearInterval(interval);
 
-
             element.innerHTML = text;
-
 
         }
 
 
-
     },25);
-
-
 
 }
 
@@ -68,10 +55,8 @@ function typeResponse(element, text){
 
 function addActivity(message){
 
-
     const log =
     document.querySelector(".activity");
-
 
 
     if(!log){
@@ -81,15 +66,12 @@ function addActivity(message){
     }
 
 
-
     const entry =
     document.createElement("p");
 
 
-
     const time =
     new Date().toLocaleTimeString();
-
 
 
     entry.innerHTML =
@@ -97,10 +79,7 @@ function addActivity(message){
     `${time} - ${message}`;
 
 
-
     log.appendChild(entry);
-
-
 
 }
 
@@ -115,15 +94,12 @@ function addActivity(message){
 async function executeORION(){
 
 
-
     const input =
     document.getElementById("command");
 
 
-
     const output =
     document.getElementById("response");
-
 
 
     if(!input || !output){
@@ -156,7 +132,6 @@ async function executeORION(){
 
 
         return;
-
 
     }
 
@@ -201,7 +176,6 @@ addActivity(
 );
 
 
-
 addActivity(
 "Brain Processing"
 );
@@ -218,218 +192,47 @@ const brainResult =
 
 await processBrain(command);
 
-console.log(
-"ORION BRAIN RESULT:",
-brainResult
-);
-
-
-let response = "";
-
-
 
 
 // =====================================
-// RESPONSE ROUTING
+// DEBUG OUTPUT
 // =====================================
-
-
-if(
-brainResult.source === "AI_BRAIN"
-){
-
-
-const aiOutput =
-
-typeof brainResult.response === "string"
-
-?
-
-brainResult.response
-
-:
-
-brainResult.response?.response
-
-||
-
-"ORION AI response unavailable.";
-
-
-
-response =
-
-generateResponse(
-
-    command,
-
-    null,
-
-    typeof getAllMemories === "function"
-
-    ?
-
-    getAllMemories()
-
-    :
-
-    [],
-
-    brainResult.knowledge || "",
-
-    brainResult.reasoning || "",
-
-    null,
-
-    null,
-
-    null,
-
-    null,
-
-    brainResult.analysis?.confidence || null,
-
-    typeof ORION_CONTEXT !== "undefined"
-
-    &&
-
-    typeof ORION_CONTEXT.getRecent === "function"
-
-    ?
-
-    ORION_CONTEXT.getRecent()
-
-    :
-
-    [],
-
-    typeof ORION_PERSONALITY !== "undefined"
-
-    &&
-
-    typeof ORION_PERSONALITY.getStyle === "function"
-
-    ?
-
-    ORION_PERSONALITY.getStyle(command)
-
-    :
-
-    {},
-
-    aiOutput
-
-);
-
-
-
-}
-
-
-
-else if(
-
-brainResult.source === "ORION_CORE"
-
-){
-
-
-
-response =
-
-await ORION.process(command);
-
-
-
-}
-
-
-
-else{
-
-
-response =
-
-"ORION ERROR: Unknown response source.";
-
-
-}
-
-
-
-
-// =====================================
-// HUD READY
-// =====================================
-
-
-if(typeof ORION_HUD !== "undefined"){
-
-
-setTimeout(function(){
-
-
-ORION_HUD.ready();
-
-
-},1000);
-
-
-}
-
-
-
-
-addActivity(
-"Response Generated"
-);
-
-
 
 
 typeResponse(
 
 output,
 
-response
+"DEBUG BRAIN RESULT:\n\n" +
+
+JSON.stringify(
+
+brainResult,
+
+null,
+
+2
+
+)
 
 );
+
+
+return;
 
 
 
 
 // =====================================
-// SAVE ASSISTANT RESPONSE
+// NORMAL RESPONSE CODE BELOW
+// TEMPORARILY DISABLED
 // =====================================
 
 
-if(typeof ORION_CONTEXT !== "undefined"){
-
-
-ORION_CONTEXT.addMessage(
-
-    "assistant",
-
-    response
-
-);
-
 
 }
-
-
-
-
-input.value = "";
-
-
-
-}
-
-
 
 catch(error){
-
 
 
 console.error(
@@ -459,15 +262,12 @@ ${error.message}
 );
 
 
-
 addActivity(
 "System Error Detected"
 );
 
 
-
 }
-
 
 
 }
@@ -487,14 +287,11 @@ document.addEventListener(
 function(){
 
 
-
 const input =
 document.getElementById("command");
 
 
-
 if(input){
-
 
 
 input.addEventListener(
@@ -502,7 +299,6 @@ input.addEventListener(
 "keydown",
 
 function(event){
-
 
 
 if(event.key === "Enter"){
@@ -514,13 +310,10 @@ executeORION();
 }
 
 
-
 });
 
 
-
 }
-
 
 
 });
@@ -588,15 +381,12 @@ const interval =
 setInterval(function(){
 
 
-
 status.innerHTML =
 
 messages[index];
 
 
-
 index++;
-
 
 
 if(index >= messages.length){
@@ -610,7 +400,6 @@ setTimeout(function(){
 
 
 boot.style.opacity = "0";
-
 
 
 setTimeout(function(){
@@ -628,7 +417,6 @@ boot.remove();
 
 
 }
-
 
 
 },700);
