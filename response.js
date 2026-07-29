@@ -637,7 +637,7 @@ ${confidence.score || confidence}
 // =====================================
 
 
-if(plan){
+if(plan && !decision){
 
 
 return `
