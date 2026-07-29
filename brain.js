@@ -2,6 +2,7 @@
 // ORION BRAIN SYSTEM
 // Adaptive Intelligence Build 3.3
 // Local Routing + AI Integration Fix
+// AI Response Extraction Patch
 // =====================================
 
 
@@ -645,7 +646,23 @@ async function processBrain(command){
 
 
 
-        response:aiResponse
+        // FIX: Extract actual AI text from Worker response
+
+        response:
+
+        typeof aiResponse === "object"
+
+        &&
+
+        aiResponse.response
+
+        ?
+
+        aiResponse.response
+
+        :
+
+        aiResponse
 
 
     };
