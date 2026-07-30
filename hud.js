@@ -1,6 +1,7 @@
 // =====================================
 // ORION HUD CONTROLLER
 // System Visualization Layer
+// Voice Integration Build 1.0
 // =====================================
 
 
@@ -91,6 +92,53 @@ this.update(
 this.update(
 "planning",
 "READY"
+);
+
+
+},
+
+
+
+
+// =====================================
+// VOICE STATUS
+// =====================================
+
+
+voiceListening(){
+
+
+this.update(
+"voice",
+"LISTENING"
+);
+
+
+},
+
+
+
+
+voiceSpeaking(){
+
+
+this.update(
+"voice",
+"SPEAKING"
+);
+
+
+},
+
+
+
+
+voiceIdle(){
+
+
+this.update(
+"voice",
+"IDLE"
 );
 
 
