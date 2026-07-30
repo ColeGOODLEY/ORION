@@ -354,6 +354,9 @@ response
 );
 
 
+ORION_VOICE.speak(response);
+
+
 
 
 
