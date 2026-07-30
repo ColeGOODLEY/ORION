@@ -583,3 +583,32 @@ console.log(
 "ORION Interface Loaded Successfully."
 
 );
+
+// =====================================
+// VOICE BUTTON
+// =====================================
+
+document.addEventListener(
+"DOMContentLoaded",
+function(){
+
+const voiceButton =
+document.getElementById("voiceButton");
+
+
+if(voiceButton){
+
+
+voiceButton.onclick = function(){
+
+
+ORION_VOICE.listen();
+
+
+};
+
+
+}
+
+
+});
