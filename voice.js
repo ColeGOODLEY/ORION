@@ -1,10 +1,11 @@
 // =====================================
 // ORION VOICE SYSTEM
-// Build 1.1
+// Build 1.2
 // Speech Recognition
 // Text To Speech
 // Push-To-Talk
 // HUD Voice Status Integration
+// Voice Configuration Layer
 // =====================================
 
 
@@ -18,9 +19,45 @@ listening: false,
 speaking: false,
 
 
+queue: [],
+
+
+
+
+
+
+// =====================================
+// VOICE SETTINGS
+// =====================================
+
+
+settings:{
+
+
+rate:0.95,
+
+pitch:0.85,
+
+volume:1,
+
+voice:null
+
+
+},
+
+
+
+
+
+
+
+// =====================================
+// INITIALIZE
+// =====================================
 
 
 init(){
+
 
 
 const SpeechRecognition =
@@ -57,6 +94,13 @@ this.recognition.lang = "en-US";
 
 
 
+this.loadVoices();
+
+
+
+
+
+
 // =====================================
 // LISTENING START
 // =====================================
@@ -81,8 +125,8 @@ ORION_HUD.voiceListening();
 }
 
 
-
 };
+
 
 
 
@@ -125,6 +169,8 @@ ORION_HUD.voiceIdle();
 
 
 
+
+
 // =====================================
 // ERROR HANDLING
 // =====================================
@@ -148,6 +194,9 @@ ORION_HUD.voiceIdle();
 
 
 };
+
+
+
 
 
 
@@ -208,6 +257,51 @@ executeORION();
 
 
 
+
+
+
+// =====================================
+// LOAD AVAILABLE VOICES
+// =====================================
+
+
+loadVoices(){
+
+
+
+const voices =
+window.speechSynthesis.getVoices();
+
+
+
+if(!voices.length){
+
+return;
+
+}
+
+
+
+this.settings.voice =
+voices.find(voice =>
+
+voice.lang === "en-US"
+
+)
+
+|| voices[0];
+
+
+
+},
+
+
+
+
+
+
+
+
 // =====================================
 // START LISTENING
 // =====================================
@@ -237,6 +331,7 @@ this.recognition.start();
 
 
 
+
 // =====================================
 // TEXT TO SPEECH
 // =====================================
@@ -256,6 +351,68 @@ return;
 
 
 
+
+this.queue.push(text);
+
+
+
+if(!this.speaking){
+
+
+this.processQueue();
+
+
+}
+
+
+
+},
+
+
+
+
+
+
+
+
+// =====================================
+// SPEECH QUEUE
+// =====================================
+
+
+processQueue(){
+
+
+
+if(this.queue.length === 0){
+
+
+this.speaking = false;
+
+
+
+if(typeof ORION_HUD !== "undefined"){
+
+
+ORION_HUD.voiceIdle();
+
+
+}
+
+
+return;
+
+
+}
+
+
+
+const text =
+this.queue.shift();
+
+
+
+
 window.speechSynthesis.cancel();
 
 
@@ -267,16 +424,33 @@ new SpeechSynthesisUtterance(text);
 
 
 
-speech.rate = 1;
+speech.rate =
+this.settings.rate;
 
 
-speech.pitch = 1;
+speech.pitch =
+this.settings.pitch;
 
 
-speech.volume = 1;
+speech.volume =
+this.settings.volume;
 
 
-speech.lang = "en-US";
+speech.lang =
+"en-US";
+
+
+
+if(this.settings.voice){
+
+
+speech.voice =
+this.settings.voice;
+
+
+}
+
+
 
 
 
@@ -305,14 +479,7 @@ this.speaking = false;
 
 
 
-
-if(typeof ORION_HUD !== "undefined"){
-
-
-ORION_HUD.voiceIdle();
-
-
-}
+this.processQueue();
 
 
 
@@ -324,6 +491,49 @@ ORION_HUD.voiceIdle();
 
 window.speechSynthesis.speak(speech);
 
+
+
+},
+
+
+
+
+
+
+
+// =====================================
+// VOICE CONTROL
+// =====================================
+
+
+setVoice(voice){
+
+
+this.settings.voice = voice;
+
+
+},
+
+
+
+
+
+setRate(rate){
+
+
+this.settings.rate = rate;
+
+
+},
+
+
+
+
+
+setPitch(pitch){
+
+
+this.settings.pitch = pitch;
 
 
 },
@@ -346,6 +556,10 @@ window.speechSynthesis.cancel();
 
 
 
+this.queue = [];
+
+
+
 this.speaking = false;
 
 
@@ -365,6 +579,22 @@ ORION_HUD.voiceIdle();
 
 
 };
+
+
+
+
+
+
+
+window.speechSynthesis.onvoiceschanged = ()=>{
+
+
+ORION_VOICE.loadVoices();
+
+
+};
+
+
 
 
 
