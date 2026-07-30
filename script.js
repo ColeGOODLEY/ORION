@@ -1,8 +1,9 @@
+```javascript
 // =====================================
 // ORION SCRIPT
 // Command Interface System
-// Build 2.6
-// AI Response Formatting Stabilization
+// Build 2.7
+// Voice State Integration Fix
 // =====================================
 
 
@@ -103,8 +104,6 @@ function cleanAIResponse(response){
     let text = response.trim();
 
 
-
-    // Remove unnecessary long explanations
 
     if(text.length > 1200){
 
@@ -319,7 +318,8 @@ response =
 
 
 // =====================================
-// HUD READY
+// HUD READY FIX
+// Prevents overriding voice states
 // =====================================
 
 if(typeof ORION_HUD !== "undefined"){
@@ -327,7 +327,22 @@ if(typeof ORION_HUD !== "undefined"){
 
 setTimeout(function(){
 
+
+if(
+typeof ORION_VOICE === "undefined"
+||
+(
+!ORION_VOICE.speaking
+&&
+!ORION_VOICE.listening
+)
+
+){
+
 ORION_HUD.ready();
+
+}
+
 
 },1000);
 
@@ -587,6 +602,10 @@ console.log(
 
 );
 
+
+
+
+
 // =====================================
 // VOICE BUTTON
 // =====================================
@@ -615,3 +634,4 @@ ORION_VOICE.listen();
 
 
 });
+```
