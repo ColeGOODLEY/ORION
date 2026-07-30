@@ -64,7 +64,7 @@ event.results[0][0].transcript;
 console.log("Voice:",text);
 
 const input =
-document.getElementById("commandInput");
+document.getElementById("command");
 
 if(input){
 
