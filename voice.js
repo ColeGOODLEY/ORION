@@ -142,3 +142,4 @@ window.addEventListener("load",()=>{
 ORION_VOICE.init();
 
 });
+alert("ORION Voice System Loaded");
