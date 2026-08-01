@@ -285,48 +285,30 @@ return;
 
 
 
+// =====================================
+// ORION STARK VOICE SELECTION
+// =====================================
+
 
 let preferredVoice =
 voices.find(voice =>
 
-voice.name.includes(
-"Google UK English Male"
-)
+voice.name === "Chrome OS US English 5"
 
 );
-
 
 
 
 if(!preferredVoice){
 
-
 preferredVoice =
 voices.find(voice =>
 
-voice.lang === "en-GB"
+voice.name.includes("Chrome OS US English 5")
 
 );
 
-
 }
-
-
-
-
-if(!preferredVoice){
-
-
-preferredVoice =
-voices.find(voice =>
-
-voice.lang === "en-US"
-
-);
-
-
-}
-
 
 
 
@@ -346,12 +328,6 @@ this.settings.voice.name
 
 
 },
-
-
-
-
-
-
 
 // =====================================
 // LISTEN
