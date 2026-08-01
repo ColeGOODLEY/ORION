@@ -33,15 +33,15 @@ queue: [],
 
 settings:{
 
+rate:0.90,
 
-rate:0.95,
-
-pitch:0.85,
+pitch:0.80,
 
 volume:1,
 
-voice:null
+voice:null,
 
+profile:"STARK_INTERFACE"
 
 },
 
@@ -244,9 +244,7 @@ if(typeof executeORION === "function"){
 // LOAD AVAILABLE VOICES
 // =====================================
 
-
 loadVoices(){
-
 
 
 const voices =
@@ -262,22 +260,65 @@ return;
 
 
 
-this.settings.voice =
-voices.find(voice =>
+
+// =====================================
+// ORION STARK INTERFACE VOICE SEARCH
+// =====================================
+
+
+let preferredVoice = voices.find(voice =>
+
+voice.name.includes("Google UK English Male")
+
+);
+
+
+
+if(!preferredVoice){
+
+
+preferredVoice = voices.find(voice =>
+
+voice.lang === "en-GB"
+
+);
+
+
+}
+
+
+
+if(!preferredVoice){
+
+
+preferredVoice = voices.find(voice =>
 
 voice.lang === "en-US"
 
-)
+);
 
-|| voices[0];
+
+}
+
+
+
+
+this.settings.voice =
+preferredVoice || voices[0];
+
+
+
+console.log(
+
+"ORION Voice Selected:",
+
+this.settings.voice.name
+
+);
 
 
 
 },
-
-
-
-
 
 
 
