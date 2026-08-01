@@ -611,22 +611,72 @@ this.settings.pitch = pitch;
 stopSpeaking(){
 
 
-
 window.speechSynthesis.cancel();
-
 
 
 this.queue = [];
 
 
-
 this.speaking = false;
-
 
 
 if(typeof ORION_HUD !== "undefined"){
 
     ORION_HUD.voiceIdle();
+
+}
+
+
+},
+
+
+
+
+
+// =====================================
+// VOICE DIAGNOSTIC
+// =====================================
+
+
+showVoices(){
+
+
+const voices =
+window.speechSynthesis.getVoices();
+
+
+
+let output =
+"AVAILABLE ORION VOICES:\n\n";
+
+
+
+voices.forEach((voice,index)=>{
+
+
+output +=
+
+index +
+": " +
+voice.name +
+" (" +
+voice.lang +
+")\n";
+
+
+});
+
+
+
+const response =
+document.getElementById("response");
+
+
+
+if(response){
+
+response.innerHTML =
+output;
 
 }
 
