@@ -293,7 +293,7 @@ return;
 let preferredVoice =
 voices.find(voice =>
 
-voice.name === "Chrome OS US English 7"
+voice.name === "Chrome OS US English 8"
 
 );
 
