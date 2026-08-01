@@ -1,11 +1,11 @@
 // =====================================
 // ORION VOICE SYSTEM
-// Build 1.2
+// Build 1.3
 // Speech Recognition
 // Text To Speech
 // Push-To-Talk
 // HUD Voice Status Integration
-// Voice Configuration Layer
+// Stark Interface Voice Profile
 // =====================================
 
 
@@ -24,14 +24,13 @@ queue: [],
 
 
 
-
-
 // =====================================
 // VOICE SETTINGS
 // =====================================
 
 
 settings:{
+
 
 rate:0.90,
 
@@ -42,6 +41,7 @@ volume:1,
 voice:null,
 
 profile:"STARK_INTERFACE"
+
 
 },
 
@@ -69,7 +69,10 @@ window.webkitSpeechRecognition;
 if(!SpeechRecognition){
 
 
-console.warn("Speech Recognition not supported.");
+console.warn(
+"Speech Recognition not supported."
+);
+
 
 return;
 
@@ -78,7 +81,8 @@ return;
 
 
 
-this.recognition = new SpeechRecognition();
+this.recognition =
+new SpeechRecognition();
 
 
 
@@ -101,6 +105,7 @@ this.loadVoices();
 
 
 
+
 // =====================================
 // LISTENING START
 // =====================================
@@ -112,7 +117,9 @@ this.recognition.onstart = ()=>{
 this.listening = true;
 
 
-console.log("ORION Listening...");
+console.log(
+"ORION Listening..."
+);
 
 
 
@@ -128,6 +135,9 @@ if(typeof ORION_HUD !== "undefined"){
 
 
 
+
+
+
 // =====================================
 // LISTENING END
 // =====================================
@@ -135,9 +145,15 @@ if(typeof ORION_HUD !== "undefined"){
 
 this.recognition.onend = ()=>{
 
-    this.listening = false;
 
-    console.log("Listening stopped.");
+this.listening = false;
+
+
+console.log(
+"Listening stopped."
+);
+
+
 
 };
 
@@ -145,26 +161,27 @@ this.recognition.onend = ()=>{
 
 
 
+
+
 // =====================================
-// ERROR HANDLING
+// ERROR
 // =====================================
 
 
 this.recognition.onerror = (event)=>{
 
 
-console.error(event.error);
+console.error(
+event.error
+);
 
 
 
 if(typeof ORION_HUD !== "undefined"){
 
-
-ORION_HUD.voiceIdle();
-
+    ORION_HUD.voiceIdle();
 
 }
-
 
 
 };
@@ -177,7 +194,7 @@ ORION_HUD.voiceIdle();
 
 
 // =====================================
-// VOICE RESULT
+// RESULT
 // =====================================
 
 
@@ -189,7 +206,10 @@ event.results[0][0].transcript;
 
 
 
-console.log("Voice:",text);
+console.log(
+"Voice:",
+text
+);
 
 
 
@@ -201,26 +221,32 @@ document.getElementById("command");
 
 if(input){
 
-
-input.value = text;
-
+    input.value = text;
 
 }
 
 
 
 
+
 if(typeof executeORION === "function"){
 
-    this.listening = false;
 
-    if(typeof ORION_HUD !== "undefined"){
+this.listening = false;
 
-        ORION_HUD.processing();
 
-    }
 
-    executeORION();
+if(typeof ORION_HUD !== "undefined"){
+
+    ORION_HUD.processing();
+
+}
+
+
+
+executeORION();
+
+
 
 }
 
@@ -230,7 +256,6 @@ if(typeof executeORION === "function"){
 
 
 
-
 },
 
 
@@ -239,15 +264,17 @@ if(typeof executeORION === "function"){
 
 
 
+// =====================================
+// LOAD VOICES
+// =====================================
 
-// =====================================
-// LOAD AVAILABLE VOICES
-// =====================================
 
 loadVoices(){
 
+
 const voices =
 window.speechSynthesis.getVoices();
+
 
 
 if(!voices.length){
@@ -257,46 +284,25 @@ return;
 }
 
 
-console.log("AVAILABLE ORION VOICES:");
-
-voices.forEach((voice,index)=>{
-
-console.log(
-index +
-": " +
-voice.name +
-" | " +
-voice.lang
-);
-
-});
 
 
-this.settings.voice = voices[0];
+let preferredVoice =
+voices.find(voice =>
 
-
-},
-
-
-
-
-// =====================================
-// ORION STARK INTERFACE VOICE SEARCH
-// =====================================
-
-
-let preferredVoice = voices.find(voice =>
-
-voice.name.includes("Google UK English Male")
+voice.name.includes(
+"Google UK English Male"
+)
 
 );
+
 
 
 
 if(!preferredVoice){
 
 
-preferredVoice = voices.find(voice =>
+preferredVoice =
+voices.find(voice =>
 
 voice.lang === "en-GB"
 
@@ -307,10 +313,12 @@ voice.lang === "en-GB"
 
 
 
+
 if(!preferredVoice){
 
 
-preferredVoice = voices.find(voice =>
+preferredVoice =
+voices.find(voice =>
 
 voice.lang === "en-US"
 
@@ -342,23 +350,28 @@ this.settings.voice.name
 
 
 
-// =====================================
-// START LISTENING
-// =====================================
 
+
+
+// =====================================
+// LISTEN
+// =====================================
 
 
 listen(){
 
 
+
 if(!this.recognition){
 
-    return;
+return;
 
 }
 
 
+
 this.recognition.start();
+
 
 
 },
@@ -366,23 +379,22 @@ this.recognition.start();
 
 
 
+
+
+
 // =====================================
-// TEXT TO SPEECH
+// SPEAK
 // =====================================
 
 
 speak(text){
 
 
-
 if(!text){
-
 
 return;
 
-
 }
-
 
 
 
@@ -392,16 +404,13 @@ this.queue.push(text);
 
 if(!this.speaking){
 
-
 this.processQueue();
-
 
 }
 
 
 
 },
-
 
 
 
@@ -427,11 +436,10 @@ this.speaking = false;
 
 if(typeof ORION_HUD !== "undefined"){
 
-
-ORION_HUD.voiceIdle();
-
+    ORION_HUD.voiceIdle();
 
 }
+
 
 
 return;
@@ -441,13 +449,16 @@ return;
 
 
 
+
 const text =
 this.queue.shift();
 
 
 
 
+
 window.speechSynthesis.cancel();
+
 
 
 
@@ -458,24 +469,39 @@ new SpeechSynthesisUtterance(text);
 
 
 
+
 speech.rate =
 this.settings.rate;
+
 
 
 speech.pitch =
 this.settings.pitch;
 
 
+
 speech.volume =
 this.settings.volume;
 
 
+
+
+
 speech.lang =
+
 this.settings.voice
+
 ?
+
 this.settings.voice.lang
+
 :
+
 "en-US";
+
+
+
+
 
 
 
@@ -493,18 +519,20 @@ this.settings.voice;
 
 
 
+
 this.speaking = true;
+
 
 
 
 
 if(typeof ORION_HUD !== "undefined"){
 
-
-ORION_HUD.voiceSpeaking();
-
+    ORION_HUD.voiceSpeaking();
 
 }
+
+
 
 
 
@@ -527,6 +555,7 @@ this.processQueue();
 
 
 
+
 window.speechSynthesis.speak(speech);
 
 
@@ -540,41 +569,34 @@ window.speechSynthesis.speak(speech);
 
 
 // =====================================
-// VOICE CONTROL
+// VOICE CONTROLS
 // =====================================
 
 
 setVoice(voice){
 
-
 this.settings.voice = voice;
 
-
 },
-
 
 
 
 
 setRate(rate){
 
-
 this.settings.rate = rate;
 
-
 },
-
 
 
 
 
 setPitch(pitch){
 
-
 this.settings.pitch = pitch;
 
-
 },
+
 
 
 
@@ -582,7 +604,7 @@ this.settings.pitch = pitch;
 
 
 // =====================================
-// STOP SPEAKING
+// STOP
 // =====================================
 
 
@@ -604,9 +626,7 @@ this.speaking = false;
 
 if(typeof ORION_HUD !== "undefined"){
 
-
-ORION_HUD.voiceIdle();
-
+    ORION_HUD.voiceIdle();
 
 }
 
@@ -617,6 +637,7 @@ ORION_HUD.voiceIdle();
 
 
 };
+
 
 
 
