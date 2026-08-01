@@ -246,10 +246,8 @@ if(typeof executeORION === "function"){
 
 loadVoices(){
 
-
 const voices =
 window.speechSynthesis.getVoices();
-
 
 
 if(!voices.length){
@@ -257,6 +255,27 @@ if(!voices.length){
 return;
 
 }
+
+
+console.log("AVAILABLE ORION VOICES:");
+
+voices.forEach((voice,index)=>{
+
+console.log(
+index +
+": " +
+voice.name +
+" | " +
+voice.lang
+);
+
+});
+
+
+this.settings.voice = voices[0];
+
+
+},
 
 
 
