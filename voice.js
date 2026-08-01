@@ -107,7 +107,7 @@ this.loadVoices();
 
 
 this.recognition.onstart = ()=>{
-alert("ORION VOICE STARTED");
+
 
 this.listening = true;
 
@@ -118,16 +118,12 @@ console.log("ORION Listening...");
 
 if(typeof ORION_HUD !== "undefined"){
 
-
-ORION_HUD.voiceListening();
-
+    ORION_HUD.voiceListening();
 
 }
 
 
 };
-
-
 
 
 
@@ -216,15 +212,15 @@ input.value = text;
 
 if(typeof executeORION === "function"){
 
-this.listening = false;
+    this.listening = false;
 
-if(typeof ORION_HUD !== "undefined"){
+    if(typeof ORION_HUD !== "undefined"){
 
-    ORION_HUD.processing();
+        ORION_HUD.processing();
 
-}
-executeORION();
+    }
 
+    executeORION();
 
 }
 
@@ -294,21 +290,16 @@ voice.lang === "en-US"
 
 listen(){
 
-    if(!this.recognition){
 
-        return;
+if(!this.recognition){
 
-    }
+    return;
 
-    this.listening = true;
+}
 
-    if(typeof ORION_HUD !== "undefined"){
 
-        ORION_HUD.voiceListening();
+this.recognition.start();
 
-    }
-
-    this.recognition.start();
 
 },
 
