@@ -32,9 +32,9 @@ queue: [],
 settings:{
 
 
-rate:0.90,
+rate:0.88,
 
-pitch:0.80,
+pitch:0.65,
 
 volume:1,
 
@@ -293,7 +293,7 @@ return;
 let preferredVoice =
 voices.find(voice =>
 
-voice.name === "Chrome OS US English 5"
+voice.name === "Chrome OS US English 6"
 
 );
 
