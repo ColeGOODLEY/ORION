@@ -107,7 +107,7 @@ this.loadVoices();
 
 
 this.recognition.onstart = ()=>{
-
+alert("ORION VOICE STARTED");
 
 this.listening = true;
 
