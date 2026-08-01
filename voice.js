@@ -452,6 +452,10 @@ this.settings.volume;
 
 
 speech.lang =
+this.settings.voice
+?
+this.settings.voice.lang
+:
 "en-US";
 
 
