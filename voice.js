@@ -307,24 +307,22 @@ voice.lang === "en-US"
 // =====================================
 
 
+
 listen(){
 
+    alert("LISTEN FUNCTION CALLED");
 
-if(!this.recognition){
+    if(!this.recognition){
 
+        alert("Recognition not initialized");
+        return;
 
-return;
+    }
 
-
-}
-
-
-
-this.recognition.start();
-
-
+    this.recognition.start();
 
 },
+
 
 
 
