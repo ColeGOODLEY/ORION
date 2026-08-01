@@ -34,7 +34,7 @@ settings:{
 
 rate:0.88,
 
-pitch:0.65,
+pitch:0.80,
 
 volume:1,
 
@@ -293,7 +293,7 @@ return;
 let preferredVoice =
 voices.find(voice =>
 
-voice.name === "Chrome OS US English 6"
+voice.name === "Chrome OS US English 4"
 
 );
 
