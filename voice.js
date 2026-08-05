@@ -289,31 +289,19 @@ return;
 // ORION STARK VOICE SELECTION
 // =====================================
 
+// Best ChromeOS voice (US English 2)
 
-let preferredVoice =
-voices.find(voice =>
+const preferredIndex = 1;
 
-voice.name === "Chrome OS US English 8"
+if(voices.length > preferredIndex){
 
-);
+    this.settings.voice = voices[preferredIndex];
 
+}else{
 
-
-if(!preferredVoice){
-
-preferredVoice =
-voices.find(voice =>
-
-voice.name.includes("Chrome OS US English 5")
-
-);
+    this.settings.voice = voices[0];
 
 }
-
-
-
-this.settings.voice =
-preferredVoice || voices[0];
 
 
 
