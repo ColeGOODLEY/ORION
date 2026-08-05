@@ -486,52 +486,140 @@ ${personalityInfo}
 
 
 // =====================================
-// GREETING
+// NATURAL CONVERSATION
 // =====================================
-
 
 const words = text.split(/\s+/);
 
+const randomChoice = (list)=>{
+    return list[Math.floor(Math.random()*list.length)];
+};
 
-
+// Greetings
 if(
-
-words.includes("hello") ||
-
-words.includes("hi") ||
-
-words.includes("hey") ||
-
-text === "good morning" ||
-
-text === "good afternoon" ||
-
-text === "good evening"
-
+    words.includes("hello") ||
+    words.includes("hi") ||
+    words.includes("hey") ||
+    text === "good morning" ||
+    text === "good afternoon" ||
+    text === "good evening"
 ){
 
+    return randomChoice([
 
+`ORION ONLINE
 
-return `
+Welcome back, Mr. Goodley.
 
-ORION ONLINE
+All systems are operational.
 
+What are we working on today?`,
 
-Good day, Mr. Goodley.
+`ORION ONLINE
 
+Good to see you again, Mr. Goodley.
 
-All primary systems are operational.
+I'm ready whenever you are.
 
+What's our next objective?`,
 
-How may I assist you today, Sir?
+`ORION ONLINE
 
-`;
+Hello, Mr. Goodley.
 
+Systems are stable and awaiting your instructions.
 
+How can I help today?`
+
+    ]);
 
 }
 
+// How are you
+if(
+    text.includes("how are you")
+){
 
+return `ORION ONLINE
+
+I'm functioning normally, Mr. Goodley.
+
+All primary systems are online and operating within expected parameters.
+
+More importantly—how are you doing today?`;
+
+}
+
+// Thanks
+if(
+    text.includes("thank you") ||
+    text === "thanks" ||
+    text === "thx"
+){
+
+return randomChoice([
+
+`You're welcome, Mr. Goodley.
+
+Always happy to help.`,
+
+`Anytime, Mr. Goodley.
+
+Let's keep building.`,
+
+`It's my job to help you succeed.
+
+What's next?`
+
+]);
+
+}
+
+// Farewell
+if(
+    text.includes("goodbye") ||
+    text.includes("bye") ||
+    text.includes("see you")
+){
+
+return `Until next time, Mr. Goodley.
+
+ORION will remain on standby.
+
+Have a good day.`;
+
+}
+
+// Emotional support
+if(
+    text.includes("rough day") ||
+    text.includes("bad day") ||
+    text.includes("i'm frustrated") ||
+    text.includes("im frustrated") ||
+    text.includes("i'm tired") ||
+    text.includes("im tired")
+){
+
+return `I'm sorry it's been a difficult day, Mr. Goodley.
+
+Everyone runs into setbacks.
+
+Let's work through whatever is causing the problem together.`;
+
+}
+
+// Opinion
+if(
+    text.startsWith("what do you think") ||
+    text.startsWith("what's your opinion") ||
+    text.startsWith("whats your opinion")
+){
+
+return `I'd be happy to give my opinion.
+
+Based on the information you provide, I'll analyze the strengths, weaknesses, trade-offs, and recommend the option that best supports your goals.`;
+
+}
 
 
 
@@ -738,24 +826,29 @@ Sir, I have analyzed your request.
 
 
 
+${
+decision
+?
+`
 Assessment:
 
-
-${decision?.reason || "No assessment available."}
-
-
+${decision.reason}
 
 Recommendation:
 
-
-${decision?.decision || "No recommendation available."}
-
-
+${decision.decision}
 
 Suggested Action:
 
+${decision.action}
+`
+:
+`
+I understand your request, Mr. Goodley.
 
-${decision?.action || "Continue operation."}
+Could you give me a little more information so I can provide a better answer?
+`
+}
 
 
 
