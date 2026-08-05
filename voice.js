@@ -5,7 +5,7 @@
 // Text To Speech
 // Push-To-Talk
 // HUD Voice Status Integration
-// Stark Interface Voice Profile
+// ORION Voice Profile
 // =====================================
 
 
@@ -31,20 +31,17 @@ queue: [],
 
 settings:{
 
+rate:0.86,
 
-rate:0.88,
-
-pitch:0.80,
+pitch:0.78,
 
 volume:1,
 
 voice:null,
 
-profile:"STARK_INTERFACE"
-
+profile:"ORION"
 
 },
-
 
 
 
@@ -286,10 +283,13 @@ return;
 
 
 // =====================================
-// ORION STARK VOICE SELECTION
+// ORION DEFAULT VOICE
 // =====================================
 
-// Best ChromeOS voice (US English 2)
+// Default ORION voice.
+// Chrome OS US English 2 provides the
+// most natural assistant-style voice
+// available on this Chromebook.
 
 const preferredIndex = 1;
 
