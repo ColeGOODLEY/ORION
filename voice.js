@@ -258,64 +258,37 @@ executeORION();
 
 
 
-
-
-
 // =====================================
 // LOAD VOICES
 // =====================================
 
-
 loadVoices(){
 
+    const voices = window.speechSynthesis.getVoices();
 
-const voices =
-window.speechSynthesis.getVoices();
+    if(!voices.length){
 
+        console.warn("ORION: Voices not loaded yet.");
 
+        return false;
 
-if(!voices.length){
+    }
 
-return;
+    // Chrome OS US English 2
+    const preferredIndex = 1;
 
-}
+    this.settings.voice =
+        voices[preferredIndex] || voices[0];
 
+    console.log(
+        "ORION Voice Selected:",
+        this.settings.voice.name
+    );
 
-
-// =====================================
-// ORION DEFAULT VOICE
-// =====================================
-
-// Default ORION voice.
-// Chrome OS US English 2 provides the
-// most natural assistant-style voice
-// available on this Chromebook.
-
-const preferredIndex = 1;
-
-if(voices.length > preferredIndex){
-
-    this.settings.voice = voices[preferredIndex];
-
-}else{
-
-    this.settings.voice = voices[0];
-
-}
-
-
-
-console.log(
-
-"ORION Voice Selected:",
-
-this.settings.voice.name
-
-);
-
-
+    return true;
 
 },
+
 
 // =====================================
 // LISTEN
@@ -387,35 +360,46 @@ this.processQueue();
 // =====================================
 
 
+
+
 processQueue(){
 
+    if(this.queue.length === 0){
 
+        this.speaking = false;
 
-if(this.queue.length === 0){
+        if(typeof ORION_HUD !== "undefined"){
 
+            ORION_HUD.voiceIdle();
 
-this.speaking = false;
+        }
 
+        return;
 
+    }
 
-if(typeof ORION_HUD !== "undefined"){
+    // Make sure voices are loaded before speaking.
+    if(!this.settings.voice){
 
-    ORION_HUD.voiceIdle();
+        this.loadVoices();
 
-}
+    }
 
+    // If voices still aren't ready, try again shortly.
+    if(!this.settings.voice){
 
+        setTimeout(()=>{
 
-return;
+            this.processQueue();
 
+        },100);
 
-}
+        return;
 
+    }
 
-
-
-const text =
-this.queue.shift();
+    const text =
+    this.queue.shift();
 
 
 
@@ -469,12 +453,19 @@ this.settings.voice.lang
 
 
 
-if(this.settings.voice){
+if(!this.settings.voice){
 
+    if(!this.loadVoices()){
 
-speech.voice =
-this.settings.voice;
+        setTimeout(()=>{
 
+            this.processQueue();
+
+        },100);
+
+        return;
+
+    }
 
 }
 
