@@ -275,7 +275,7 @@ loadVoices(){
     }
 
     // Chrome OS US English 2
-    const preferredIndex = 13;
+    const preferredIndex = 4;
 
     this.settings.voice =
         voices[preferredIndex] || voices[0];
