@@ -1,262 +1,72 @@
 // =====================================
 // ORION AI BRAIN CONNECTOR
-// Model Connection Layer
-// Context Integration Build 3.4
+// Feature Install Build 3.5
+// Optional web research via the Cloudflare Worker
 // =====================================
 
-
 const ORION_BRAIN = {
-
-
     provider: "Hugging Face",
-
     model: "meta-llama/Llama-3.1-8B-Instruct",
-
-
-    connected:false,
-
-
-
-    async think(prompt, context){
-
-
-        try{
-
-
-            console.log(
-                "ORION Brain Activated"
-            );
-
-
-
-            const response = await fetch(
-
-                "https://sparkling-meadow-17f4.colehgoodley.workers.dev",
-
-                {
-
-                    method:"POST",
-
-
-                    headers:{
-
-                        "Content-Type":
-                        "application/json"
-
-                    },
-
-
-                    body:JSON.stringify({
-
-
-                        model:this.model,
-
-
-                        prompt:prompt,
-
-
-                        context:{
-
-
-
-                            // =====================================
-                            // ORION IDENTITY
-                            // =====================================
-
-                            identity:
-
-                            typeof ORION_IDENTITY !== "undefined"
-
-                            ?
-
-                            ORION_IDENTITY
-
-                            :
-
-                            {},
-
-
-
-
-                            // =====================================
-                            // PERSONALITY
-                            // =====================================
-
-                            personality:
-
-                            typeof ORION_PERSONALITY !== "undefined"
-
-                            ?
-
-                            ORION_PERSONALITY
-
-                            :
-
-                            {},
-
-
-
-
-                            // =====================================
-                            // MEMORY
-                            // =====================================
-
-                            memory:
-
-                            context.memory || [],
-
-
-
-
-                            // =====================================
-                            // CONVERSATION
-                            // =====================================
-
-                            conversation:
-
-                            context.conversation || [],
-
-
-
-
-                            // =====================================
-                            // REASONING
-                            // =====================================
-
-                            reasoning:
-
-                            context.reasoning || "",
-
-
-
-
-                            // =====================================
-                            // KNOWLEDGE
-                            // =====================================
-
-                            knowledge:
-
-                            context.knowledge || "",
-
-
-
-
-                            // =====================================
-                            // ANALYSIS
-                            // =====================================
-
-                            analysis:
-
-                            context.analysis || {}
-
-
-
-                        }
-
-
-                    })
-
+    endpoint: "https://sparkling-meadow-17f4.colehgoodley.workers.dev",
+    connected: false,
+
+    async requestWorker(payload) {
+        const response = await fetch(this.endpoint, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        });
+        const raw = await response.text();
+        let data;
+        try { data = JSON.parse(raw); }
+        catch { throw new Error("Worker returned an unreadable response."); }
+        if (!response.ok) throw new Error(data.error || data.response || `Worker request failed (${response.status}).`);
+        return data;
+    },
+
+    async think(prompt, context = {}) {
+        try {
+            console.log("ORION Brain Activated");
+            const enrichedContext = { ...context };
+
+            // Install-first behavior: search when a request likely needs current/external facts.
+            // Search failures do not stop ordinary AI responses.
+            if (typeof ORION_WEB_RESEARCH !== "undefined" && ORION_WEB_RESEARCH.shouldSearch(prompt)) {
+                try {
+                    const searchData = await this.requestWorker({ action: "search", query: prompt });
+                    const results = Array.isArray(searchData.results) ? searchData.results : [];
+                    enrichedContext.research = ORION_WEB_RESEARCH.formatResults(results);
+                    enrichedContext.researchStatus = results.length ? "Search results retrieved" : "No search results returned";
+                } catch (searchError) {
+                    console.warn("ORION Web Research unavailable:", searchError.message);
+                    enrichedContext.research = "Web research was requested but is currently unavailable. Be transparent about this and do not claim to have searched the web.";
+                    enrichedContext.researchStatus = "Unavailable";
                 }
-
-            );
-
-
-
-
-
-            // =====================================
-            // SERVER ERROR HANDLING
-            // =====================================
-
-
-            if(!response.ok){
-
-
-                const errorText =
-                await response.text();
-
-
-
-                throw new Error(
-
-                    errorText ||
-
-                    "Brain server unavailable."
-
-                );
-
-
             }
 
-
-
-
-
-            // =====================================
-            // RECEIVE AI RESPONSE
-            // =====================================
-
-
-            const data =
-            await response.json();
-
-
-
+            const data = await this.requestWorker({
+                action: "chat",
+                model: this.model,
+                prompt,
+                context: {
+                    identity: typeof ORION_IDENTITY !== "undefined" ? ORION_IDENTITY : {},
+                    personality: typeof ORION_PERSONALITY !== "undefined" ? ORION_PERSONALITY : {},
+                    memory: enrichedContext.memory || [],
+                    conversation: enrichedContext.conversation || [],
+                    reasoning: enrichedContext.reasoning || "",
+                    knowledge: enrichedContext.knowledge || "",
+                    analysis: enrichedContext.analysis || {},
+                    research: enrichedContext.research || "",
+                    researchStatus: enrichedContext.researchStatus || "Not requested"
+                }
+            });
 
             this.connected = true;
-
-
-
-            return (
-
-                data.response
-
-                ||
-
-                "ORION AI response unavailable."
-
-            );
-
-
-
-        }
-
-
-
-        catch(error){
-
-
-
-            console.error(
-
-                "ORION Brain Error:",
-
-                error
-
-            );
-
-
-
+            return data.response || "ORION AI response unavailable.";
+        } catch (error) {
+            console.error("ORION Brain Error:", error);
             this.connected = false;
-
-
-
-            return `
-
-ORION AI BRAIN ERROR:
-
-
-${error.message}
-
-
-Core systems remain operational.
-
-`;
-
+            return `ORION AI BRAIN ERROR:\n\n${error.message}\n\nCore systems remain operational.`;
         }
-
-
     }
-
-
 };
